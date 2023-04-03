@@ -1,37 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { Unity, useUnityContext } from 'react-unity-webgl';
+import React, { useCallback, useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './app.css';
 
+import { Header } from './pages/header';
+import { GNB } from './pages/gnb';
+import { Game } from './pages/game';
+import { Home } from './pages/home';
+import { Windows } from './pages/windows';
+import { Resume } from './pages/resume';
 
-function App() {
-  const { unityProvider } = useUnityContext({
-    loaderUrl: 'GameBuild/build.loader.js',
-    dataUrl: 'GameBuild/build.data.br',
-    frameworkUrl: 'GameBuild/build.framework.js.br',
-    codeUrl: 'GameBuild/build.wasm.br'
-  });
-
+export const App = () => {
+  useEffect(() => {
+    // initializeCookie();
+  }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <Unity unityProvider={unityProvider} />
-        {/* <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a> */}
-      </header>
+    <div className="app">
+      <BrowserRouter>
+        <Header />
+        <GNB />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/Windows' element={<Windows />} />
+          <Route path='/Game' element={/* <Game /> */ null} />
+          <Route path='/Resume' element={<Resume />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
 
-export default App;

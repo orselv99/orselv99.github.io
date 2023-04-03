@@ -1,0 +1,16 @@
+header {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#title {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 10px 0 10px;
+}
+
+#right {
+  display: inline-flex;
+  align-items: center;
+}
