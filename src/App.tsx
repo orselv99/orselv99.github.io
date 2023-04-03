@@ -24,6 +24,7 @@ export const App = () => {
           <Route path='/Windows' element={<Windows />} />
           <Route path='/Game' element={<Game />} />
           <Route path='/Resume' element={<Resume />} />
+          <Route path='*' element={<Home />} />
         </Routes>
       </BrowserRouter>
     </div>
