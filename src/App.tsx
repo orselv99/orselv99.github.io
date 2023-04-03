@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 import './app.css';
 
@@ -16,9 +16,7 @@ import SVGWindows from './assets/windows.svg';
 import SVGResume from './assets/resume.svg';
 
 export const App = () => {
-  useEffect(() => {
-    // initializeCookie();
-  }, []);
+  // 
 
   const style: React.CSSProperties = { display: 'inline-flex', alignItems: 'center', margin: '0 25px 0 25px', position: 'relative', bottom: 0 };
   return (
@@ -32,7 +30,7 @@ export const App = () => {
             <Route path='/Windows' element={<Windows />} />
             <Route path='/Game' element={<Game />} />
             <Route path='/Resume' element={<Resume />} />
-            <Route path='/*' element={<Home />} />
+            <Route path='/*' element={<Navigate to="/"></Navigate>} />
           </Routes>
         </BrowserView>
         <MobileView>
