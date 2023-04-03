@@ -6,10 +6,10 @@ import { Unity, useUnityContext } from 'react-unity-webgl';
 
 function App() {
   const { unityProvider } = useUnityContext({
-    loaderUrl: './game/build.loader.js',
-    dataUrl: './game/build.data.br',
-    frameworkUrl: './game/build.framework.js.br',
-    codeUrl: './game/build.wasm.br'
+    loaderUrl: 'GameBuild/build.loader.js',
+    dataUrl: 'GameBuild/build.data.br',
+    frameworkUrl: 'GameBuild/build.framework.js.br',
+    codeUrl: 'GameBuild/build.wasm.br'
   });
 
 
