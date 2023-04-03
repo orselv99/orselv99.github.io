@@ -3,8 +3,9 @@ nav {
   display: flex;
 }
 
-a {
+a, a:visited {
   text-decoration-line: none;
+  color: inherit;
 }
 
 #menu {
@@ -12,7 +13,6 @@ a {
   margin: 0 0 0 10px;
   padding: 0;
   list-style-type: none;
-
   display: inline-flex;
   align-items: center;
 }
