@@ -4,10 +4,10 @@ import './app.css';
 
 import { Header } from './pages/header';
 import { GNB } from './pages/gnb';
-import { Game } from './pages/game';
-import { Home } from './pages/home';
-import { Windows } from './pages/windows';
-import { Resume } from './pages/resume';
+import { Game } from './pages/contents/game';
+import { Home } from './pages/contents/home';
+import { Windows } from './pages/contents/windows';
+import { Resume } from './pages/contents/resume';
 
 export const App = () => {
   useEffect(() => {
@@ -22,7 +22,7 @@ export const App = () => {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/Windows' element={<Windows />} />
-          <Route path='/Game' element={/* <Game /> */ null} />
+          <Route path='/Game' element={<Game />} />
           <Route path='/Resume' element={<Resume />} />
         </Routes>
       </BrowserRouter>
