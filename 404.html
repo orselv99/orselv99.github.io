@@ -35,11 +35,15 @@
         
       }, 500);
 
-      console.log(window.location.href);
-
-      // setTimeout(() => {
-      //   window.location.href = '/';
-      // }, 1500);
+      setTimeout(() => {
+        const href = str.lastIndexOf('/');
+        if (href === '/Windows' || href === '/Game' || href === '/Resume') {
+          window.location.href = href;
+        }
+        else {
+          window.location.href = '/';
+        }
+      }, 1500);
     }
   </script>
 </body>
