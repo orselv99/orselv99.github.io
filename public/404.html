@@ -6,11 +6,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-<body>
-  <div>Redirecting..</div>
+<body style="overflow: hidden;">
+  <div id="container" style="height: 100vh; display: flex; justify-content: center; align-items: center;">
+    <div id="loading" style="display: flex; color: #0f0f0f;">
+      <picture style="display: inline-flex; align-items: center;">
+        <img src="runner.webp" />
+      </picture>
+      <h2 id="message">REDIRECT</h2>
+    </div>
+  </div>
+  
   <script>
     window.onload = () => {
-      location.href = '/';
+      // TODO: darkmode
+      // const mode = window.localStorage.getItem('mode');
+      // const runner = (mode === 'dark') ? 'runner_dark' : 'runner_light';
+      // const color = (mode === 'dark') ? '#0f0f0f' : '#9f9f9f';
+
+      const message = document.getElementById('message');
+      const length = message.innerText.length;
+      setInterval(() => {
+        if (message.innerText.length < length + 3) {
+          message.innerText += '.';
+        }
+        else {
+          message.innerText = 'REDIRECT';
+        }
+      }, 500);
+
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 1500);          
     }
   </script>
 </body>
