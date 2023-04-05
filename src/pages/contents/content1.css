@@ -1,3 +1,16 @@
 #content_container {
   margin: 20px;
 }
+
+h1 {
+  background-image: linear-gradient(to right, #FF39C6, #FE9613);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h2 {
+  background-image: linear-gradient(to right, #0DCDFD, #C7FE1E);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+}
