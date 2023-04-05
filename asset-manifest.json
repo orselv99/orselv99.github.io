@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.1d17024b.css",
-    "main.js": "/static/js/main.35d16411.js",
-    "static/media/gamepad.svg": "/static/media/gamepad.16ad8bed705aa41df0225eebbff6594f.svg",
-    "static/media/home.svg": "/static/media/home.ffc72b77724860ca6252deca8f574d08.svg",
-    "static/media/resume.svg": "/static/media/resume.134689b771efc33f20af3c2a86d9ed86.svg",
-    "static/media/windows.svg": "/static/media/windows.17f5cebcd6b8856752e872ea53a37151.svg",
+    "main.css": "/static/css/main.6efbb039.css",
+    "main.js": "/static/js/main.883301d5.js",
+    "static/media/NeoDunggeunmoPro-Regular.ttf": "/static/media/NeoDunggeunmoPro-Regular.dab518c0175ba84f1a9a.ttf",
+    "static/media/NeoDunggeunmoPro-Regular.woff": "/static/media/NeoDunggeunmoPro-Regular.0818c487bcc1cc8938b1.woff",
+    "static/media/NeoDunggeunmoPro-Regular.woff2": "/static/media/NeoDunggeunmoPro-Regular.5650872361e96a910bc3.woff2",
+    "static/media/logo.png": "/static/media/logo.fdf9fd86184d0c9de1db.png",
     "index.html": "/index.html",
-    "main.1d17024b.css.map": "/static/css/main.1d17024b.css.map",
-    "main.35d16411.js.map": "/static/js/main.35d16411.js.map"
+    "main.6efbb039.css.map": "/static/css/main.6efbb039.css.map",
+    "main.883301d5.js.map": "/static/js/main.883301d5.js.map"
   },
   "entrypoints": [
-    "static/css/main.1d17024b.css",
-    "static/js/main.35d16411.js"
+    "static/css/main.6efbb039.css",
+    "static/js/main.883301d5.js"
   ]
 }
