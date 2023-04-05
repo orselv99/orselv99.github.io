@@ -1,6 +1,14 @@
+@font-face {
+  font-family: 'Roboto';
+  src: 
+    url('./assets/font/NeoDunggeunmoPro-Regular.ttf') format('truetype'),
+    url('./assets/font/NeoDunggeunmoPro-Regular.woff') format('woff'),
+    url('./assets/font/NeoDunggeunmoPro-Regular.woff2') format('woff2');
+}
+
 body {
   user-select: none;
-  font-family: 'Noto Sans', 'Noto Sans KR';
+  font-family: 'Roboto';
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -28,3 +36,4 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+

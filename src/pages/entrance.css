@@ -1,0 +1,25 @@
+#container {
+  display: flex;
+  min-height: 90vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#enter_string {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  animation: flash 1s linear infinite;
+}
+
+@keyframes flash {
+  50% {
+    opacity: 0;
+  }
+}
+
+a, a:visited {
+  text-decoration-line: none;
+  color: inherit;
+}
