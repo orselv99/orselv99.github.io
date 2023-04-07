@@ -18,7 +18,7 @@ export const Game = () => {
 
   return (
     <>
-      <div id='container'>
+      <div id='game_container'>
         {/* <button onClick={onClickFullScreen}>full</button> */}
         <div>
           Unity WebGL Update getBoundingClientRect 오류로 인해 패치까지 iframe 으로 대체

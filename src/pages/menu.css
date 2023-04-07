@@ -17,6 +17,11 @@ a {
   flex-direction: row;
 }
 
+#menus {
+  display: flex;
+  justify-content: center;
+}
+
 .spacing {
   margin: 0 10px 0 10px;
 }

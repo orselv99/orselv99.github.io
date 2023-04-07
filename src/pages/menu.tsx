@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import './menu.css';
 import { Content1 } from './contents/content1';
+import { Game } from './contents/game';
 
 export interface MenuData {
   name: string;
@@ -14,7 +15,7 @@ export const MenuDatas = (): MenuData[] => {
   return [
     { name: 'content1', path: '/content1', element: <Content1 /> },
     { name: 'content2', path: '/content2', element: <Content1 /> },
-    { name: 'content3', path: '/content3', element: <Content1 /> },
+    { name: 'content3', path: '/content3', element: <Game /> },
   ]
 }
 
