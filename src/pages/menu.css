@@ -1,20 +1,15 @@
 nav {
   padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
-ul {
+#menu_list {
   display: flex;
   padding: 0;
   margin: 0;
-}
-
-li {
-  list-style-type: none;
-}
-
-a {
-  display: flex;
-  flex-direction: row;
 }
 
 #menus {
@@ -24,4 +19,12 @@ a {
 
 .spacing {
   margin: 0 10px 0 10px;
+}
+
+#right {
+  display: inline-flex;
+  align-items: center;
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }

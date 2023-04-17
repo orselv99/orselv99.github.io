@@ -8,7 +8,7 @@ export const Content1 = () => {
   return (
     <>
       <Menu />
-      <div id='content_container'>
+      <div id='template_container'>
         <h1>
           Content1
         </h1>

@@ -1,0 +1,40 @@
+.resume_container {
+  margin: 0 0 40px 0;
+}
+
+#resume_name {
+  background-image: linear-gradient(45deg, #FF39C6 5%, #FE9613 10%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  -moz-text-fill-color: transparent;
+}
+
+#resume_contact {
+  display: flex;
+}
+
+.contact_item {
+  display: flex;
+  align-items: center;
+}
+
+.contact_icon {
+  width: 19px;
+  height: 20px;
+  margin: 0 10px 0 0;
+}
+
+
+
+
+
+.resume_subject {
+  background-image: linear-gradient(45deg, #0DCDFD 2%, #C7FE1E 10%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  -moz-text-fill-color: transparent;
+}

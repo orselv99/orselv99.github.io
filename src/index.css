@@ -24,6 +24,15 @@ body[data-theme="light"] {
   color: #0f0f0f;
 }
 
+li {
+  list-style-type: none;
+}
+
+a {
+  display: flex;
+  flex-direction: row;
+}
+
 a:visited [data-theme="dark"]{
   color: #9f9f9f;
 }

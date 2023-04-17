@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Unity, useUnityContext } from 'react-unity-webgl';
 import './game.css';
+import { Menu } from '../menu';
 
 export const Game = () => {
   const { unityProvider, requestFullscreen } = useUnityContext({
@@ -18,6 +19,7 @@ export const Game = () => {
 
   return (
     <>
+      <Menu />
       <div id='game_container'>
         {/* <button onClick={onClickFullScreen}>full</button> */}
         <div>
