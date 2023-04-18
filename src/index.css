@@ -12,17 +12,10 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-body[data-theme="dark"] {
   background-color: #0f0f0f;
   color: #9f9f9f;
 }
 
-body[data-theme="light"] {
-  background-color: #ffffff;
-  color: #0f0f0f;
-}
 
 li {
   list-style-type: none;
@@ -33,12 +26,8 @@ a {
   flex-direction: row;
 }
 
-a:visited [data-theme="dark"]{
+a:visited {
   color: #9f9f9f;
-}
-
-a:visited[data-theme="light"] {
-  color: #0f0f0f;
 }
 
 code {

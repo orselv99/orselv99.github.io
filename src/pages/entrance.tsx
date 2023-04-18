@@ -24,7 +24,7 @@ export const Entrance = () => {
             TODO: content 만들어서 의미있는 path 로 바꿀것 (menu.tsx 도 같이 수정)
           */}
           <Link to='/content1'>
-            <h2>Insert Coin To Play</h2>
+            <h2 id='insert_coin'>Insert Coin To Play</h2>
           </Link>
         </div>
       </div>

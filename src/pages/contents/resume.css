@@ -3,7 +3,7 @@
 }
 
 #resume_name {
-  background-image: linear-gradient(45deg, #FF39C6 5%, #FE9613 10%);
+  background-image: linear-gradient(45deg, #FF39C6 1%, #FE9613 10%);
   background-clip: text;
   -webkit-background-clip: text;
   -moz-background-clip: text;
@@ -26,10 +26,6 @@
   margin: 0 10px 0 0;
 }
 
-
-
-
-
 .resume_subject {
   background-image: linear-gradient(45deg, #0DCDFD 2%, #C7FE1E 10%);
   background-clip: text;
@@ -37,4 +33,15 @@
   -moz-background-clip: text;
   -webkit-text-fill-color: transparent; 
   -moz-text-fill-color: transparent;
+}
+.resume_company {
+  background-image: linear-gradient(45deg, #D69B4E 2%, #F3CF40 10%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  -moz-text-fill-color: transparent;
+}
+.resume_project {
+  color: #F2F2F0;
 }
