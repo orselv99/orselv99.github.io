@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Unity, useUnityContext } from 'react-unity-webgl';
 import { Menu } from '../menu';
+import { useMediaQuery } from 'react-responsive';
 
 export const ChromeIsOFFLINE3D = () => {
+  const isBrowser = useMediaQuery({ query: '(min-width: 800px)' });
+  const [resolution, setResolution] = useState({});
+
+  useEffect(() => {
+    setResolution((isBrowser === true) ?
+      { width: 450, height: 600 } :
+      { width: 400, height: 500 });
+  }, [isBrowser])
+
   const { unityProvider, unload } = useUnityContext({
     loaderUrl: 'ChromeIsOFFLINE.3D/build.loader.js',
     dataUrl: 'ChromeIsOFFLINE.3D/build.data',
@@ -18,7 +28,7 @@ export const ChromeIsOFFLINE3D = () => {
         <h1>Chrome is OFFLINE 3D</h1>
         <Unity
           unityProvider={unityProvider}
-          style={{ width: 450, height: 600 }}
+          style={resolution}
           devicePixelRatio={devicePixelRatio}
         />
       </div>
