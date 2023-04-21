@@ -27,8 +27,3 @@
     opacity: 0;
   }
 }
-
-a, a:visited {
-  text-decoration-line: none;
-  color: inherit;
-}

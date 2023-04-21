@@ -30,6 +30,11 @@ a:visited {
   color: #9f9f9f;
 }
 
+a, a:visited {
+  text-decoration-line: none;
+  color: inherit;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

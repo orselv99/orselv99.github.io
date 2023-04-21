@@ -23,7 +23,7 @@ export const Entrance = () => {
             home 은 content1 고정  
             TODO: content 만들어서 의미있는 path 로 바꿀것 (menu.tsx 도 같이 수정)
           */}
-          <Link to='/content1'>
+          <Link to='/chromeIsOFFLINE.2D'>
             <h2 id='insert_coin'>Insert Coin To Play</h2>
           </Link>
         </div>

@@ -1,29 +1,51 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './menu.css';
 import { Content1 } from './contents/content1';
 import { Game } from './contents/game';
 import { Resume } from './contents/resume';
 import { Switch } from '@mui/material';
+import { ChromeIsOFFLINE2D } from './contents/chromeIsOFFLINE.2D';
 
 export interface MenuData {
   name: string;
   path: string;
+  hasUnityContext: boolean;
   element: JSX.Element;
 }
 
 export const MenuDatas = (): MenuData[] => {
   return [
-    { name: 'CONTENT1', path: '/content1', element: <Content1 /> },
-    { name: 'MATCH COLOR', path: '/content3', element: <Game /> },
-    { name: 'RESUME', path: '/resume', element: <Resume /> },
+    {
+      name: 'CHROME IS OFFLINE 2D',
+      path: '/chromeIsOFFLINE.2D',
+      hasUnityContext: true,
+      element: <ChromeIsOFFLINE2D />
+    },
+    {
+      name: 'MATCH COLOR',
+      path: '/content3',
+      hasUnityContext: true,
+      element: <Game />
+    },
+    {
+      name: 'RESUME',
+      path: '/resume',
+      hasUnityContext: false,
+      element: <Resume />
+    },
   ]
 }
 
-export const Menu = () => {
+interface MenuProps {
+  unityUnload?: () => Promise<void>
+}
+
+export const Menu = (props: MenuProps) => {
   // const [date, setDate] = useState('');
   // const [darkmode, setDarkMode] = useState(false);
   const [menudatas, setMenuDatas] = useState<MenuData[]>([]);
+  const history = useNavigate();
 
   useEffect(() => {
     // const getDate = () => {
@@ -50,12 +72,15 @@ export const Menu = () => {
     setMenuDatas(MenuDatas());
   }, []);
 
-  // const onClickDarkMode = () => {
-  //   const mode = window.localStorage.getItem('mode') === 'light' ? 'dark' : 'light';
-  //   document.body.dataset.theme = mode;
-  //   window.localStorage.setItem('mode', mode);
-  //   setDarkMode((mode === 'dark'));
-  // }
+  const onClickUnityUnload = async (path: string) => {
+    if (props && props.unityUnload) {
+      await props.unityUnload();
+    }
+
+    // async await 을 Link event 에서 사용할 수가 없어서
+    // Link a tag 대신 navigate 를 사용하여 전환
+    history(path);
+  }
 
   return (
     <nav>
@@ -64,14 +89,12 @@ export const Menu = () => {
           {
             menudatas.map((item, index) => {
               return (
-                <div key={'menu_' + index}>
-                  <Link to={item.path}>
-                    {
-                      (index != 0 && index < menudatas.length) &&
-                      <li className='spacing'>·</li>
-                    }
-                    <li className='name'>{item.name}</li>
-                  </Link>
+                <div className='menu_item' key={'menu_' + index} onClick={() => onClickUnityUnload(item.path)}>
+                  {
+                    (index != 0 && index < menudatas.length) &&
+                    <p className='spacing'>·</p>
+                  }
+                  <li className='name'>{item.name}</li>
                 </div>
               );
             })
