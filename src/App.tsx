@@ -5,7 +5,6 @@ import { Menu, MenuData, MenuDatas } from './pages/menu';
 
 export const App = () => {
   const [menudatas, setMenuDatas] = useState<MenuData[]>([]);
-  const [enter, setEnter] = useState(false);
 
   useEffect(() => {
     setMenuDatas(MenuDatas());

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './menu.css';
 import { Content1 } from './contents/content1';
-import { Game } from './contents/game';
 import { Resume } from './contents/resume';
 import { Switch } from '@mui/material';
 import { ChromeIsOFFLINE2D } from './contents/chromeIsOFFLINE.2D';
+import { ChromeIsOFFLINE3D } from './contents/choromIsOFFLINE.3D';
 
 export interface MenuData {
   name: string;
@@ -17,16 +17,16 @@ export interface MenuData {
 export const MenuDatas = (): MenuData[] => {
   return [
     {
-      name: 'CHROME IS OFFLINE 2D',
-      path: '/chromeIsOFFLINE.2D',
+      name: 'CIO.2D',
+      path: '/CIO.2D',
       hasUnityContext: true,
       element: <ChromeIsOFFLINE2D />
     },
     {
-      name: 'MATCH COLOR',
-      path: '/content3',
+      name: 'CIO.3D',
+      path: '/CIO.3D',
       hasUnityContext: true,
-      element: <Game />
+      element: <ChromeIsOFFLINE3D />
     },
     {
       name: 'RESUME',
@@ -72,7 +72,8 @@ export const Menu = (props: MenuProps) => {
     setMenuDatas(MenuDatas());
   }, []);
 
-  const onClickUnityUnload = async (path: string) => {
+  const onClickLinkTo = async (path: string) => {
+    // unity unload 가 필요한 경우
     if (props && props.unityUnload) {
       await props.unityUnload();
     }
@@ -89,9 +90,9 @@ export const Menu = (props: MenuProps) => {
           {
             menudatas.map((item, index) => {
               return (
-                <div className='menu_item' key={'menu_' + index} onClick={() => onClickUnityUnload(item.path)}>
+                <div className='menu_item' key={'menu_' + index} onClick={() => onClickLinkTo(item.path)}>
                   {
-                    (index != 0 && index < menudatas.length) &&
+                    (index !== 0 && index < menudatas.length) &&
                     <p className='spacing'>·</p>
                   }
                   <li className='name'>{item.name}</li>

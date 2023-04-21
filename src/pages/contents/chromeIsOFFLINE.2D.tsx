@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import { Unity, useUnityContext } from 'react-unity-webgl';
-import './game.css';
 import { Menu } from '../menu';
 
 export const ChromeIsOFFLINE2D = () => {
@@ -15,7 +14,8 @@ export const ChromeIsOFFLINE2D = () => {
   return (
     <>
       <Menu unityUnload={unload} />
-      <div id='game_container'>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '100px 20px 20px 20px' }}>
+        <h1>Chrome is OFFLINE 2D</h1>
         <Unity
           unityProvider={unityProvider}
           style={{ width: 600, height: 450 }}
