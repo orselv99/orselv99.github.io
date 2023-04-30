@@ -1,5 +1,9 @@
 /* browser */
 @media (min-width: 800px) {
+  #logo {
+    background-image: linear-gradient(to right, #0DCDFD, #C7FE1E, #FE9613, #FF39C6);
+  }
+
   header {
     display: flex;
   }
@@ -12,6 +16,7 @@
 /* mobile */
 @media (max-width: 800px) {
   #logo {
+    background-image: linear-gradient(to right, #0DCDFD, #C7FE1E, #FE9613, #FF39C6 65%);
     margin-bottom: 25px;
   }
 
@@ -46,7 +51,6 @@ header h1 {
 }
 
 #logo {
-  background-image: linear-gradient(to right, #0DCDFD, #C7FE1E, #FE9613, #FF39C6);
   background-clip: text;
   -webkit-background-clip: text;
   -moz-background-clip: text;

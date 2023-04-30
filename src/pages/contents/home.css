@@ -38,6 +38,13 @@ section {
 
 #intro_text h1{
   margin-bottom: 15px;
+  color: white;
+  font-weight: 100;
+}
+
+#intro_text h5{
+  color: white;
+  font-weight: 100;
 }
 
 #intro_text p{
@@ -58,6 +65,11 @@ section {
   color: #0f0f0f;
   border-radius: 10px;
   background-color: #9f9f9f;
+  transition: all .5s ease;
+}
+
+.intro_button:hover {
+  background-color: white;
 }
 
 #intro_text_art {
