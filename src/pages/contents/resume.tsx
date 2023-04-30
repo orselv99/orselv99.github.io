@@ -9,8 +9,8 @@ export const Resume = () => {
       <article>
         <div className='resume_container'>
           <h1>Jeongho Ha</h1>
-          <div id='resume_contact'>
-            <div style={{ margin: '0 10px 0 0' }}>
+          <div>
+            <div>
               <a href='mailto:orselv99@gmail.com'>
                 <img src='https://img.shields.io/badge/M-orselv99@gmail.com-bd515a?style=flat' alt='mail' />
               </a>
@@ -41,7 +41,7 @@ export const Resume = () => {
         {/* work experiences */}
         <div className='resume_container'>
           <h2>Work Experiences</h2>
-          <div style={{ margin: '30px 0 40px 0' }}>
+          <div className='resume_workexperience'>
             <h3>WonderPeople (2021.10 ~ 2023.01)</h3>
             <h4>GeeGee 게임 플랫폼 PC 클라이언트</h4>
             <p>· 게임 런쳐 & 게임사 배포용 SDK (C++: Qt, CEF)</p>
@@ -50,7 +50,7 @@ export const Resume = () => {
             <p>· 게임 런쳐 차세대 버전 & 개발용 운영툴 개발 (Electron: Node, React)</p>
             <p>· 빌드 및 패키징 (Jenkins, Advanced Installer)</p>
           </div>
-          <div style={{ margin: '30px 0 40px 0' }}>
+          <div className='resume_workexperience'>
             <h3>Inzent (2018.05 ~ 2021.09)</h3>
             <h4>XEDM (문서중앙화화 및 DLP 솔루션)</h4>
             <p>· 사용자 pc 클라이언트 (C# : WPF)</p>
@@ -59,7 +59,7 @@ export const Resume = () => {
             <p>· 빌드 및 패키징 (Jenkins, Innosetup, NSIS)</p>
             <p>· 사용자 정책 백오피스 (Javascript : Vanilla + Node)</p>
           </div>
-          <div style={{ margin: '30px 0 40px 0' }}>
+          <div className='resume_workexperience'>
             <h4>스마트워크 (근태관리 및 사용자 이벤트 추적 솔루션)</h4>
             <p>· 사용자 pc 클라이언트 (C# : WPF)</p>
             <p>· 사용자 이벤트 수집 (C++ : Win32 API)</p>

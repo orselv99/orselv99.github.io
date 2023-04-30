@@ -1,9 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { MENUDATAS, Menu } from './pages/menu';
-import './app.css';
-import Heart from './assets/heart.png';
-import { Home } from './pages/contents/home';
+import { MENUDATAS } from './pages/menu';
 import { Footer } from './pages/footer';
 
 export const App = () => {
