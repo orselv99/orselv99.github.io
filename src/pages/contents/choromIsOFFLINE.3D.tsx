@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Unity, useUnityContext } from 'react-unity-webgl';
-// import { Menu } from '../../pages/menu';
 import { useMediaQuery } from 'react-responsive';
+import { Menu } from '../menu';
+import './games.css';
 
 export const ChromeIsOFFLINE3D = () => {
   const isBrowser = useMediaQuery({ query: '(min-width: 800px)' });
   const [resolution, setResolution] = useState({});
-
-  useEffect(() => {
-    setResolution((isBrowser === true) ?
-      { width: 450, height: 600 } :
-      { width: 400, height: 500 });
-  }, [isBrowser])
-
   const { unityProvider, unload } = useUnityContext({
     loaderUrl: 'ChromeIsOFFLINE.3D/build.loader.js',
     dataUrl: 'ChromeIsOFFLINE.3D/build.data',
@@ -21,10 +15,16 @@ export const ChromeIsOFFLINE3D = () => {
 
   });
 
+  useEffect(() => {
+    setResolution((isBrowser === true) ?
+      { width: 450, height: 600 } :
+      { width: 400, height: 500 });
+  }, [isBrowser]);
+
   return (
     <>
-      {/* <Menu unityUnload={unload} /> */}
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '100px 20px 20px 20px' }}>
+      <Menu unityUnload={unload} />
+      <div className='game_container'>
         <h1>Chrome is OFFLINE 3D</h1>
         <Unity
           unityProvider={unityProvider}

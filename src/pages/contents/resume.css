@@ -1,6 +1,9 @@
 /* browser */
 @media (min-width: 800px) {
   article {
+    min-height: 95vh;
+
+    /* media diff */
     margin: 120px 20% 20px 20%;
   }
 }
@@ -8,6 +11,9 @@
 /* mobile */
 @media (max-width: 800px) {
   article {
+    min-height: 95vh;
+
+    /* media diff */
     margin: 150px 20px 20px 20px;
   }
 }
@@ -54,6 +60,7 @@
 .resume_container h4 {
   color: #F2F2F0;
   margin-bottom: 10px;
+  font-weight: 100;
 }
 
 #resume_contact {

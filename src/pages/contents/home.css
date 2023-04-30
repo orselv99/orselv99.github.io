@@ -1,27 +1,39 @@
-section {
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  display: grid;
-  /* 1fr 1:1 비율이라는 뜻 */
-  grid-template-columns: repeat(2, 1fr);  
-  align-items: center;
-  gap: 100px;
-  padding: 0 20%;
-}
-
+/* browser */
 @media (min-width: 800px) {
-  #intro_text {
-    text-align: right;
-    min-width: 360px;
-    max-height: 150px;
+  section {
+    /* 1fr 1:1 비율이라는 뜻 */
+    grid-template-columns: repeat(2, 1fr);  
+    min-height: 95vh;
+    gap: 100px;
+    margin: 0 20%;
   }
 }
 
+/* mobile */
+@media (max-width: 800px) {
+  section {
+    margin: 150px 10% 0 10%;
+    gap: 50px;
+  }
 
-#intro_text_art {
-  /* min-width: 360px;
-  max-height: 150px; */
+  #intro_text {
+    margin-bottom: 50px;
+  }
+
+  #intro_text:nth-child(1) {
+    order: 2;
+  }
+  
+  #intro_text_art:nth-child(2) {
+    order: 1;
+  }
+}
+
+/* common */
+section {
+  display: grid;
+  align-items: center;
+  text-align: right;
 }
 
 #intro_text h1{
@@ -42,10 +54,13 @@ section {
 }
 
 .intro_button {
-  
   padding: 10px;
   color: #0f0f0f;
   border-radius: 10px;
   background-color: #9f9f9f;
-  
+}
+
+#intro_text_art {
+  min-width: 100%;
+  text-align: center;
 }

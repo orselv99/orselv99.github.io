@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './menu.css';
-import { Home, Resume } from './contents';
+import { Home, ChromeIsOFFLINE2D, ChromeIsOFFLINE3D, Resume } from './contents';
 
 interface MenuData {
   name: string;
   path: string;
-  hasUnityContext: boolean;
   element?: JSX.Element;
   children?: MenuData;
 }
@@ -15,32 +14,31 @@ export const MENUDATAS: MenuData[] = [
   {
     name: 'HOME',
     path: '/',
-    hasUnityContext: true,
     element: <Home />
   },
   {
     name: 'CIO.2D',
-    path: '/CIO.2D',
-    hasUnityContext: true,
-    element: {} as JSX.Element
+    path: '/cio.2d',
+    element: <ChromeIsOFFLINE2D />
   },
   {
     name: 'CIO.3D',
-    path: '/CIO.3D',
-    hasUnityContext: true,
-    element: {} as JSX.Element
+    path: '/cio.3d',
+    element: <ChromeIsOFFLINE3D />
   },
   {
     name: 'RESUME',
     path: '/resume',
-    hasUnityContext: false,
     element: <Resume />
   },
 ];
 
-
+// TODO:
+// unity webgl bug (?) 로 인해 unload 가 자체적으로 안됨
+// 따라서, menu 에서 props 를 받아서 다른페이지를 이동시 unload 후 navigate 처리
+// 위 과정을 위해 페이지마다 Menu 를 추가해야함
 interface MenuProps {
-  unityUnload?: () => Promise<void>
+  unityUnload?: () => Promise<void>;
 }
 
 export const Menu = (props: MenuProps) => {
@@ -48,7 +46,7 @@ export const Menu = (props: MenuProps) => {
 
   const onClickLinkTo = async (path: string) => {
     // unity unload 가 필요한 경우
-    if (props && props.unityUnload) {
+    if (props.unityUnload) {
       await props.unityUnload();
     }
 

@@ -4,6 +4,7 @@ import { MENUDATAS, Menu } from './pages/menu';
 import './app.css';
 import Heart from './assets/heart.png';
 import { Home } from './pages/contents/home';
+import { Footer } from './pages/footer';
 
 export const App = () => {
   useEffect(() => {
@@ -12,7 +13,6 @@ export const App = () => {
   return (
     <div className="app">
       <BrowserRouter>
-        <Menu />
         <Routes>
           {
             MENUDATAS.map((value, index) =>
@@ -20,6 +20,7 @@ export const App = () => {
             )
           }
         </Routes>
+        <Footer />
       </BrowserRouter>
     </div >
   );
