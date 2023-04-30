@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Unity, useUnityContext } from 'react-unity-webgl';
-import { Menu } from '../menu';
+// import { Menu } from '../../pages/menu';
 import { useMediaQuery } from 'react-responsive';
 
 export const ChromeIsOFFLINE2D = () => {
@@ -23,7 +23,7 @@ export const ChromeIsOFFLINE2D = () => {
 
   return (
     <>
-      <Menu unityUnload={unload} />
+      {/* <Menu unityUnload={unload} /> */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '100px 20px 20px 20px' }}>
         <h1>Chrome is OFFLINE 2D</h1>
         <Unity

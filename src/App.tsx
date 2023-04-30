@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Entrance } from './pages/entrance';
-import { Menu, MenuData, MenuDatas } from './pages/menu';
+import { MENUDATAS, Menu } from './pages/menu';
+import './app.css';
+import Heart from './assets/heart.png';
+import { Home } from './pages/contents/home';
 
 export const App = () => {
-  const [menudatas, setMenuDatas] = useState<MenuData[]>([]);
-
   useEffect(() => {
-    setMenuDatas(MenuDatas());
   }, []);
 
   return (
     <div className="app">
       <BrowserRouter>
+        <Menu />
         <Routes>
-          <Route path='/' element={<Entrance />} />
           {
-            menudatas.map((item) => {
-              return (
-                <Route path={item.path} element={item.element} key={item.path} />
-              );
-            })
+            MENUDATAS.map((value, index) =>
+              <Route path={value.path} element={value.element} key={`route_${index}`} />
+            )
           }
         </Routes>
       </BrowserRouter>

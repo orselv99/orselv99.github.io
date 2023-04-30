@@ -1,36 +1,103 @@
-nav {
-  padding: 20px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: #0f0f0f;
+/* browser */
+@media (min-width: 800px) {
+  header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    align-content: center;
+    justify-content: space-between;
+    padding: 30px 10%;
+    background-color: #0f0f0f;
+  
+    /* prevent drag */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    /* media diff */
+    display: flex;
+  }
+
+  #logo {
+    background-image: linear-gradient(to right, #0DCDFD, #C7FE1E, #FE9613, #FF39C6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+  }
+
+  #menu_list li{
+    cursor: pointer;
+    background-color: transparent;
+    border-bottom: 2px solid transparent;
+    transition: all .5s ease;
+
+    /* media diff */
+    margin: 0 30px;
+  }
 }
 
-#menus {
-  display: flex;
-  justify-content: center;
+/* mobile */
+@media (max-width: 800px) {
+  header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    align-content: center;
+    justify-content: space-between;
+    padding: 30px 10%;
+    background-color: #0f0f0f;
+  
+    /* prevent drag */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  #logo {
+    background-image: linear-gradient(to right, #0DCDFD, #C7FE1E, #FE9613, #FF39C6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-text-fill-color: transparent;
+
+    /* media diff */
+    margin-bottom: 25px;
+  }
+
+  #menu_list li{
+    cursor: pointer;
+    background-color: transparent;
+    border-bottom: 2px solid transparent;
+    transition: all .5s ease;
+
+    /* media diff */
+    margin: 0 15px;
+  }
+}
+
+/* common */
+header h1 {
+  cursor: pointer;
+  min-width: 220px;
 }
 
 #menu_list {
   display: flex;
-  padding: 0;
-  margin: 0;
-}
-
-.menu_item {
-  display: flex;
-  cursor: pointer;
-}
-
-.spacing {
-  margin: 0 10px 0 10px;
-}
-
-#right {
-  display: inline-flex;
   align-items: center;
-  position: absolute;
-  top: 8px;
-  right: 8px;
+  justify-content: center;
+}
+
+#menu_list li:hover{
+  border-bottom: 2px solid #9f9f9f;
 }

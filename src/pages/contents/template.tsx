@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Menu } from '../menu';
+// import { Menu } from '../../pages/menu';
 
-import './content1.css'
+// import './content1.css'
 
 // 복사해서 쓰자 template.css 까지
 export const Content1 = () => {
   return (
     <>
-      <Menu />
+      {/* <Menu /> */}
       <div id='template_container'>
         <h1>
           Content1
