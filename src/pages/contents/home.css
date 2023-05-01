@@ -4,7 +4,7 @@
     /* 1fr 1:1 비율이라는 뜻 */
     grid-template-columns: repeat(2, 1fr);  
     min-height: 95vh;
-    gap: 100px;
+    /* gap: 100px; */
     margin: 0 20%;
   }
 }
@@ -12,7 +12,7 @@
 /* mobile */
 @media (max-width: 800px) {
   section {
-    margin: 150px 10% 0 10%;
+    margin: 40% 10% 0 10%;
     gap: 50px;
   }
 
@@ -24,7 +24,7 @@
     order: 2;
   }
   
-  #intro_text_art:nth-child(2) {
+  #intro_text_animation:nth-child(2) {
     order: 1;
   }
 }
@@ -33,6 +33,9 @@
 section {
   display: grid;
   align-items: center;
+}
+
+section #intro_text {
   text-align: right;
 }
 
@@ -72,7 +75,9 @@ section {
   background-color: white;
 }
 
-#intro_text_art {
-  min-width: 100%;
-  text-align: center;
+#intro_text_animation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
 }

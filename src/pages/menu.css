@@ -5,7 +5,14 @@
   }
 
   header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    align-content: center;
+    padding: 30px 10%;
     display: flex;
+    justify-content: space-between;
   }
 
   #menu_list li{
@@ -16,8 +23,17 @@
 /* mobile */
 @media (max-width: 800px) {
   #logo {
-    background-image: linear-gradient(to right, #0DCDFD, #C7FE1E, #FE9613, #FF39C6 65%);
+    background-image: linear-gradient(to right, #0DCDFD 25%, #C7FE1E, #FE9613, #FF39C6 75%);
     margin-bottom: 25px;
+    text-align: center;
+  }
+
+  header {
+    position: fixed;
+    top: 5%;
+    right: 0;
+    width: 100%;
+    display: grid;
   }
 
   #menu_list li{
@@ -27,13 +43,6 @@
 
 /* common */
 header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 100%;
-  align-content: center;
-  justify-content: space-between;
-  padding: 30px 10%;
   background-color: #0f0f0f;
 
   /* prevent drag */
@@ -47,7 +56,6 @@ header {
 
 header h1 {
   cursor: pointer;
-  min-width: 220px;
 }
 
 #logo {
