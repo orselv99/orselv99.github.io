@@ -30,10 +30,11 @@
 
   header {
     position: fixed;
-    top: 5%;
+    top: 0;
     right: 0;
     width: 100%;
     display: grid;
+    padding-top: 10%;
   }
 
   #menu_list li{
