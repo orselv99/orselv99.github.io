@@ -3,6 +3,13 @@ import './resume.css'
 import { Menu } from '../menu';
 
 export const Resume = () => {
+  // const [test, setTest] = useState(0);
+  // useEffect(() => {
+  //   let t = 0;
+  //   setInterval(() => {
+  //     setTest(t++);
+  //   }, 100);
+  // }, []);
   return (
     <>
       <Menu />

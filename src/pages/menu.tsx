@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './menu.css';
 import { Home, ChromeIsOFFLINE2D, ChromeIsOFFLINE3D, Resume } from './contents';
@@ -7,7 +7,8 @@ interface MenuData {
   name: string;
   path: string;
   element?: JSX.Element;
-  children?: MenuData;
+  children?: MenuData[];
+  active?: boolean;
 }
 
 export const MENUDATAS: MenuData[] = [
@@ -17,14 +18,36 @@ export const MENUDATAS: MenuData[] = [
     element: <Home />
   },
   {
-    name: 'CIO.2D',
-    path: '/cio.2d',
-    element: <ChromeIsOFFLINE2D />
+    name: 'DEV',
+    path: '/dev',
+    children: [
+      {
+        name: 'Chrome is OFFLINE 2D',
+        path: '/cio.2d',
+        element: <ChromeIsOFFLINE2D />
+      },
+      {
+        name: 'Chrome is OFFLINE 3D',
+        path: '/cio.3d',
+        element: <ChromeIsOFFLINE3D />
+      },
+    ]
   },
   {
-    name: 'CIO.3D',
-    path: '/cio.3d',
-    element: <ChromeIsOFFLINE3D />
+    name: 'DROPDOWN',
+    path: '/dropdown',
+    children: [
+      {
+        name: 'Chrome is OFFLINE 2D',
+        path: '/cio.2d',
+        element: <ChromeIsOFFLINE2D />
+      },
+      {
+        name: 'Chrome is OFFLINE 3D',
+        path: '/cio.3d',
+        element: <ChromeIsOFFLINE3D />
+      },
+    ]
   },
   {
     name: 'RESUME',
@@ -42,7 +65,35 @@ interface MenuProps {
 }
 
 export const Menu = (props: MenuProps) => {
+  const [menudatas, setMenuDatas] = useState([] as MenuData[]);
+  const [submenu, setSubMenu] = useState('');
   const history = useNavigate();
+
+  useEffect(() => {
+    setMenuDatas(MENUDATAS);
+  }, []);
+
+  // dropdown 메뉴가 펼쳐진 상태에서 focus 가 풀리면 메뉴 감추기
+  const ref = useRef<HTMLLIElement>(null);
+  useEffect(() => {
+    const focusOut = (e: MouseEvent) => {
+      const target = menudatas.map((value) => {
+        value.active = false;
+        return value;
+      });
+      setMenuDatas(target);
+    }
+    document.addEventListener('mousedown', focusOut);
+    return () => document.removeEventListener('mousedown', focusOut);
+  }, [ref, menudatas]);
+
+  const onClickDropDown = (name: string) => {
+    const target = menudatas.map((value) => {
+      value.active = (value.name === name) ? true : false;
+      return value;
+    });
+    setMenuDatas(target);
+  }
 
   const onClickLinkTo = async (path: string) => {
     // unity unload 가 필요한 경우
@@ -56,14 +107,38 @@ export const Menu = (props: MenuProps) => {
   }
 
   return (
-    <header>
+    <header ref={ref}>
       <h1 id='logo' onClick={() => onClickLinkTo('/')}>ORSEL WORKSHOP</h1>
       <ul id='menu_list'>
-        {MENUDATAS.map((value, index) =>
-          <li onClick={() => onClickLinkTo(value.path)} key={`menu_${index}`}>
-            {value.name}
-          </li>
-        )}
+        {menudatas.map((value, i) => {
+          // 하위메뉴가 있음
+          if (value.children) {
+            return (
+              <li className='menu_main' onClick={() => onClickDropDown(value.name)} key={`menu_${i}`}>
+                {value.name}
+                <div className='menu_child'>
+                  <ul className={value.active ? 'menu_child_fade_in' : 'menu_child_fade_out'}>
+                    {
+                      (value.active === true) ?
+                        value.children.map((child, j) => {
+                          return (<li onClick={() => onClickLinkTo(child.path)} key={`menu_child_${j}`}>{child.name}</li>);
+                        })
+                        :
+                        null
+                    }
+                  </ul>
+                </div>
+              </li>
+            );
+          }
+
+          // 일반
+          return (
+            <li className='menu_main' onClick={() => onClickLinkTo(value.path)} key={`menu_${i}`}>
+              {value.name}
+            </li>
+          );
+        })}
       </ul>
     </header>
   );

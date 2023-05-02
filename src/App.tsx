@@ -9,9 +9,19 @@ export const App = () => {
       <BrowserRouter>
         <Routes>
           {
-            MENUDATAS.map((value, index) =>
-              <Route path={value.path} element={value.element} key={`route_${index}`} />
-            )
+            MENUDATAS.map((value, index) => {
+              if (value.children) {
+                return value.children.map((child, index) => {
+                  return (
+                    <Route path={child.path} element={child.element} key={`route_child_${index}`} />
+                  );
+                })
+              }
+
+              return (
+                <Route path={value.path} element={value.element} key={`route_${index}`} />
+              );
+            })
           }
         </Routes>
         <Footer />

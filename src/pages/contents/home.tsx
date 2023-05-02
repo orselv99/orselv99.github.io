@@ -18,47 +18,47 @@ const ANIMATED_PROPS = {
 export const Home = () => {
   const [animatedText, setAnimatedText] = useState('');
 
-  useEffect(() => {
-    let { texts, index, offset, length, forward, skip } = ANIMATED_PROPS;
-    let { count, delay } = skip;
+  // useEffect(() => {
+  //   let { texts, index, offset, length, forward, skip } = ANIMATED_PROPS;
+  //   let { count, delay } = skip;
 
-    setInterval(() => {
-      if (forward === true) {
-        if (offset >= texts[index].length) {
-          count++;
-          if (delay === count) {
-            forward = false;
-            count = 0;
-          }
-        }
-      }
-      else {
-        // text 가 끝나면 다음 배열로 이동
-        if (offset === 0) {
-          forward = true;
-          index++;
-          offset = 0;
+  //   setInterval(() => {
+  //     if (forward === true) {
+  //       if (offset >= texts[index].length) {
+  //         count++;
+  //         if (delay === count) {
+  //           forward = false;
+  //           count = 0;
+  //         }
+  //       }
+  //     }
+  //     else {
+  //       // text 가 끝나면 다음 배열로 이동
+  //       if (offset === 0) {
+  //         forward = true;
+  //         index++;
+  //         offset = 0;
 
-          // 다시 처음 배열로 이동
-          if (index >= length) {
-            index = 0;
-          }
-        }
-      }
+  //         // 다시 처음 배열로 이동
+  //         if (index >= length) {
+  //           index = 0;
+  //         }
+  //       }
+  //     }
 
-      setAnimatedText(texts[index].substring(0, offset));
+  //     setAnimatedText(texts[index].substring(0, offset));
 
-      // 한 글자씩 이동
-      if (count === 0) {
-        if (forward) {
-          offset++;
-        }
-        else {
-          offset--;
-        }
-      }
-    }, 100);
-  }, []);
+  //     // 한 글자씩 이동
+  //     if (count === 0) {
+  //       if (forward) {
+  //         offset++;
+  //       }
+  //       else {
+  //         offset--;
+  //       }
+  //     }
+  //   }, 100);
+  // }, []);
 
   return (
     <>
