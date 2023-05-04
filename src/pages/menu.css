@@ -75,8 +75,6 @@ header h1 {
 
 /* main menu hover 시 */
 #menu_list li {
-  position: relative;
-  display: inline-block;
   cursor: pointer;
   background-color: transparent;
   border-bottom: 2px solid transparent;
@@ -90,7 +88,8 @@ header h1 {
 
 .menu_child {
   position: absolute;
-  margin: 10px 0 0 -30px;
+  text-align: center;
+  margin-top: 30px;
   z-index: 1;
 }
 

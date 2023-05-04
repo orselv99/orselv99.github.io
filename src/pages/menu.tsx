@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { createRef, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './menu.css';
 import { Home, ChromeIsOFFLINE2D, ChromeIsOFFLINE3D, Resume } from './contents';
@@ -33,22 +33,32 @@ export const MENUDATAS: MenuData[] = [
       },
     ]
   },
-  {
-    name: 'DROPDOWN',
-    path: '/dropdown',
-    children: [
-      {
-        name: 'Chrome is OFFLINE 2D',
-        path: '/cio.2d',
-        element: <ChromeIsOFFLINE2D />
-      },
-      {
-        name: 'Chrome is OFFLINE 3D',
-        path: '/cio.3d',
-        element: <ChromeIsOFFLINE3D />
-      },
-    ]
-  },
+  // {
+  //   name: 'DROPDOWN',
+  //   path: '/dropdown',
+  //   children: [
+  //     {
+  //       name: 'DROPDOWN TEST 1',
+  //       path: '/resume',
+  //       element: <Resume />
+  //     },
+  //     {
+  //       name: 'DROPDOWN TEST 2',
+  //       path: '/resume',
+  //       element: <Resume />
+  //     },
+  //     {
+  //       name: 'DROPDOWN TEST 3',
+  //       path: '/resume',
+  //       element: <Resume />
+  //     },
+  //     {
+  //       name: 'DROPDOWN TEST 4',
+  //       path: '/resume',
+  //       element: <Resume />
+  //     },
+  //   ]
+  // },
   {
     name: 'RESUME',
     path: '/resume',
@@ -66,33 +76,36 @@ interface MenuProps {
 
 export const Menu = (props: MenuProps) => {
   const [menudatas, setMenuDatas] = useState([] as MenuData[]);
-  const [submenu, setSubMenu] = useState('');
   const history = useNavigate();
 
   useEffect(() => {
     setMenuDatas(MENUDATAS);
   }, []);
 
-  // dropdown 메뉴가 펼쳐진 상태에서 focus 가 풀리면 메뉴 감추기
   const ref = useRef<HTMLLIElement>(null);
   useEffect(() => {
+    // dropdown 메뉴가 펼쳐진 상태에서 focus 가 풀리면 메뉴 감추기
     const focusOut = (e: MouseEvent) => {
-      const target = menudatas.map((value) => {
-        value.active = false;
-        return value;
-      });
-      setMenuDatas(target);
+      if ((e.target as Element).className.includes('menu_child_') === true) {
+        console.log('SUBMENU');
+      }
+      else {
+        setMenuDatas(menudatas.map((value) => {
+          value.active = false;
+          return value;
+        }));
+      }
     }
+
     document.addEventListener('mousedown', focusOut);
     return () => document.removeEventListener('mousedown', focusOut);
-  }, [ref, menudatas]);
+  }, [menudatas]);
 
-  const onClickDropDown = (name: string) => {
-    const target = menudatas.map((value) => {
+  const onClickDropDown = (name: string, index: number) => {
+    setMenuDatas(menudatas.map((value) => {
       value.active = (value.name === name) ? true : false;
       return value;
-    });
-    setMenuDatas(target);
+    }));
   }
 
   const onClickLinkTo = async (path: string) => {
@@ -114,21 +127,23 @@ export const Menu = (props: MenuProps) => {
           // 하위메뉴가 있음
           if (value.children) {
             return (
-              <li className='menu_main' onClick={() => onClickDropDown(value.name)} key={`menu_${i}`}>
-                {value.name}
-                <div className='menu_child'>
-                  <ul className={value.active ? 'menu_child_fade_in' : 'menu_child_fade_out'}>
-                    {
-                      (value.active === true) ?
-                        value.children.map((child, j) => {
-                          return (<li onClick={() => onClickLinkTo(child.path)} key={`menu_child_${j}`}>{child.name}</li>);
-                        })
-                        :
-                        null
-                    }
-                  </ul>
-                </div>
-              </li>
+              <div key={`menu_div_${i}`} >
+                <li className='menu_main' onClick={() => onClickDropDown(value.name, i)} key={`menu_${i}`} >
+                  {value.name}
+                  <div className='menu_child' >
+                    <ul className={value.active ? 'menu_child_fade_in' : 'menu_child_fade_out'}>
+                      {
+                        (value.active === true) ?
+                          value.children.map((child, j) => {
+                            return (<li className={`menu_child_${j}`} onClick={() => onClickLinkTo(child.path)} key={`menu_child_${j}`}>{child.name}</li>);
+                          })
+                          :
+                          null
+                      }
+                    </ul>
+                  </div>
+                </li>
+              </div>
             );
           }
 
