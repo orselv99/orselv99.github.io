@@ -1,7 +1,7 @@
 import React, { createRef, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './menu.css';
-import { Home, ChromeIsOFFLINE2D, ChromeIsOFFLINE3D, Resume } from './contents';
+import { Home, ChromeIsOFFLINE2D, ChromeIsOFFLINE3D, ProjectCD, Resume } from './contents';
 
 interface MenuData {
   name: string;
@@ -30,6 +30,11 @@ export const MENUDATAS: MenuData[] = [
         name: 'Chrome is OFFLINE 3D',
         path: '/cio.3d',
         element: <ChromeIsOFFLINE3D />
+      },
+      {
+        name: 'PROJECT CD',
+        path: '/project.cd',
+        element: <ProjectCD />
       },
     ]
   },
