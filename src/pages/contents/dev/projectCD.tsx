@@ -16,7 +16,7 @@ export const ProjectCD = () => {
 
   useEffect(() => {
     setResolution((isBrowser === true) ?
-      { width: 400, height: 700 } :
+      { width: 600, height: 1080 } :
       { width: 400, height: 700 });
   }, [isBrowser]);
 
