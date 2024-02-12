@@ -49,6 +49,13 @@ export const Resume = () => {
         <div className='resume_container'>
           <h2>Work Experiences</h2>
           <div className='resume_workexperience'>
+            <h3>Wizvera (2023.06 ~ )</h3>
+            <h4>사용자 행동분석 솔루션</h4>
+            <p>· Windows 환경에서 발생하는 사용자 이벤트 수집 (C/C++, C#)</p>
+            <p>· Elastic Search</p>
+            <p>· 빌드 및 패키징 (Jenkins, Advanced Installer)</p>
+          </div>
+          <div className='resume_workexperience'>
             <h3>WonderPeople (2021.10 ~ 2023.01)</h3>
             <h4>GeeGee 게임 플랫폼 PC 클라이언트</h4>
             <p>· 게임 런쳐 & 게임사 배포용 SDK (C++: Qt, CEF)</p>
