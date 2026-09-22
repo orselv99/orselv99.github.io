@@ -14,7 +14,7 @@ const navItems = [
 ];
 ---
 
-<header class="sticky top-0 z-50 w-full bg-surface-canvas">
+<header class="top-0 z-50 w-full bg-surface-canvas">
   <div
     class="h-10 w-full flex items-center justify-between bg-surface-canvas overflow-x-auto"
   >
@@ -23,11 +23,12 @@ const navItems = [
       {
         navItems.map((item) => {
           const isHome = currentPath === "/" || currentPath === "";
-          const isWriting = currentPath === "/writing" || currentPath.startsWith("/writing");
+          const isWriting =
+            currentPath === "/writing" || currentPath.startsWith("/writing");
           const isActive =
             (item.href === "/" && isHome) ||
             (item.href === "/writing" && isWriting) ||
-            (item.href === currentPath);
+            item.href === currentPath;
           return (
             <a
               href={item.href}
@@ -132,15 +133,15 @@ const navItems = [
     });
 
     // Scroll spy on home page to maintain line for active section in view
-    const sectionIds = [
-      "philosophy",
-      "contact",
-    ];
+    const sectionIds = ["philosophy", "contact"];
     const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter(Boolean) as HTMLElement[];
 
-    if (sections.length > 0 && (window.location.pathname === "/" || window.location.pathname === "")) {
+    if (
+      sections.length > 0 &&
+      (window.location.pathname === "/" || window.location.pathname === "")
+    ) {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
