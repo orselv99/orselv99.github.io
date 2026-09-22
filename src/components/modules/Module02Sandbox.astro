@@ -1,0 +1,134 @@
+---
+// Module 02: Type-Safe Code Diff Sandbox
+---
+
+<div class="p-gutter md:p-space-lg lg:p-space-xl space-y-space-md" id="sandbox">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-border-hairline pb-space-sm gap-space-xs">
+    <div class="flex items-center space-x-space-sm">
+      <span class="font-label-mono text-label-mono uppercase tracking-widest text-text-secondary font-bold">02 //</span>
+      <span class="font-label-mono text-label-mono uppercase tracking-widest text-text-primary font-bold">TYPE-SAFE ARTIFACT SANDBOX</span>
+    </div>
+    <div class="font-label-mono-xs text-label-mono-xs uppercase tracking-wider text-text-secondary">
+      DIFF: NAIVE_HEAP vs ZERO_COPY_PINNED
+    </div>
+  </div>
+
+  <!-- Code Diff Window -->
+  <div class="border border-border-hairline bg-surface-canvas overflow-hidden">
+    <div class="bg-surface-subtle px-space-md py-space-xs border-b border-border-hairline flex flex-wrap items-center justify-between gap-space-sm">
+      <div class="flex items-center space-x-2">
+        <span class="w-2.5 h-2.5 bg-text-primary inline-block"></span>
+        <span class="font-label-mono text-label-mono uppercase font-bold text-text-primary">SRC/RUNTIME/BUFFER_POOL.RS</span>
+      </div>
+      <div class="flex items-center space-x-space-xs">
+        <button
+          class="font-label-mono-xs text-label-mono-xs uppercase px-space-sm py-1 border border-border-hairline bg-surface-canvas hover:bg-surface-subtle transition-none cursor-pointer text-text-primary select-none"
+          id="btn-copy-ast"
+        >
+          [COPY AST]
+        </button>
+        <button
+          class="font-label-mono-xs text-label-mono-xs uppercase px-space-sm py-1 bg-surface-subtle text-text-primary border border-border-hairline hover:bg-surface-muted transition-none font-bold cursor-pointer select-none"
+          id="btn-run-bench"
+        >
+          [EXECUTE BENCHMARK]
+        </button>
+      </div>
+    </div>
+
+    <!-- Code Comparison Block -->
+    <div class="p-space-md overflow-x-auto font-code-block text-code-block leading-relaxed bg-surface-canvas text-text-primary">
+      <div class="text-text-secondary font-label-mono-xs uppercase pb-2 mb-2 border-b border-border-subtle">
+        // COMPILER IR: ATOMIC RING BUFFER EMISSION
+      </div>
+      <div class="space-y-1">
+        <div class="text-text-secondary flex items-start">
+          <span class="w-8 select-none text-text-muted">01</span>
+          <span><span class="font-bold text-text-primary">pub struct</span> ExecutionContext&lt;P: StatePolicy&gt; &#123;</span>
+        </div>
+        <div class="text-text-secondary flex items-start">
+          <span class="w-8 select-none text-text-muted">02</span>
+          <span class="pl-4">engine_id: EpochNonce,</span>
+        </div>
+        <!-- Removed Naive Line -->
+        <div class="bg-surface-muted border-l-2 border-text-secondary text-text-secondary flex items-start -mx-space-md px-space-md py-0.5">
+          <span class="w-8 select-none font-bold text-text-primary">- 03</span>
+          <span class="pl-4 font-medium line-through">let mut buffer: Vec&lt;u8&gt; = Vec::with_capacity(size);</span>
+        </div>
+        <!-- Added Optimized Line -->
+        <div class="bg-surface-subtle border-l-2 border-border-hairline text-text-primary flex items-start -mx-space-md px-space-md py-0.5">
+          <span class="w-8 select-none font-bold text-text-primary">+ 03</span>
+          <span class="pl-4 font-bold">let buffer: Pin&lt;Arc&lt;SharedRingBuffer&lt;ZeroCopy&gt;&gt;&gt; = Ring::allocate_pinned(PAGE_SIZE)?;</span>
+        </div>
+        <div class="text-text-secondary flex items-start">
+          <span class="w-8 select-none text-text-muted">04</span>
+          <span class="pl-4"><span class="font-bold text-text-primary">unsafe</span> &#123; buffer.set_write_barrier(BarrierSemantics::SeqCst) &#125;;</span>
+        </div>
+        <div class="text-text-secondary flex items-start">
+          <span class="w-8 select-none text-text-muted">05</span>
+          <span>&#125;</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Telemetry Matrix Bar -->
+    <div class="grid grid-cols-2 md:grid-cols-4 border-t border-border-hairline divide-x divide-border-hairline bg-surface-subtle font-label-mono text-label-mono">
+      <div class="p-space-sm flex flex-col justify-center">
+        <span class="text-text-secondary text-label-mono-xs uppercase">THROUGHPUT GAIN</span>
+        <span class="font-bold text-text-primary font-code-block" id="metric-tput">+340.2%</span>
+      </div>
+      <div class="p-space-sm flex flex-col justify-center">
+        <span class="text-text-secondary text-label-mono-xs uppercase">HEAP ALLOCS</span>
+        <span class="font-bold text-text-primary font-code-block" id="metric-alloc">0 / OP [ZERO]</span>
+      </div>
+      <div class="p-space-sm flex flex-col justify-center">
+        <span class="text-text-secondary text-label-mono-xs uppercase">LATENCY P99</span>
+        <span class="font-bold text-text-primary font-code-block" id="metric-lat">1.24 μs</span>
+      </div>
+      <div class="p-space-sm flex flex-col justify-center">
+        <span class="text-text-secondary text-label-mono-xs uppercase">SMT VERIFIED</span>
+        <span class="font-bold text-text-primary font-code-block">100% SOUND</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Benchmark Run Simulation
+  const benchBtn = document.getElementById('btn-run-bench');
+  if (benchBtn) {
+    benchBtn.addEventListener('click', () => {
+      const tput = document.getElementById('metric-tput');
+      const lat = document.getElementById('metric-lat');
+      const alloc = document.getElementById('metric-alloc');
+
+      const origText = benchBtn.textContent;
+      benchBtn.textContent = '[EXECUTING...]';
+      benchBtn.classList.add('opacity-75');
+
+      setTimeout(() => {
+        if (tput) tput.textContent = '+384.6%';
+        if (lat) lat.textContent = '1.08 μs';
+        if (alloc) alloc.textContent = '0 / OP [PINNED]';
+        benchBtn.textContent = '[DONE: 10M ITER]';
+        benchBtn.classList.remove('opacity-75');
+
+        setTimeout(() => {
+          benchBtn.textContent = origText;
+        }, 2000);
+      }, 600);
+    });
+  }
+
+  // AST Copy Feedback Simulation
+  const copyBtn = document.getElementById('btn-copy-ast');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      const origText = copyBtn.textContent;
+      copyBtn.textContent = '[AST COPIED]';
+      setTimeout(() => {
+        copyBtn.textContent = origText;
+      }, 1500);
+    });
+  }
+</script>

@@ -1,0 +1,368 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { generateCryptoAttestation } from "../utils/cryptoAttestation";
+
+const attestation = generateCryptoAttestation();
+---
+
+<BaseLayout
+  title="KAI CHEN // SYSTEMS ARCHITECT & COMPILER RESEARCHER"
+  description="Deterministic runtime systems, type-directed synthesis, and verified distributed state machines. Editorial Rationalism."
+  currentPath="/"
+>
+  <div
+    class="flex flex-col w-full divide-y divide-border-hairline bg-surface-canvas"
+    id="philosophy"
+  >
+    <!-- SECTION 1: MASTER IDENTITY & ENGINEERING DIRECTIVE -->
+    <section
+      class="py-space-lg md:py-space-xl space-y-space-lg bg-surface-canvas"
+    >
+      <!-- Top System Pill -->
+      <div
+        class="flex items-center justify-between border border-border-hairline p-space-sm bg-surface-subtle"
+      >
+        <span
+          class="font-label-mono-xs text-label-mono-xs uppercase text-text-primary tracking-widest"
+        >
+          [SYS_ID: ARCH-0922 // REV: 2026.1]
+        </span>
+        <div class="flex items-center space-x-1.5">
+          <span class="w-2 h-2 bg-text-primary inline-block"></span>
+          <span
+            class="font-label-mono-xs text-label-mono-xs uppercase font-semibold text-text-primary"
+            >VERIFIED</span
+          >
+        </div>
+      </div>
+
+      <!-- Master Title & Headline -->
+      <div class="space-y-space-sm border-b border-border-hairline pb-space-lg">
+        <div
+          class="font-label-mono text-label-mono uppercase tracking-widest text-text-secondary"
+        >
+          // PRINCIPAL RESEARCHER &amp; FELLOW
+        </div>
+        <h1
+          class="font-display-hero text-display-hero tracking-tighter text-text-primary leading-none uppercase select-none"
+        >
+          KAI CHEN
+        </h1>
+        <p
+          class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-primary pt-space-xs font-bold"
+        >
+          Systems Architect &amp; Compiler Researcher
+        </p>
+      </div>
+
+      <!-- Social Contacts (Email, GitHub, LinkedIn) -->
+      <div
+        class="flex flex-wrap items-center gap-space-xs font-label-mono text-label-mono-xs uppercase"
+      >
+        <a
+          href="mailto:kai@chen.systems"
+          class="inline-flex items-center gap-1.5 px-space-sm py-1 border border-border-hairline bg-surface-canvas hover:bg-surface-subtle text-text-primary transition-none select-none"
+        >
+          <span class="w-1.5 h-1.5 bg-accent-spec inline-block"></span>
+          <span class="text-text-secondary">[EMAIL]</span>
+          <span class="font-bold">kai@chen.systems</span>
+          <span class="text-text-secondary">↗</span>
+        </a>
+        <a
+          href="https://github.com/kaichen-sys"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 px-space-sm py-1 border border-border-hairline bg-surface-canvas hover:bg-surface-subtle text-text-primary transition-none select-none"
+        >
+          <span class="w-1.5 h-1.5 bg-text-secondary inline-block"></span>
+          <span class="text-text-secondary">[GITHUB]</span>
+          <span class="font-bold">kaichen-sys</span>
+          <span class="text-text-secondary">↗</span>
+        </a>
+        <a
+          href="https://linkedin.com/in/kaichen-sys"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-1.5 px-space-sm py-1 border border-border-hairline bg-surface-canvas hover:bg-surface-subtle text-text-primary transition-none select-none"
+        >
+          <span class="w-1.5 h-1.5 bg-text-secondary inline-block"></span>
+          <span class="text-text-secondary">[LINKEDIN]</span>
+          <span class="font-bold">kaichen-sys</span>
+          <span class="text-text-secondary">↗</span>
+        </a>
+      </div>
+
+      <!-- Engineering Directive / Manifesto -->
+      <div class="space-y-space-sm">
+        <div
+          class="font-label-mono-xs text-label-mono-xs uppercase tracking-widest text-text-secondary"
+        >
+          [THESIS / DIRECTIVE]
+        </div>
+        <blockquote
+          class="font-body-lg text-body-lg text-text-primary leading-relaxed tracking-tight border-l-2 border-border-hairline pl-space-md py-space-xs max-w-4xl"
+        >
+          “Building deterministic runtime systems, type-directed synthesis, and
+          verified distributed state machines. Rejecting accidental complexity
+          in favor of mathematical rigor and structural clarity.”
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- SECTION 2: TECHNICAL SPECIFICATIONS & CRYPTOGRAPHIC ATTESTATION -->
+    <section
+      class="py-space-lg md:py-space-xl space-y-space-lg bg-surface-canvas"
+    >
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+        <!-- Key-Value Spec Sheet (7 cols on desktop) -->
+        <div
+          class="lg:col-span-7 border border-border-hairline bg-surface-canvas h-full flex flex-col justify-between"
+        >
+          <div>
+            <div
+              class="bg-surface-subtle px-space-md py-space-xs border-b border-border-hairline flex items-center justify-between"
+            >
+              <span
+                class="font-label-mono-xs text-label-mono-xs uppercase font-semibold tracking-wider text-text-primary"
+              >
+                ENGINEERING SPECIFICATION SHEET
+              </span>
+              <span
+                class="font-label-mono-xs text-label-mono-xs text-text-secondary"
+                >SPEC-V4.8</span
+              >
+            </div>
+            <div
+              class="divide-y divide-border-hairline font-label-mono text-label-mono"
+            >
+              <div
+                class="grid grid-cols-12 px-space-md py-space-sm items-baseline hover:bg-surface-subtle transition-none"
+              >
+                <span
+                  class="col-span-5 sm:col-span-4 text-text-secondary uppercase"
+                  >DOMAINS</span
+                >
+                <span
+                  class="col-span-7 sm:col-span-8 font-medium text-text-primary"
+                  >Type Systems, Consensus, Formal Verification</span
+                >
+              </div>
+              <div
+                class="grid grid-cols-12 px-space-md py-space-sm items-baseline hover:bg-surface-subtle transition-none"
+              >
+                <span
+                  class="col-span-5 sm:col-span-4 text-text-secondary uppercase"
+                  >LANGUAGES</span
+                >
+                <span
+                  class="col-span-7 sm:col-span-8 font-code-block text-code-block font-medium text-text-primary"
+                  >Rust, OCaml, Zig, TypeScript, C</span
+                >
+              </div>
+              <div
+                class="grid grid-cols-12 px-space-md py-space-sm items-baseline hover:bg-surface-subtle transition-none"
+              >
+                <span
+                  class="col-span-5 sm:col-span-4 text-text-secondary uppercase"
+                  >TOOLING &amp; IR</span
+                >
+                <span
+                  class="col-span-7 sm:col-span-8 font-code-block text-code-block font-medium text-text-primary"
+                  >LLVM, Tree-sitter, WASM, TLA+, Coq</span
+                >
+              </div>
+              <div
+                class="grid grid-cols-12 px-space-md py-space-sm items-baseline hover:bg-surface-subtle transition-none"
+              >
+                <span
+                  class="col-span-5 sm:col-span-4 text-text-secondary uppercase"
+                  >LAB / LABELS</span
+                >
+                <span
+                  class="col-span-7 sm:col-span-8 font-medium text-text-primary"
+                  >Distributed Systems Lab &amp; Core Engine Group</span
+                >
+              </div>
+              <div
+                class="grid grid-cols-12 px-space-md py-space-sm items-baseline hover:bg-surface-subtle transition-none"
+              >
+                <span
+                  class="col-span-5 sm:col-span-4 text-text-secondary uppercase"
+                  >CONCURRENCY</span
+                >
+                <span
+                  class="col-span-7 sm:col-span-8 font-medium text-text-primary"
+                  >Lock-Free Rings, io_uring, Deterministic Actors</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cryptographic Attestation (5 cols on desktop) -->
+        <div class="lg:col-span-5 flex flex-col justify-between">
+          <!-- Cryptographic Signature Box -->
+          <div
+            class="border border-border-hairline p-space-md bg-surface-subtle space-y-space-sm h-full flex flex-col justify-between"
+          >
+            <div>
+              <div
+                class="flex items-center justify-between pb-space-xs border-b border-border-subtle"
+              >
+                <span
+                  class="font-label-mono-xs text-label-mono-xs uppercase tracking-wider text-text-secondary"
+                >
+                  CRYPTOGRAPHIC ATTESTATION
+                </span>
+                <span
+                  class="font-code-block text-label-mono-xs text-text-primary font-bold"
+                  >{attestation.commitId}</span
+                >
+              </div>
+              <div
+                class="h-24 w-full flex items-center justify-center bg-surface-canvas border border-border-hairline px-space-md overflow-hidden my-space-sm"
+              >
+                <svg
+                  class="w-full h-10 text-text-primary opacity-80"
+                  viewBox="0 0 300 40"
+                  fill="none"
+                  stroke="currentColor"
+                >
+                  <path
+                    d={attestation.primaryPath}
+                    stroke-width="1.5"
+                    stroke-linecap="round"></path>
+                  <path
+                    d={attestation.secondaryPath}
+                    stroke-width="0.75"
+                    stroke-dasharray="2 2"></path>
+                  {
+                    attestation.markerDots.map((dot) => (
+                      <circle
+                        cx={dot.cx}
+                        cy={dot.cy}
+                        r={dot.r}
+                        fill="currentColor"
+                      />
+                    ))
+                  }
+                </svg>
+              </div>
+            </div>
+            <div
+              class="flex flex-col sm:flex-row sm:items-end justify-between gap-1.5 font-code-block text-label-mono-xs pt-space-xs"
+            >
+              <div
+                class="break-all select-all text-text-secondary leading-tight flex-1"
+              >
+                SIG: SHA256:{attestation.sigHex}
+              </div>
+              <div
+                class="text-right text-text-primary font-bold select-none whitespace-nowrap sm:self-end leading-tight"
+              >
+                [VALIDATED: {attestation.commitDate}]
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: 07 // SYSTEM UPLINK (COLLABORATION & DISPATCH) -->
+    <section
+      class="py-space-lg md:py-space-xl bg-surface-canvas text-text-primary space-y-space-md"
+      id="contact"
+    >
+      <div
+        class="flex items-center justify-between border-b border-border-hairline pb-space-sm"
+      >
+        <span
+          class="font-label-mono text-label-mono uppercase tracking-widest text-text-primary font-bold"
+          >07 // SYSTEM UPLINK</span
+        >
+        <span
+          class="font-label-mono-xs text-label-mono-xs uppercase tracking-widest bg-surface-subtle text-text-primary border border-border-hairline px-1.5 py-0.5 font-bold"
+        >
+          ENCRYPTED TRANSIT
+        </span>
+      </div>
+
+      <div class="space-y-space-xs">
+        <h3
+          class="font-headline-lg text-headline-lg tracking-tight uppercase leading-tight text-text-primary font-bold"
+        >
+          READY TO ARCHITECT RESILIENT COMPUTATIONAL SYSTEMS?
+        </h3>
+        <p
+          class="font-body-lg text-body-lg text-text-secondary max-w-2xl leading-relaxed"
+        >
+          Accepting select consultative research engagements, type-system
+          audits, and high-stakes distributed consensus architectural reviews.
+        </p>
+      </div>
+
+      <!-- Monospace Contact Array (Responsive 2 to 4 cols) -->
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-sm border border-border-hairline p-space-md bg-surface-card"
+      >
+        <div class="space-y-1 font-label-mono text-label-mono">
+          <div class="text-text-secondary uppercase text-label-mono-xs">
+            PRIMARY DISPATCH:
+          </div>
+          <div
+            class="font-code-block text-code-block font-bold select-all text-text-primary"
+          >
+            kai@chen.systems
+          </div>
+        </div>
+        <div class="space-y-1 font-label-mono text-label-mono">
+          <div class="text-text-secondary uppercase text-label-mono-xs">
+            PGP FINGERPRINT:
+          </div>
+          <div
+            class="font-code-block text-label-mono-xs select-all text-text-primary"
+          >
+            4A89 F012 BE93 C127 D854 9901 2F88 BA21
+          </div>
+        </div>
+        <div class="space-y-1 font-label-mono text-label-mono">
+          <div class="text-text-secondary uppercase text-label-mono-xs">
+            ORCID RESEARCH RECORD:
+          </div>
+          <div
+            class="font-code-block text-code-block select-all text-text-primary"
+          >
+            0000-0002-1825-0001
+          </div>
+        </div>
+        <div class="space-y-1 font-label-mono text-label-mono">
+          <div class="text-text-secondary uppercase text-label-mono-xs">
+            VERSION CONTROL:
+          </div>
+          <div
+            class="font-code-block text-code-block select-all text-text-primary"
+          >
+            github.com/kaichen-sys
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="pt-space-xs flex items-center justify-between flex-wrap gap-space-md"
+      >
+        <a
+          class="inline-block bg-surface-subtle text-text-primary border border-border-hairline px-space-lg py-space-md font-label-mono text-label-mono font-bold uppercase tracking-wider hover:bg-surface-muted transition-none select-none"
+          href="mailto:kai@chen.systems"
+        >
+          INITIATE TRANSMISSION →
+        </a>
+        <div
+          class="flex items-center space-x-2 font-label-mono-xs text-label-mono-xs uppercase text-text-secondary"
+        >
+          <span class="w-1.5 h-1.5 bg-accent-spec inline-block"></span>
+          <span>STATUS: OPERATIONAL // LISTENING ON 443</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

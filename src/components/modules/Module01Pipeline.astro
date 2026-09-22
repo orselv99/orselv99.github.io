@@ -1,0 +1,101 @@
+---
+// Module 01: Architectural Pipeline
+---
+
+<div class="p-gutter md:p-space-lg lg:p-space-xl space-y-space-lg" id="pipeline">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-border-hairline pb-space-sm gap-space-xs">
+    <div class="flex items-center space-x-space-sm">
+      <span class="font-label-mono text-label-mono uppercase tracking-widest text-text-secondary font-bold">01 //</span>
+      <span class="font-label-mono text-label-mono uppercase tracking-widest text-text-primary font-bold">ARCHITECTURAL PIPELINE</span>
+    </div>
+    <div class="flex items-center space-x-space-xs">
+      <span class="inline-block w-2 h-2 bg-text-primary"></span>
+      <span class="font-label-mono-xs text-label-mono-xs uppercase tracking-widest bg-surface-subtle text-text-primary border border-border-hairline px-space-xs py-0.5 font-bold">
+        99.999% DETERMINISTIC INVARIANT
+      </span>
+    </div>
+  </div>
+
+  <!-- Step Progression Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-border-hairline border border-border-hairline">
+    <!-- Stage 01 -->
+    <div class="bg-surface-canvas p-space-md flex flex-col justify-between hover:bg-surface-subtle transition-none relative group">
+      <div>
+        <div class="flex items-center justify-between border-b border-border-hairline pb-space-xs mb-space-sm">
+          <span class="font-label-mono-xs text-label-mono-xs text-text-secondary font-bold">PHASE 01</span>
+          <span class="font-label-mono-xs text-label-mono-xs bg-surface-subtle px-1.5 py-0.5 border border-border-hairline font-bold">SPEC</span>
+        </div>
+        <h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-primary mb-space-xs">
+          RESEARCH &amp; FORMAL SPEC
+        </h3>
+        <p class="font-body-sm text-body-sm text-text-secondary mb-space-md leading-relaxed">
+          TLA+ model checking, safety and liveness invariant proving, state machine formulation before a single line of machine code is written.
+        </p>
+      </div>
+      <div class="pt-space-xs border-t border-border-subtle flex items-center justify-between text-text-secondary font-label-mono-xs text-label-mono-xs">
+        <span>INVARIANT DEPTH</span>
+        <span class="font-code-block text-code-block text-text-primary font-bold">2.4M STATES</span>
+      </div>
+    </div>
+
+    <!-- Stage 02 -->
+    <div class="bg-surface-canvas p-space-md flex flex-col justify-between hover:bg-surface-subtle transition-none relative group">
+      <div>
+        <div class="flex items-center justify-between border-b border-border-hairline pb-space-xs mb-space-sm">
+          <span class="font-label-mono-xs text-label-mono-xs text-text-secondary font-bold">PHASE 02</span>
+          <span class="font-label-mono-xs text-label-mono-xs bg-surface-subtle px-1.5 py-0.5 border border-border-hairline font-bold">KERNEL</span>
+        </div>
+        <h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-primary mb-space-xs">
+          ZERO-COPY MEMORY LAYOUTS
+        </h3>
+        <p class="font-body-sm text-body-sm text-text-secondary mb-space-md leading-relaxed">
+          Hardware-aligned cache locality, page-pinned circular ring buffers, and NUMA-aware synchronization primitives without heap locks.
+        </p>
+      </div>
+      <div class="pt-space-xs border-t border-border-subtle flex items-center justify-between text-text-secondary font-label-mono-xs text-label-mono-xs">
+        <span>CACHE HIT RATE</span>
+        <span class="font-code-block text-code-block text-text-primary font-bold">L1/L2 &gt; 99.4%</span>
+      </div>
+    </div>
+
+    <!-- Stage 03 -->
+    <div class="bg-surface-canvas p-space-md flex flex-col justify-between hover:bg-surface-subtle transition-none relative group">
+      <div>
+        <div class="flex items-center justify-between border-b border-border-hairline pb-space-xs mb-space-sm">
+          <span class="font-label-mono-xs text-label-mono-xs text-text-secondary font-bold">PHASE 03</span>
+          <span class="font-label-mono-xs text-label-mono-xs bg-surface-subtle px-1.5 py-0.5 border border-border-hairline font-bold">CORE</span>
+        </div>
+        <h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-primary mb-space-xs">
+          DETERMINISTIC RUNTIME
+        </h3>
+        <p class="font-body-sm text-body-sm text-text-secondary mb-space-md leading-relaxed">
+          Explicit seed-controlled pseudo-random execution engines with discrete logical time advancement. Full bit-level replay capability.
+        </p>
+      </div>
+      <div class="pt-space-xs border-t border-border-subtle flex items-center justify-between text-text-secondary font-label-mono-xs text-label-mono-xs">
+        <span>TRACE REPRODUCIBILITY</span>
+        <span class="font-code-block text-code-block text-text-primary font-bold">100.00% BITWISE</span>
+      </div>
+    </div>
+
+    <!-- Stage 04 -->
+    <div class="bg-surface-canvas p-space-md flex flex-col justify-between hover:bg-surface-subtle transition-none relative group">
+      <div>
+        <div class="flex items-center justify-between border-b border-border-hairline pb-space-xs mb-space-sm">
+          <span class="font-label-mono-xs text-label-mono-xs text-text-secondary font-bold">PHASE 04</span>
+          <span class="font-label-mono-xs text-label-mono-xs bg-surface-subtle text-text-primary px-1.5 py-0.5 border border-border-hairline font-bold">DEPLOY</span>
+        </div>
+        <h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-primary mb-space-xs">
+          CHAOS &amp; SMT VERIFICATION
+        </h3>
+        <p class="font-body-sm text-body-sm text-text-secondary mb-space-md leading-relaxed">
+          Jepsen-style network partition injection, LLVM-sanitizer sweeps, and automated SMT assertion extraction at cluster boundary lines.
+        </p>
+      </div>
+      <div class="pt-space-xs border-t border-border-subtle flex items-center justify-between text-text-secondary font-label-mono-xs text-label-mono-xs">
+        <span>DIVERGENCE EVENTS</span>
+        <span class="font-code-block text-code-block text-text-primary font-bold">0 RECORDED</span>
+      </div>
+    </div>
+  </div>
+</div>

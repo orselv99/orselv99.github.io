@@ -1,0 +1,184 @@
+---
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = "/" } = Astro.props;
+
+const navItems = [
+  { label: "01. PHILOSOPHY", href: "/", id: "philosophy" },
+  { label: "02. WRITING", href: "/writing", id: "writing" },
+  { label: "03. ARTIFACTS", href: "#artifacts", id: "artifacts" },
+  { label: "04. ARCHIVE", href: "#archive", id: "archive" },
+  { label: "05. CONTACT", href: "/#contact", id: "contact" },
+];
+---
+
+<header class="sticky top-0 z-50 w-full bg-surface-canvas">
+  <div
+    class="h-10 w-full flex items-center justify-between bg-surface-canvas overflow-x-auto"
+  >
+    <!-- GNB Navigation -->
+    <nav class="flex items-center gap-space-md md:gap-space-lg h-full shrink-0">
+      {
+        navItems.map((item) => {
+          const isHome = currentPath === "/" || currentPath === "";
+          const isWriting = currentPath === "/writing" || currentPath.startsWith("/writing");
+          const isActive =
+            (item.href === "/" && isHome) ||
+            (item.href === "/writing" && isWriting) ||
+            (item.href === currentPath);
+          return (
+            <a
+              href={item.href}
+              class={`nav-link font-label-mono text-label-mono-xs uppercase px-1 h-full flex items-center transition-none select-none whitespace-nowrap tracking-wider border-b-2 -mb-px ${
+                isActive
+                  ? "border-text-primary text-text-primary font-bold"
+                  : "border-transparent text-text-secondary hover:text-text-primary hover:border-border-hairline"
+              }`}
+              data-nav-id={item.id}
+            >
+              {item.label}
+            </a>
+          );
+        })
+      }
+    </nav>
+
+    <!-- Right Controls: Theme Switcher -->
+    <div class="flex items-center gap-space-sm shrink-0 pl-space-md">
+      <button
+        id="theme-toggle"
+        type="button"
+        title="Toggle Light / Dark Mode"
+        class="flex items-center gap-1.5 px-space-sm py-0.5 border border-border-hairline bg-surface-canvas hover:bg-surface-subtle font-label-mono-xs text-label-mono-xs uppercase text-text-primary cursor-pointer transition-none select-none"
+      >
+        <span class="w-1.5 h-1.5 bg-accent-spec inline-block"></span>
+        <span id="theme-text">[THEME: LIGHT]</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  // 1. Theme Toggle Controller
+  function updateThemeUI() {
+    const isDark = document.documentElement.classList.contains("dark");
+    const textEl = document.getElementById("theme-text");
+    if (textEl) {
+      textEl.textContent = isDark ? "[THEME: DARK]" : "[THEME: LIGHT]";
+    }
+  }
+
+  function initThemeToggle() {
+    const btn = document.getElementById("theme-toggle");
+    if (!btn) return;
+
+    updateThemeUI();
+
+    btn.addEventListener("click", () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      if (isDark) {
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+      } else {
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+      }
+      updateThemeUI();
+    });
+  }
+
+  // 2. Nav Active Bottom Line State Controller
+  function initNavActiveState() {
+    const navLinks = document.querySelectorAll(".nav-link");
+
+    function setActiveLink(activeEl: Element) {
+      navLinks.forEach((link) => {
+        link.classList.remove(
+          "border-text-primary",
+          "text-text-primary",
+          "font-bold",
+        );
+        link.classList.add("border-transparent", "text-text-secondary");
+      });
+      activeEl.classList.remove("border-transparent", "text-text-secondary");
+      activeEl.classList.add(
+        "border-text-primary",
+        "text-text-primary",
+        "font-bold",
+      );
+    }
+
+    navLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        const href = link.getAttribute("href");
+        const pathname = window.location.pathname.replace(/\/$/, "") || "/";
+        if ((href === "/" || href === "#philosophy") && pathname === "/") {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+          history.pushState(null, "", "/");
+          setActiveLink(link);
+        } else if (href === "/#contact" && pathname === "/") {
+          e.preventDefault();
+          const target = document.getElementById("contact");
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth" });
+            history.pushState(null, "", "#contact");
+            setActiveLink(link);
+          }
+        }
+      });
+    });
+
+    // Scroll spy on home page to maintain line for active section in view
+    const sectionIds = [
+      "philosophy",
+      "contact",
+    ];
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[];
+
+    if (sections.length > 0 && (window.location.pathname === "/" || window.location.pathname === "")) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.id;
+              const matching = document.querySelector(
+                `.nav-link[data-nav-id="${id}"]`,
+              );
+              if (matching) {
+                setActiveLink(matching);
+              }
+            }
+          });
+        },
+        { rootMargin: "-20% 0px -70% 0px" },
+      );
+
+      sections.forEach((sec) => observer.observe(sec));
+
+      window.addEventListener("scroll", () => {
+        if (window.scrollY < 200) {
+          const first = document.querySelector(
+            '.nav-link[data-nav-id="philosophy"]',
+          );
+          if (first && !first.classList.contains("border-text-primary")) {
+            setActiveLink(first);
+          }
+        }
+      });
+    }
+  }
+
+  // Initial execution
+  initThemeToggle();
+  initNavActiveState();
+
+  document.addEventListener("astro:after-swap", () => {
+    initThemeToggle();
+    initNavActiveState();
+  });
+</script>

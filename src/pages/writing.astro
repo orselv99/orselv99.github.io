@@ -1,0 +1,418 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const dispatches = [
+  {
+    id: '[001]',
+    date: '2026.03.14',
+    title: 'The Illusion of Asynchronous Safety in Distributed Actors',
+    abstract: 'Proof that unbounded mailbox message-queuing collapses causal delivery guarantees under high-entropy partition states. Evaluated across 256 physical hypervisors using a linear TLA+ validation harness.',
+    category: 'systems',
+    taxonomy: '[DISTRIBUTED / RL]',
+    peerRef: '[SIGPLAN \'25]',
+    linkText: 'PDF [1.2MB]',
+    href: '#'
+  },
+  {
+    id: '[002]',
+    date: '2026.01.20',
+    title: 'Compiling Dependent Types to Zero-Cost Machine Code',
+    abstract: 'An LLVM optimization backend that compiles compile-time inductive equality proofs directly into instruction-level identity transforms, yielding strict static memory verification without runtime overhead.',
+    category: 'design',
+    taxonomy: '[COMPILERS / LLVM]',
+    peerRef: '[POPL \'26]',
+    linkText: 'RFC-094',
+    href: '#'
+  },
+  {
+    id: '[003]',
+    date: '2025.11.28',
+    title: 'Deterministic Time-Travel Execution for Microkernel IPC',
+    abstract: 'Achieving bidirectional deterministic execution tracing in high-throughput seL4 IPC channels via sparse memory snap-pointing and discrete logical epoch registers.',
+    category: 'systems',
+    taxonomy: '[KERNEL / IPC]',
+    peerRef: '[SOSP \'25]',
+    linkText: 'SPEC-V2',
+    href: '#'
+  },
+  {
+    id: '[004]',
+    date: '2025.09.15',
+    title: 'Linear Logic as an Allocation Strategy for Embedded Kernels',
+    abstract: 'Eliminating non-deterministic garbage collection pause times in safety-critical firmware by enforcing linear logic ownership at the compiler intermediate representation stage.',
+    category: 'monographs',
+    taxonomy: '[THEORY / TYPES]',
+    peerRef: '[ICFP \'25]',
+    linkText: 'MONO-07',
+    href: '#'
+  },
+  {
+    id: '[005]',
+    date: '2025.06.02',
+    title: 'High-Entropy Fault Injection in Raft Consensus Engines',
+    abstract: 'Empirical analysis of split-brain anomalies under simulated asymmetric network latency. Introduces an adaptive randomized lease verification algorithm.',
+    category: 'systems',
+    taxonomy: '[CONSENSUS / RAFT]',
+    peerRef: '[OSDI \'25]',
+    linkText: 'BENCH-LOG',
+    href: '#'
+  },
+  {
+    id: '[006]',
+    date: '2025.04.18',
+    title: 'Zero-Overhead Observability via eBPF Kernel Probes',
+    abstract: 'Extracting cycle-accurate scheduling statistics and memory allocation graphs at the Ring 0 boundary without mutating application memory layouts or introducing syscall delays.',
+    category: 'design',
+    taxonomy: '[OBSERVABILITY]',
+    peerRef: '[USENIX ATC]',
+    linkText: 'SRC-EBPF',
+    href: '#'
+  },
+  {
+    id: '[007]',
+    date: '2025.02.10',
+    title: 'Categorical Semantics of Linear State Transitions',
+    abstract: 'Formalizing state-monad transformations using symmetric monoidal categories. Provides mechanised machine proofs in Coq verifying invariant preservation across parallel reduction trees.',
+    category: 'monographs',
+    taxonomy: '[CATEGORY THEORY]',
+    peerRef: '[LICS \'25]',
+    linkText: 'COQ-PROOF',
+    href: '#'
+  },
+  {
+    id: '[008]',
+    date: '2024.12.04',
+    title: 'Verified Lock-Free Data Structures in Bare-Metal Rust',
+    abstract: 'Designing wait-free multi-producer single-consumer ring buffers with formal progress proofs under weak memory models (ARMv8 / RISC-V RVWMO).',
+    category: 'systems',
+    taxonomy: '[CONCURRENCY]',
+    peerRef: '[PLDI \'24]',
+    linkText: 'CRATE-V1',
+    href: '#'
+  },
+];
+---
+
+<BaseLayout
+  title="04. WRITING // KAI CHEN — EDITORIAL ARCHIVE & MONOGRAPHS"
+  description="Rigorous technical papers, invariant proofs, and architectural essays on deterministic execution, microkernel IPC, and memory safety."
+  currentPath="/writing"
+>
+  <div class="flex flex-col w-full divide-y divide-border-hairline bg-surface-canvas">
+    
+    <!-- SECTION 1: SECTION DOSSIER / EDITORIAL MASTHEAD -->
+    <section class="py-space-lg md:py-space-xl space-y-space-lg bg-surface-canvas">
+      <!-- Breadcrumb Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-md border-b border-border-hairline">
+        <div class="flex items-center gap-space-sm font-label-mono-xs text-label-mono-xs uppercase text-text-primary tracking-widest">
+          <span class="inline-block w-2 h-2 bg-text-primary"></span>
+          <span>// RESEARCH DISPATCHES // BIBLIOGRAPHIC ARCHIVE</span>
+        </div>
+        <div class="flex items-center gap-space-md font-label-mono-xs text-label-mono-xs uppercase text-text-secondary">
+          <span>INDEX_KEY: KC-SYS-WRITING</span>
+          <span class="text-text-primary font-code-block text-code-block font-bold">VOL. VII (2023-2026)</span>
+        </div>
+      </div>
+
+      <!-- Main Headline & Directive Matrix -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+        <div class="lg:col-span-8 flex flex-col gap-space-sm">
+          <span class="font-label-mono text-label-mono text-text-secondary uppercase tracking-widest">
+            [SECTION IDENTIFIER: 04_WRITING]
+          </span>
+          <h1 class="font-display-hero text-headline-lg md:text-display-hero uppercase text-text-primary tracking-tight leading-none">
+            04 // EDITORIAL ARCHIVE &amp; MONOGRAPHS
+          </h1>
+          <p class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-secondary pt-space-xs">
+            Formal Systems, Invariant Verification &amp; Type Theory
+          </p>
+        </div>
+
+        <div class="lg:col-span-4 border border-border-hairline bg-surface-subtle p-space-md flex flex-col justify-between gap-space-md">
+          <div class="flex items-center justify-between border-b border-border-subtle pb-space-xs">
+            <span class="font-label-mono-xs text-label-mono-xs uppercase font-semibold text-text-primary">
+              ARCHIVE PROTOCOL
+            </span>
+            <span class="font-label-mono-xs text-label-mono-xs uppercase text-text-secondary">
+              [SYS::STRICT_VERIFIED]
+            </span>
+          </div>
+          <p class="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+            Rigorous technical papers, invariant proofs, and architectural essays on deterministic execution, microkernel IPC, and memory safety. Peer-reviewed proceedings, formal RFC revisions, and computational drafts.
+          </p>
+          <div class="flex flex-wrap items-center gap-space-xs font-label-mono-xs text-label-mono-xs text-text-primary pt-space-xs border-t border-border-subtle">
+            <span class="bg-surface-canvas border border-border-hairline px-space-xs py-0.5 font-code-block">LATEX</span>
+            <span class="bg-surface-canvas border border-border-hairline px-space-xs py-0.5 font-code-block">POSTSCRIPT</span>
+            <span class="bg-surface-canvas border border-border-hairline px-space-xs py-0.5 font-code-block">RFC-SPEC</span>
+            <span class="bg-surface-canvas border border-border-hairline px-space-xs py-0.5 font-code-block">AST-IR</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: QUERY FILTER & CONTROL DECK -->
+    <section class="py-space-md bg-surface-canvas">
+      <div class="border border-border-hairline flex flex-col lg:flex-row items-stretch justify-between bg-surface-canvas divide-y lg:divide-y-0 lg:divide-x divide-border-hairline">
+        <!-- Category Filters -->
+        <div class="flex items-stretch overflow-x-auto divide-x divide-border-hairline" id="filter-group">
+          <button
+            class="archive-filter-btn px-space-md py-space-sm font-label-mono text-label-mono uppercase whitespace-nowrap bg-surface-subtle text-text-primary font-bold border-b-2 border-text-primary cursor-pointer transition-none select-none"
+            data-filter="all"
+            type="button"
+          >
+            [ALL (08)]
+          </button>
+          <button
+            class="archive-filter-btn px-space-md py-space-sm font-label-mono text-label-mono uppercase whitespace-nowrap bg-surface-canvas text-text-secondary hover:text-text-primary hover:bg-surface-subtle border-b-2 border-transparent cursor-pointer transition-none select-none"
+            data-filter="systems"
+            type="button"
+          >
+            [SYSTEMS (04)]
+          </button>
+          <button
+            class="archive-filter-btn px-space-md py-space-sm font-label-mono text-label-mono uppercase whitespace-nowrap bg-surface-canvas text-text-secondary hover:text-text-primary hover:bg-surface-subtle border-b-2 border-transparent cursor-pointer transition-none select-none"
+            data-filter="design"
+            type="button"
+          >
+            [DESIGN &amp; RUNTIME (02)]
+          </button>
+          <button
+            class="archive-filter-btn px-space-md py-space-sm font-label-mono text-label-mono uppercase whitespace-nowrap bg-surface-canvas text-text-secondary hover:text-text-primary hover:bg-surface-subtle border-b-2 border-transparent cursor-pointer transition-none select-none"
+            data-filter="monographs"
+            type="button"
+          >
+            [NOTES &amp; MONOGRAPHS (02)]
+          </button>
+        </div>
+
+        <!-- Search & Sorter Controls -->
+        <div class="flex flex-col sm:flex-row items-stretch divide-y sm:divide-y-0 sm:divide-x divide-border-hairline lg:border-l-0">
+          <div class="relative flex items-center min-w-[280px]">
+            <svg class="w-4 h-4 absolute left-space-sm text-text-secondary pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+            <input
+              class="w-full bg-surface-canvas text-text-primary placeholder:text-text-muted font-label-mono text-label-mono pl-9 pr-space-md py-space-sm focus:outline-none focus:bg-surface-subtle border-0 uppercase"
+              id="archive-search"
+              placeholder="[QUERY: TYPE TO FILTER IN-MEMORY...]"
+              type="text"
+            />
+          </div>
+          <div class="flex items-center px-space-md py-space-sm bg-surface-subtle font-label-mono-xs text-label-mono-xs uppercase text-text-secondary whitespace-nowrap gap-space-sm">
+            <span class="select-none font-bold text-text-primary">SORT: CHRONO_DESC</span>
+            <span class="hidden xl:inline select-none text-text-muted">//</span>
+            <span class="hidden xl:inline select-none text-text-muted">SIG_VERIFIED</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: ARCHIVAL DATA MATRIX -->
+    <section class="py-space-md bg-surface-canvas">
+      <div class="w-full border border-border-hairline bg-surface-canvas">
+        <!-- Table Header Bar -->
+        <div class="hidden md:grid grid-cols-12 border-b border-border-hairline bg-surface-subtle font-label-mono-xs text-label-mono-xs uppercase text-text-primary divide-x divide-border-hairline select-none font-bold">
+          <div class="col-span-1 px-space-md py-space-sm">ID</div>
+          <div class="col-span-2 px-space-md py-space-sm">TIMESTAMP</div>
+          <div class="col-span-5 px-space-md py-space-sm">DOCUMENT // DISPATCH TITLE &amp; FORMAL THESIS ABSTRACT</div>
+          <div class="col-span-2 px-space-md py-space-sm">TAXONOMY</div>
+          <div class="col-span-1 px-space-md py-space-sm">PEER REF</div>
+          <div class="col-span-1 px-space-md py-space-sm text-right">DISPATCH</div>
+        </div>
+
+        <!-- Rows Container -->
+        <div class="divide-y divide-border-hairline" id="archive-entries">
+          {
+            dispatches.map((item) => (
+              <article
+                class="archive-row group block w-full bg-surface-canvas hover:bg-surface-subtle transition-none border-b md:border-b-0 border-border-hairline"
+                data-category={item.category}
+              >
+                <div class="grid grid-cols-1 md:grid-cols-12 md:divide-x md:divide-border-hairline">
+                  <!-- ID -->
+                  <div class="md:col-span-1 p-space-md font-label-mono text-label-mono font-bold flex items-center md:items-start text-text-primary">
+                    {item.id}
+                  </div>
+                  <!-- Timestamp -->
+                  <div class="md:col-span-2 p-space-md font-label-mono text-label-mono text-text-secondary flex items-center md:items-start font-code-block">
+                    {item.date}
+                  </div>
+                  <!-- Title & Summary -->
+                  <div class="md:col-span-5 p-space-md flex flex-col gap-space-xs">
+                    <h2 class="font-headline-sm text-headline-sm uppercase text-text-primary font-bold group-hover:underline">
+                      {item.title}
+                    </h2>
+                    <p class="font-code-block text-code-block text-text-secondary leading-relaxed">
+                      {item.abstract}
+                    </p>
+                    <div class="flex md:hidden items-center gap-space-xs pt-space-xs flex-wrap">
+                      <span class="font-label-mono-xs text-label-mono-xs border border-border-hairline px-space-xs py-0.5 bg-surface-subtle text-text-primary">
+                        {item.taxonomy}
+                      </span>
+                      <span class="font-label-mono-xs text-label-mono-xs border border-border-hairline px-space-xs py-0.5 bg-surface-subtle text-text-primary">
+                        {item.peerRef}
+                      </span>
+                    </div>
+                  </div>
+                  <!-- Taxonomy -->
+                  <div class="hidden md:flex md:col-span-2 p-space-md items-start">
+                    <span class="font-label-mono-xs text-label-mono-xs border border-border-hairline px-space-xs py-1 uppercase text-text-primary bg-surface-subtle">
+                      {item.taxonomy}
+                    </span>
+                  </div>
+                  <!-- Peer / Status -->
+                  <div class="hidden md:flex md:col-span-1 p-space-md items-start">
+                    <span class="font-label-mono-xs text-label-mono-xs border border-border-hairline px-space-xs py-1 uppercase text-text-primary bg-surface-subtle">
+                      {item.peerRef}
+                    </span>
+                  </div>
+                  <!-- Action Link -->
+                  <div class="md:col-span-1 p-space-md flex items-center justify-between md:justify-end font-label-mono text-label-mono font-bold text-text-primary">
+                    <a
+                      href={item.href}
+                      class="inline-flex items-center gap-space-xs hover:underline text-text-primary font-bold"
+                    >
+                      <span class="text-label-mono-xs">[{item.linkText}]</span>
+                      <span>→</span>
+                    </a>
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+
+        <!-- Table Pagination Footer -->
+        <div class="bg-surface-subtle p-space-md border-t border-border-hairline flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-mono-xs text-label-mono-xs uppercase text-text-secondary">
+          <div class="flex items-center space-x-2">
+            <span class="w-1.5 h-1.5 bg-accent-spec inline-block"></span>
+            <span id="entries-count">08 OF 08 DISPATCHES</span>
+          </div>
+          <div class="flex items-center space-x-1">
+            <button
+              class="px-space-sm py-space-xs bg-surface-canvas border border-border-hairline font-label-mono text-label-mono text-text-muted cursor-not-allowed uppercase select-none"
+              disabled
+              type="button"
+            >
+              [PREV &lt;&lt;]
+            </button>
+            <button
+              class="px-space-sm py-space-xs bg-surface-subtle text-text-primary border border-border-hairline font-label-mono text-label-mono font-bold uppercase select-none"
+              type="button"
+            >
+              [01]
+            </button>
+            <button
+              class="px-space-sm py-space-xs bg-surface-canvas border border-border-hairline font-label-mono text-label-mono text-text-muted cursor-not-allowed uppercase select-none"
+              disabled
+              type="button"
+            >
+              [&gt;&gt; NEXT]
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: TECHNICAL DOSSIER / SYSTEM INVARIANTS FOOTER WIDGET -->
+    <section class="py-space-lg md:py-space-xl bg-surface-canvas">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+        <div class="border border-border-hairline p-space-md bg-surface-canvas">
+          <div class="font-label-mono-xs text-label-mono-xs uppercase text-text-secondary border-b border-border-subtle pb-space-xs mb-space-xs">
+            VERIFICATION STANDARD // 01
+          </div>
+          <div class="font-headline-sm text-headline-sm uppercase text-text-primary font-bold mb-space-xs">
+            MACHINE CHECKED
+          </div>
+          <p class="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+            All proofs accompanying published monographs are cross-verified against Coq 8.19 or Lean 4 formal libraries. Source proofs bundled alongside dispatch archives.
+          </p>
+        </div>
+        <div class="border border-border-hairline p-space-md bg-surface-canvas">
+          <div class="font-label-mono-xs text-label-mono-xs uppercase text-text-secondary border-b border-border-subtle pb-space-xs mb-space-xs">
+            DATA PIPELINE // 02
+          </div>
+          <div class="font-headline-sm text-headline-sm uppercase text-text-primary font-bold mb-space-xs">
+            REPRODUCIBLE HARNESS
+          </div>
+          <p class="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+            Benchmarks incorporate nix-pinned environments with deterministic LLVM bitcode derivations, executed against identical cycle-accurate hardware traces.
+          </p>
+        </div>
+        <div class="border border-border-hairline p-space-md bg-surface-canvas">
+          <div class="font-label-mono-xs text-label-mono-xs uppercase text-text-secondary border-b border-border-subtle pb-space-xs mb-space-xs">
+            OPEN PROTOCOL // 03
+          </div>
+          <div class="font-headline-sm text-headline-sm uppercase text-text-primary font-bold mb-space-xs">
+            MIRRORED IPFS &amp; GIT
+          </div>
+          <p class="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+            Dispatches operate on append-only cryptographic log repositories mirrored between Seoul and San Francisco edge nodes with content-addressed immutability.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</BaseLayout>
+
+<script>
+  function initArchiveFilter() {
+    const filterBtns = document.querySelectorAll<HTMLButtonElement>('.archive-filter-btn');
+    const rows = document.querySelectorAll<HTMLElement>('.archive-row');
+    const countEl = document.getElementById('entries-count');
+    const searchInput = document.getElementById('archive-search') as HTMLInputElement | null;
+
+    if (!filterBtns.length || !rows.length) return;
+
+    let activeFilter = 'all';
+
+    function updateTable() {
+      const query = searchInput ? searchInput.value.toLowerCase().trim() : '';
+      let visibleCount = 0;
+
+      rows.forEach((row) => {
+        const category = row.getAttribute('data-category');
+        const text = row.innerText.toLowerCase();
+
+        const matchesCategory = activeFilter === 'all' || category === activeFilter;
+        const matchesQuery = query === '' || text.includes(query);
+
+        if (matchesCategory && matchesQuery) {
+          row.style.display = '';
+          visibleCount++;
+        } else {
+          row.style.display = 'none';
+        }
+      });
+
+      if (countEl) {
+        const padded = String(visibleCount).padStart(2, '0');
+        const total = String(rows.length).padStart(2, '0');
+        countEl.textContent = `${padded} OF ${total} DISPATCHES`;
+      }
+    }
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach((b) => {
+          b.classList.remove('bg-surface-subtle', 'text-text-primary', 'font-bold', 'border-text-primary');
+          b.classList.add('bg-surface-canvas', 'text-text-secondary', 'border-transparent');
+        });
+        btn.classList.remove('bg-surface-canvas', 'text-text-secondary', 'border-transparent');
+        btn.classList.add('bg-surface-subtle', 'text-text-primary', 'font-bold', 'border-text-primary');
+
+        activeFilter = btn.getAttribute('data-filter') || 'all';
+        updateTable();
+      });
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', updateTable);
+    }
+  }
+
+  // Initialize
+  initArchiveFilter();
+  document.addEventListener('astro:after-swap', initArchiveFilter);
+</script>

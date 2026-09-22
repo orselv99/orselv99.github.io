@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <meta content="web_standard" name="shell-type" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <style>
+    @layer base {
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        overscroll-behavior: none;
+      }
+
+      main>:first-child {
+        margin-top: 0 !important;
+      }
+
+      main>:last-child {
+        margin-bottom: 0 !important;
+      }
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-muted": "#EAEAEA",
+            "surface-bright": "#fbf9f9",
+            "surface": "#fbf9f9",
+            "border-subtle": "#D4D4D4",
+            "primary-fixed-dim": "#c6c6c6",
+            "surface-container": "#efeded",
+            "on-secondary-container": "#636262",
+            "surface-tint": "#5e5e5e",
+            "on-tertiary-fixed-variant": "#474747",
+            "tertiary-fixed-dim": "#c6c6c6",
+            "on-primary": "#ffffff",
+            "surface-container-highest": "#e3e2e2",
+            "inverse-primary": "#c6c6c6",
+            "on-primary-fixed": "#1b1b1b",
+            "tertiary-container": "#1b1b1b",
+            "tertiary-fixed": "#e2e2e2",
+            "on-error-container": "#93000a",
+            "error": "#ba1a1a",
+            "background": "#fbf9f9",
+            "on-background": "#1b1c1c",
+            "on-secondary-fixed": "#1b1b1c",
+            "secondary": "#5f5e5e",
+            "on-surface": "#1b1c1c",
+            "border-hairline": "#000000",
+            "text-primary": "#000000",
+            "surface-dim": "#dbdad9",
+            "on-primary-container": "#848484",
+            "text-secondary": "#555555",
+            "secondary-fixed-dim": "#c8c6c5",
+            "surface-container-high": "#e9e8e7",
+            "on-error": "#ffffff",
+            "surface-canvas": "#FFFFFF",
+            "tertiary": "#000000",
+            "on-tertiary-fixed": "#1b1b1b",
+            "text-muted": "#888888",
+            "surface-container-low": "#f5f3f3",
+            "on-secondary-fixed-variant": "#474746",
+            "on-primary-fixed-variant": "#474747",
+            "secondary-container": "#e2dfde",
+            "secondary-fixed": "#e5e2e1",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-container": "#848484",
+            "surface-variant": "#e3e2e2",
+            "primary-container": "#1b1b1b",
+            "on-surface-variant": "#4c4546",
+            "surface-container-lowest": "#ffffff",
+            "inverse-surface": "#303031",
+            "primary": "#000000",
+            "on-secondary": "#ffffff",
+            "inverse-on-surface": "#f2f0f0",
+            "primary-fixed": "#e2e2e2",
+            "surface-subtle": "#F4F4F4",
+            "outline-variant": "#cfc4c5",
+            "error-container": "#ffdad6",
+            "accent-spec": "#F386A1",
+            "outline": "#7e7576"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin-desktop": "3rem",
+            "space-sm": "0.5rem",
+            "gutter": "1rem",
+            "space-md": "1rem",
+            "margin-tablet": "2rem",
+            "gutter-desktop": "1.5rem",
+            "margin": "1rem",
+            "space-xl": "2.5rem",
+            "space-lg": "1.5rem",
+            "space-xs": "0.25rem"
+          },
+          "fontFamily": {
+            "body-sm": [
+              "Inter"
+            ],
+            "code-block": [
+              "JetBrains Mono"
+            ],
+            "body-md": [
+              "Inter"
+            ],
+            "display-hero": [
+              "Inter"
+            ],
+            "headline-lg-mobile": [
+              "Inter"
+            ],
+            "headline-sm": [
+              "Inter"
+            ],
+            "label-mono": [
+              "JetBrains Mono"
+            ],
+            "label-mono-xs": [
+              "JetBrains Mono"
+            ],
+            "headline-md": [
+              "Inter"
+            ],
+            "display-hero-mobile": [
+              "Inter"
+            ],
+            "body-lg": [
+              "Inter"
+            ],
+            "headline-lg": [
+              "Inter"
+            ]
+          },
+          "fontSize": {
+            "body-sm": [
+              "0.8125rem",
+              {
+                "lineHeight": "1.45",
+                "letterSpacing": "0em",
+                "fontWeight": "400"
+              }
+            ],
+            "code-block": [
+              "0.8125rem",
+              {
+                "lineHeight": "1.6",
+                "letterSpacing": "0em",
+                "fontWeight": "400"
+              }
+            ],
+            "body-md": [
+              "0.9375rem",
+              {
+                "lineHeight": "1.5",
+                "letterSpacing": "0em",
+                "fontWeight": "400"
+              }
+            ],
+            "display-hero": [
+              "4.5rem",
+              {
+                "lineHeight": "1.0",
+                "letterSpacing": "-0.04em",
+                "fontWeight": "700"
+              }
+            ],
+            "headline-lg-mobile": [
+              "1.875rem",
+              {
+                "lineHeight": "1.15",
+                "letterSpacing": "-0.025em",
+                "fontWeight": "700"
+              }
+            ],
+            "headline-sm": [
+              "1.25rem",
+              {
+                "lineHeight": "1.3",
+                "letterSpacing": "-0.02em",
+                "fontWeight": "600"
+              }
+            ],
+            "label-mono": [
+              "0.75rem",
+              {
+                "lineHeight": "1.2",
+                "letterSpacing": "0.06em",
+                "fontWeight": "500"
+              }
+            ],
+            "label-mono-xs": [
+              "0.6875rem",
+              {
+                "lineHeight": "1.2",
+                "letterSpacing": "0.08em",
+                "fontWeight": "500"
+              }
+            ],
+            "headline-md": [
+              "1.75rem",
+              {
+                "lineHeight": "1.2",
+                "letterSpacing": "-0.025em",
+                "fontWeight": "600"
+              }
+            ],
+            "display-hero-mobile": [
+              "2.75rem",
+              {
+                "lineHeight": "1.05",
+                "letterSpacing": "-0.03em",
+                "fontWeight": "700"
+              }
+            ],
+            "body-lg": [
+              "1.125rem",
+              {
+                "lineHeight": "1.5",
+                "letterSpacing": "-0.01em",
+                "fontWeight": "400"
+              }
+            ],
+            "headline-lg": [
+              "2.5rem",
+              {
+                "lineHeight": "1.1",
+                "letterSpacing": "-0.035em",
+                "fontWeight": "700"
+              }
+            ]
+          }
+        },
+      },
+    }</script>
+</head>
+
+<body class="bg-surface-canvas font-body-md text-body-md text-primary antialiased">
+  <header class="fixed top-0 left-0 w-full z-50 bg-surface-canvas border-b border-border-hairline">
+    <div class="h-16 w-full px-gutter md:px-margin-desktop flex items-center justify-between">
+      <div class="flex items-center gap-space-md overflow-hidden"><a
+          class="font-label-mono text-label-mono tracking-wider uppercase font-semibold text-primary shrink-0 select-none"
+          data-path="philosophy" href="#">RESEARCH//SYSTEMS</a>
+        <div
+          class="hidden lg:flex items-center border border-border-hairline px-space-sm py-space-xs bg-surface-canvas shrink-0">
+          <span class="font-label-mono-xs text-label-mono-xs uppercase text-text-primary tracking-widest">[STATUS:
+            ACTIVE // LOC: SEOUL &amp; SF]</span>
+        </div>
+        <div
+          class="hidden xl:flex items-center gap-space-md text-text-secondary font-label-mono-xs text-label-mono-xs border-l border-border-hairline pl-space-md">
+          <span class="select-none">37.5665° N, 126.9780° E // 37.7749° N, 122.4194° W</span><span
+            class="select-none font-code-block text-code-block text-text-primary">UTC+9 / UTC-8</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-space-lg">
+        <nav class="hidden md:flex items-center border-l border-border-hairline"
+          data-active-classes="bg-primary text-on-primary"><a aria-current="page"
+            class="font-label-mono uppercase px-space-sm py-space-xs border-r border-border-hairline transition-none bg-primary text-on-primary"
+            data-path="philosophy" href="#">01. PHILOSOPHY</a><a
+            class="font-label-mono text-label-mono uppercase px-space-sm py-space-xs border-r border-border-hairline text-text-secondary hover:bg-surface-subtle hover:text-on-surface transition-none"
+            data-path="pipeline" href="#">02. PIPELINE</a><a
+            class="font-label-mono text-label-mono uppercase px-space-sm py-space-xs border-r border-border-hairline text-text-secondary hover:bg-surface-subtle hover:text-on-surface transition-none"
+            data-path="artifacts" href="#">03. ARTIFACTS</a><a
+            class="font-label-mono text-label-mono uppercase px-space-sm py-space-xs border-r border-border-hairline text-text-secondary hover:bg-surface-subtle hover:text-on-surface transition-none"
+            data-path="writing" href="#">04. WRITING</a><a
+            class="font-label-mono text-label-mono uppercase px-space-sm py-space-xs border-r border-border-hairline text-text-secondary hover:bg-surface-subtle hover:text-on-surface transition-none"
+            data-path="experience" href="#">05. EXPERIENCE</a><a
+            class="font-label-mono text-label-mono uppercase px-space-sm py-space-xs border-r border-border-hairline text-text-secondary hover:bg-surface-subtle hover:text-on-surface transition-none"
+            data-path="archive" href="#">06. ARCHIVE</a><a
+            class="font-label-mono text-label-mono uppercase px-space-sm py-space-xs border-r border-border-hairline text-text-secondary hover:bg-surface-subtle hover:text-on-surface transition-none"
+            data-path="contact" href="#">07. CONTACT</a></nav>
+        <div class="flex items-center gap-space-sm">
+          <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span
+              class="material-symbols-outlined text-on-primary text-[18px]">person</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="w-full pt-16 bg-surface-canvas">
+    <div class="flex flex-col w-full">
+      <!-- PRIMARY GRID MATRIX: SPLIT EDITORIAL / DATA-DENSE ARCHITECTURE -->
+      <div class="w-full border-b border-border-hairline bg-surface-canvas">
+        <div class="w-full flex flex-col lg:flex-row">
+          <!-- LEFT COLUMN: STICKY MANIFESTO & IDENTITY SPEC SHEET (40%) -->
+          <aside
+            class="w-full lg:w-[40%] xl:w-[38%] border-b lg:border-b-0 lg:border-r border-border-hairline bg-surface-canvas flex flex-col justify-between shrink-0">
+            <div class="p-gutter md:p-space-lg lg:p-space-xl flex flex-col space-y-space-xl lg:sticky lg:top-16">
+              <!-- Monospace System Header Pill -->
+              <div class="flex items-center justify-between border border-border-hairline p-space-sm bg-surface-subtle">
+                <span class="font-label-mono-xs text-label-mono-xs uppercase text-text-primary tracking-widest">[SYS_ID:
+                  ARCH-0922 // REV: 2025.1]</span>
+                <div class="flex items-center space-x-1.5">
+                  <span class="w-2 h-2 bg-text-primary inline-block"></span>
+                  <span class="font-label-mono-xs text-label-mono-xs uppercase font-semibold">VERIFIED</span>
+                </div>
+              </div>
+              <!-- Master Title Block -->
+              <div class="space-y-space-sm border-b border-border-hairline pb-space-lg">
+                <div class="font-label-mono text-label-mono uppercase tracking-widest text-text-secondary">// PRINCIPAL
+                  RESEARCHER &amp; FELLOW</div>
+                <h1
+                  class="font-display-hero text-display-hero tracking-tighter text-text-primary leading-none uppercase select-none">
+                  KAI<br />CHEN
+                </h1>
+                <p
+                  class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-primary pt-space-xs font-bold">
+                  Systems Architect &amp; Compiler Researcher
+                </p>
+              </div>
+              <!-- Engineering Manifesto Statement -->
+              <div class="space-y-space-sm">
+                <div class="font-label-mono-xs text-label-mono-xs uppercase tracking-widest text-text-secondary">[THESIS
+                  / DIRECTIVE]</div>
+                <blockquote
+                  class="font-body-lg text-body-lg text-text-primary leading-snug tracking-tight border-l-2 border-border-hairline pl-space-md py-space-xs">
+                  “Building deterministic runtime systems, type-directed synthesis, and verified distributed state
+                  machines. Rejecting accidental complexity in favor of mathematical rigor and structural clarity.”
+                </blockquote>
+              </div>
+              <!-- Technical Spec Sheet: High-Density Key-Value Matrix -->
+              <div class="border border-border-hairline bg-surface-canvas">
+                <div
+                  class="bg-surface-subtle px-space-md py-space-xs border-b border-border-hairline flex items-center justify-between">
+                  <span class="font-label-mono-xs text-label-mono-xs uppercase font-semibold tracking-wider">ENGINEERING
+                    SPECIFICATION SHEET</span>
+                  <span class="font-label-mono-xs text-label-mono-xs text-text-secondary">SPEC-V4.8</span>
+                </div>
+                <div class="divide-y divide-border-hairline font-label-mono text-label-mono">
+                  <div
+                    class="grid grid-cols-12 px-space-md py-space-xs items-baseline hover:bg-surface-subtle transition-none">
+                    <span class="col-span-5 text-text-secondary uppercase">DOMAINS</span>
+                    <span class="col-span-7 font-medium text-text-primary">Type Systems, Consensus, Formal
+                      Verification</span>
+                  </div>
+                  <div
+                    class="grid grid-cols-12 px-space-md py-space-xs items-baseline hover:bg-surface-subtle transition-none">
+                    <span class="col-span-5 text-text-secondary uppercase">LANGUAGES</span>
+                    <span class="col-span-7 font-code-block text-code-block font-medium text-text-primary">Rust, OCaml,
+                      Zig, TypeScript, C</span>
+                  </div>
+                  <div
+                    class="grid grid-cols-12 px-space-md py-space-xs items-baseline hover:bg-surface-subtle transition-none">
+                    <span class="col-span-5 text-text-secondary uppercase">TOOLING &amp; IR</span>
+                    <span class="col-span-7 font-code-block text-code-block font-medium text-text-primary">LLVM, eBPF,
+                      TLA+, Coq, Z3 SMT</span>
+                  </div>
+                  <div
+                    class="grid grid-cols-12 px-space-md py-space-xs items-baseline hover:bg-surface-subtle transition-none">
+                    <span class="col-span-5 text-text-secondary uppercase">LAB / LABELS</span>
+                    <span class="col-span-7 font-medium text-text-primary">Distributed Systems Lab &amp; Core Engine
+                      Group</span>
+                  </div>
+                  <div
+                    class="grid grid-cols-12 px-space-md py-space-xs items-baseline hover:bg-surface-subtle transition-none">
+                    <span class="col-span-5 text-text-secondary uppercase">CONCURRENCY</span>
+                    <span class="col-span-7 font-code-block text-code-block font-medium text-text-primary">Lock-Free
+                      Cas, SPMC/MPMC, Actor Invariants</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Digital Cryptographic Signature Block -->
+              <div class="border border-border-hairline p-space-md bg-surface-subtle space-y-space-sm">
+                <div
+                  class="flex items-center justify-between text-text-secondary font-label-mono-xs text-label-mono-xs uppercase">
+                  <span>CRYPTOGRAPHIC SIGNATURE</span>
+                  <span>KEY_ID: 0x9AF0C81E</span>
+                </div>
+                <!-- Structural Inline SVG Vector Signature & Hash Geometry -->
+                <div
+                  class="h-16 w-full flex items-center justify-center bg-surface-canvas border border-border-hairline px-space-md overflow-hidden">
+                  <svg class="w-full h-10 text-primary" fill="none" viewbox="0 0 320 40"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M4 22C24 6 36 34 52 20C68 6 78 30 96 18C114 6 122 36 140 22C158 8 174 24 192 14C210 4 220 32 238 20C256 8 266 26 284 16C298 8 308 26 316 20"
+                      stroke="currentColor" stroke-linecap="square" stroke-width="1.5"></path>
+                    <circle cx="52" cy="20" fill="currentColor" r="2.5"></circle>
+                    <circle cx="140" cy="22" fill="currentColor" r="2.5"></circle>
+                    <circle cx="238" cy="20" fill="currentColor" r="2.5"></circle>
+                    <line stroke="currentColor" stroke-dasharray="2 3" stroke-width="0.5" x1="4" x2="316" y1="36"
+                      y2="36"></line>
+                  </svg>
+                </div>
+                <div class="font-code-block text-label-mono-xs text-text-secondary break-all select-all leading-tight">
+                  SIG: SHA256:7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069 [VALIDATED]
+                </div>
+              </div>
+            </div>
+            <!-- Sticky Column Base Coordinates -->
+            <div
+              class="border-t border-border-hairline p-space-md bg-surface-canvas hidden lg:flex items-center justify-between font-label-mono-xs text-label-mono-xs uppercase text-text-secondary">
+              <span>LAT/LONG: 37.7749° N, 122.4194° W</span>
+              <span>SYSTEM DISCIPLINE: 0-RT</span>
+            </div>
+          </aside>
+          <!-- RIGHT COLUMN: INTERACTIVE TECHNICAL MODULES & SCIENTIFIC FEED (60%) -->
+          <section class="w-full lg:w-[60%] xl:w-[62%] flex flex-col divide-y divide-border-hairline bg-surface-canvas">
+            <!-- MODULE 01: ARCHITECTURAL PIPELINE (INTERACTIVE STATE VERIFICATION) -->
+            <div class="p-gutter md:p-space-lg lg:p-space-xl space-y-space-lg" id="pipeline">
+              <div
+                class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-border-hairline pb-space-sm gap-space-xs">
+                <div class="flex items-center space-x-space-sm">
+                  <span
+                    class="font-label-mono text-label-mono uppercase tracking-widest text-text-secondary font-bold">01
+                    //</span>
+                  <span
+                    class="font-label-mono text-label-mono uppercase tracking-widest text-text-primary font-bold">ARCHITECTURAL
+                    PIPELINE</span>
+                </div>
+                <div class="flex items-center space-x-space-xs">
+                  <span class="inline-block w-2 h-2 bg-text-primary"></span>
+                  <span
+                    class="font-label-mono-xs text-label-mono-xs uppercase tracking-widest bg-primary text-on-primary px-space-xs py-0.5">
+                    99.999% DETERMINISTIC INVARIANT
+                  </span>
+                </div>
+              </div>
+              <!-- Step Progression Grid -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-border-hairline border border-border-hairline">
+                <!-- Stage 01 -->
+                <div
+                  class="bg-surface-canvas p-space-md flex flex-col justify-between hover:bg-surface-subtle transition-none relative group">
+                  <div
+                    class="flex items-center justify-between border-b border-border-hairline pb-space-xs mb-space-sm">
+                    <span class="font-label-mono-xs text-label-mono-xs text-text-secondary font-bold">PHASE 01</span>
+                    <span
+                      class="font-label-mono-xs text-label-mono-xs bg-surface-subtle px-1.5 py-0.5 border border-border-hairline font-bold">SPEC</span>
+                  </div>
+                  <h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-primary mb-space-xs">
+                    RESEARCH &amp; FORMAL SPEC
+                  </h3>
+                  <p class="font-body-sm text-body-sm text-text-secondary mb-space-md leading-relaxed">
+                    TLA+ model checking, safety and liveness invariant proving, state machine formulation before a
+                    single line of machine code is written.
+                  </p>
+                  <div
+                    class="pt-space-xs border-t border-border-subtle flex items-center justify-between text-text-secondary font-label-mono-xs text-label-mono-xs">
+                    <span>INVARIANT DEPTH</span>
+                    <span class="font-code-block text-code-block text-text-primary font-bold">2.4M STATES</span>
+                  </div>
+                </div>
+                <!-- Stage 02 -->
+                <div
+                  class="bg-surface-canvas p-space-md flex flex-col justify-between hover:bg-surface-subtle transition-none relative group">
+                  <div
+                    class="flex items-center justify-between border-b border-border-hairline pb-space-xs mb-space-sm">
+                    <span class="font-label-mono-xs text-label-mono-xs text-text-secondary font-bold">PHASE 02</span>
+                    <span
+                      class="font-label-mono-xs text-label-mono-xs bg-surface-subtle px-1.5 py-0.5 border border-border-hairline font-bold">KERNEL</span>
+                  </div>
+                  <h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-primary mb-space-xs">
+                    ZERO-COPY MEMORY LAYOUTS
+                  </h3>
+                  <p class="font-body-sm text-body-sm text-text-secondary mb-space-md leading-relaxed">
+                    Hardware-aligned cache locality, page-pinned circular ring buffers, and NUMA-aware synchronization
+                    primitives without heap locks.
+                  </p>
+                  <div
+                    class="pt-space-xs border-t border-border-subtle flex items-center justify-between text-text-secondary font-label-mono-xs text-label-mono-xs">
+                    <span>CACHE HIT RATE</span>
+                    <span class="font-code-block text-code-block text-text-primary font-bold">L1/L2 &gt; 99.4%</span>
+                  </div>
+                </div>
+                <!-- Stage 03 -->
+                <div
+                  class="bg-surface-canvas p-space-md flex flex-col justify-between hover:bg-surface-subtle transition-none relative group">
+                  <div
+                    class="flex items-center justify-between border-b border-border-hairline pb-space-xs mb-space-sm">
+                    <span class="font-label-mono-xs text-label-mono-xs text-text-secondary font-bold">PHASE 03</span>
+                    <span
+                      class="font-label-mono-xs text-label-mono-xs bg-surface-subtle px-1.5 py-0.5 border border-border-hairline font-bold">CORE</span>
+                  </div>
+                  <h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-primary mb-space-xs">
+                    DETERMINISTIC RUNTIME
+                  </h3>
+                  <p class="font-body-sm text-body-sm text-text-secondary mb-space-md leading-relaxed">
+                    Explicit seed-controlled pseudo-random execution engines with discrete logical time advancement.
+                    Full bit-level replay capability.
+                  </p>
+                  <div
+                    class="pt-space-xs border-t border-border-subtle flex items-center justify-between text-text-secondary font-label-mono-xs text-label-mono-xs">
+                    <span>TRACE REPRODUCIBILITY</span>
+                    <span class="font-code-block text-code-block text-text-primary font-bold">100.00% BITWISE</span>
+                  </div>
+                </div>
+                <!-- Stage 04 -->
+                <div
+                  class="bg-surface-canvas p-space-md flex flex-col justify-between hover:bg-surface-subtle transition-none relative group">
+                  <div
+                    class="flex items-center justify-between border-b border-border-hairline pb-space-xs mb-space-sm">
+                    <span class="font-label-mono-xs text-label-mono-xs text-text-secondary font-bold">PHASE 04</span>
+                    <span
+                      class="font-label-mono-xs text-label-mono-xs bg-primary text-on-primary px-1.5 py-0.5 border border-border-hairline font-bold">DEPLOY</span>
+                  </div>
+                  <h3 class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-primary mb-space-xs">
+                    CHAOS &amp; SMT VERIFICATION
+                  </h3>
+                  <p class="font-body-sm text-body-sm text-text-secondary mb-space-md leading-relaxed">
+                    Jepsen-style network partition injection, LLVM-sanitizer sweeps, and automated SMT assertion
+                    extraction at cluster boundary lines.
+                  </p>
+                  <div
+                    class="pt-space-xs border-t border-border-subtle flex items-center justify-between text-text-secondary font-label-mono-xs text-label-mono-xs">
+                    <span>DIVERGENCE EVENTS</span>
+                    <span class="font-code-block text-code-block text-text-primary font-bold">0 RECORDED</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- MODULE 02: INTERACTIVE TYPE-SAFE CODE DIFF SANDBOX -->
+            <div class="p-gutter md:p-space-lg lg:p-space-xl space-y-space-md" id="sandbox">
+              <div
+                class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-border-hairline pb-space-sm gap-space-xs">
+                <div class="flex items-center space-x-space-sm">
+                  <span
+                    class="font-label-mono text-label-mono uppercase tracking-widest text-text-secondary font-bold">02
+                    //</span>
+                  <span
+                    class="font-label-mono text-label-mono uppercase tracking-widest text-text-primary font-bold">TYPE-SAFE
+                    ARTIFACT SANDBOX</span>
+                </div>
+                <div class="font-label-mono-xs text-label-mono-xs uppercase tracking-wider text-text-secondary">
+                  DIFF: NAIVE_HEAP vs ZERO_COPY_PINNED
+                </div>
+              </div>
+              <!-- Code Diff Window -->
+              <div class="border border-border-hairline bg-surface-canvas overflow-hidden">
+                <!-- Window Toolbar -->
+                <div
+                  class="bg-surface-subtle px-space-md py-space-xs border-b border-border-hairline flex flex-wrap items-center justify-between gap-space-sm">
+                  <div class="flex items-center space-x-2">
+                    <span class="w-2.5 h-2.5 bg-primary inline-block"></span>
+                    <span
+                      class="font-label-mono text-label-mono uppercase font-bold text-text-primary">SRC/RUNTIME/BUFFER_POOL.RS</span>
+                  </div>
+                  <div class="flex items-center space-x-space-xs">
+                    <button
+                      class="font-label-mono-xs text-label-mono-xs uppercase px-space-sm py-1 border border-border-hairline bg-surface-canvas hover:bg-primary hover:text-on-primary transition-none"
+                      id="btn-copy-ast" onclick="copyAstMock()">
+                      [COPY AST]
+                    </button>
+                    <button
+                      class="font-label-mono-xs text-label-mono-xs uppercase px-space-sm py-1 bg-primary text-on-primary border border-border-hairline hover:bg-surface-canvas hover:text-primary transition-none font-bold"
+                      id="btn-run-bench" onclick="runBenchmarkMock()">
+                      [EXECUTE BENCHMARK]
+                    </button>
+                  </div>
+                </div>
+                <!-- Code Comparison Block -->
+                <div
+                  class="p-space-md overflow-x-auto font-code-block text-code-block leading-relaxed bg-surface-canvas text-text-primary">
+                  <div class="text-text-secondary font-label-mono-xs uppercase pb-2 mb-2 border-b border-border-subtle">
+                    // COMPILER IR: ATOMIC RING BUFFER EMISSION</div>
+                  <div class="space-y-1">
+                    <div class="text-text-secondary flex items-start">
+                      <span class="w-8 select-none text-text-muted">01</span>
+                      <span><span class="font-bold">pub struct</span> ExecutionContext&lt;P: StatePolicy&gt; {</span>
+                    </div>
+                    <div class="text-text-secondary flex items-start">
+                      <span class="w-8 select-none text-text-muted">02</span>
+                      <span class="pl-4">engine_id: EpochNonce,</span>
+                    </div>
+                    <!-- Removed Naive Line -->
+                    <div
+                      class="bg-surface-muted border-l-2 border-text-secondary text-text-secondary flex items-start -mx-space-md px-space-md py-0.5">
+                      <span class="w-8 select-none font-bold text-text-primary">- 03</span>
+                      <span class="pl-4 font-medium line-through">let mut buffer: Vec&lt;u8&gt; =
+                        Vec::with_capacity(size);</span>
+                    </div>
+                    <!-- Added Optimized Line -->
+                    <div
+                      class="bg-surface-subtle border-l-2 border-border-hairline text-text-primary flex items-start -mx-space-md px-space-md py-0.5">
+                      <span class="w-8 select-none font-bold text-text-primary">+ 03</span>
+                      <span class="pl-4 font-bold">let buffer: Pin&lt;Arc&lt;SharedRingBuffer&lt;ZeroCopy&gt;&gt;&gt; =
+                        Ring::allocate_pinned(PAGE_SIZE)?;</span>
+                    </div>
+                    <div class="text-text-secondary flex items-start">
+                      <span class="w-8 select-none text-text-muted">04</span>
+                      <span class="pl-4"><span class="font-bold">unsafe</span> {
+                        buffer.set_write_barrier(BarrierSemantics::SeqCst) };</span>
+                    </div>
+                    <div class="text-text-secondary flex items-start">
+                      <span class="w-8 select-none text-text-muted">05</span>
+                      <span>}</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Telemetry Matrix Bar -->
+                <div
+                  class="grid grid-cols-2 md:grid-cols-4 border-t border-border-hairline divide-x divide-border-hairline bg-surface-subtle font-label-mono text-label-mono">
+                  <div class="p-space-sm flex flex-col justify-center">
+                    <span class="text-text-secondary text-label-mono-xs uppercase">THROUGHPUT GAIN</span>
+                    <span class="font-bold text-text-primary font-code-block" id="metric-tput">+340.2%</span>
+                  </div>
+                  <div class="p-space-sm flex flex-col justify-center">
+                    <span class="text-text-secondary text-label-mono-xs uppercase">HEAP ALLOCS</span>
+                    <span class="font-bold text-text-primary font-code-block" id="metric-alloc">0 / OP [ZERO]</span>
+                  </div>
+                  <div class="p-space-sm flex flex-col justify-center">
+                    <span class="text-text-secondary text-label-mono-xs uppercase">LATENCY P99</span>
+                    <span class="font-bold text-text-primary font-code-block" id="metric-lat">1.24 μs</span>
+                  </div>
+                  <div class="p-space-sm flex flex-col justify-center">
+                    <span class="text-text-secondary text-label-mono-xs uppercase">SMT VERIFIED</span>
+                    <span class="font-bold text-text-primary font-code-block">100% SOUND</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- MODULE 03: SELECTED ARTIFACTS & RESEARCH PAPERS -->
+            <div class="p-gutter md:p-space-lg lg:p-space-xl space-y-space-md" id="artifacts">
+              <div
+                class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-border-hairline pb-space-sm gap-space-xs">
+                <div class="flex items-center space-x-space-sm">
+                  <span
+                    class="font-label-mono text-label-mono uppercase tracking-widest text-text-secondary font-bold">03
+                    //</span>
+                  <span
+                    class="font-label-mono text-label-mono uppercase tracking-widest text-text-primary font-bold">SELECTED
+                    ARTIFACTS &amp; SYSTEMS</span>
+                </div>
+                <div class="font-label-mono-xs text-label-mono-xs uppercase tracking-wider text-text-secondary">
+                  TOTAL 04 REPOSITORIES / PAPERS
+                </div>
+              </div>
+              <!-- 2x2 Dense Matrix -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-border-hairline border border-border-hairline">
+                <!-- Item 01 -->
+                <div
+                  class="bg-surface-canvas p-space-md flex flex-col justify-between hover:bg-surface-subtle transition-none">
+                  <div>
+                    <div
+                      class="flex items-center justify-between border-b border-border-hairline pb-space-xs mb-space-sm">
+                      <span
+                        class="font-label-mono-xs text-label-mono-xs uppercase font-bold text-text-secondary">ARTIFACT-01</span>
+                      <span
+                        class="font-label-mono-xs text-label-mono-xs bg-surface-subtle px-1 border border-border-hairline uppercase font-bold">WASM
+                        / KERNEL</span>
+                    </div>
+                    <h4 class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-primary font-bold">
+                      Aether-VM
+                    </h4>
+                    <p class="font-body-sm text-body-sm text-text-secondary mt-space-xs leading-relaxed">
+                      Microkernel WebAssembly runtime with mechanically verified linear memory bounds. Eliminates
+                      Spectre speculation gadgets via isolated address spaces.
+                    </p>
+                  </div>
+                  <div
+                    class="mt-space-md pt-space-sm border-t border-border-hairline flex items-center justify-between">
+                    <span class="font-label-mono-xs text-label-mono-xs text-text-secondary">REV: v2.3.1</span>
+                    <div class="flex space-x-space-xs">
+                      <a class="font-label-mono-xs text-label-mono-xs uppercase underline hover:bg-primary hover:text-on-primary px-1 py-0.5 border border-transparent hover:border-border-hairline"
+                        href="#artifacts">[GITHUB]</a>
+                      <a class="font-label-mono-xs text-label-mono-xs uppercase underline hover:bg-primary hover:text-on-primary px-1 py-0.5 border border-transparent hover:border-border-hairline"
+                        href="#artifacts">[PAPER PDF]</a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Item 02 -->
+                <div
+                  class="bg-surface-canvas p-space-md flex flex-col justify-between hover:bg-surface-subtle transition-none">
+                  <div>
+                    <div
+                      class="flex items-center justify-between border-b border-border-hairline pb-space-xs mb-space-sm">
+                      <span
+                        class="font-label-mono-xs text-label-mono-xs uppercase font-bold text-text-secondary">ARTIFACT-02</span>
+                      <span
+                        class="font-label-mono-xs text-label-mono-xs bg-surface-subtle px-1 border border-border-hairline uppercase font-bold">STORAGE
+                        / VECTOR</span>
+                    </div>
+                    <h4 class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-primary font-bold">
+                      ChronosDB
+                    </h4>
+                    <p class="font-body-sm text-body-sm text-text-secondary mt-space-xs leading-relaxed">
+                      Deterministic time-travel relational database engine utilizing tree-structured vector clocks for
+                      arbitrary historical point-in-time branch evaluation.
+                    </p>
+                  </div>
+                  <div
+                    class="mt-space-md pt-space-sm border-t border-border-hairline flex items-center justify-between">
+                    <span class="font-label-mono-xs text-label-mono-xs text-text-secondary">SPEC: DRAFT-04</span>
+                    <div class="flex space-x-space-xs">
+                      <a class="font-label-mono-xs text-label-mono-xs uppercase underline hover:bg-primary hover:text-on-primary px-1 py-0.5 border border-transparent hover:border-border-hairline"
+                        href="#artifacts">[DEMO CLI]</a>
+                      <a class="font-label-mono-xs text-label-mono-xs uppercase underline hover:bg-primary hover:text-on-primary px-1 py-0.5 border border-transparent hover:border-border-hairline"
+                        href="#artifacts">[SPEC RFC]</a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Item 03 -->
+                <div
+                  class="bg-surface-canvas p-space-md flex flex-col justify-between hover:bg-surface-subtle transition-none">
+                  <div>
+                    <div
+                      class="flex items-center justify-between border-b border-border-hairline pb-space-xs mb-space-sm">
+                      <span
+                        class="font-label-mono-xs text-label-mono-xs uppercase font-bold text-text-secondary">ARTIFACT-03</span>
+                      <span
+                        class="font-label-mono-xs text-label-mono-xs bg-surface-subtle px-1 border border-border-hairline uppercase font-bold">LSP
+                        / COMPILER</span>
+                    </div>
+                    <h4 class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-primary font-bold">
+                      TypeInfer-LSP
+                    </h4>
+                    <p class="font-body-sm text-body-sm text-text-secondary mt-space-xs leading-relaxed">
+                      Sub-millisecond incremental type checker and language server protocol daemon with memoized
+                      demand-driven query engines for dependent type systems.
+                    </p>
+                  </div>
+                  <div
+                    class="mt-space-md pt-space-sm border-t border-border-hairline flex items-center justify-between">
+                    <span class="font-label-mono-xs text-label-mono-xs text-text-secondary">ENGINE: RUST 1.84</span>
+                    <div class="flex space-x-space-xs">
+                      <a class="font-label-mono-xs text-label-mono-xs uppercase underline hover:bg-primary hover:text-on-primary px-1 py-0.5 border border-transparent hover:border-border-hairline"
+                        href="#artifacts">[DOCS]</a>
+                      <a class="font-label-mono-xs text-label-mono-xs uppercase underline hover:bg-primary hover:text-on-primary px-1 py-0.5 border border-transparent hover:border-border-hairline"
+                        href="#artifacts">[CRATE]</a>
+                    </div>
+                  </div>
+                </div>
+                <!-- Item 04 -->
+                <div
+                  class="bg-surface-canvas p-space-md flex flex-col justify-between hover:bg-surface-subtle transition-none">
+                  <div>
+                    <div
+                      class="flex items-center justify-between border-b border-border-hairline pb-space-xs mb-space-sm">
+                      <span
+                        class="font-label-mono-xs text-label-mono-xs uppercase font-bold text-text-secondary">ARTIFACT-04</span>
+                      <span
+                        class="font-label-mono-xs text-label-mono-xs bg-surface-subtle px-1 border border-border-hairline uppercase font-bold">RAFT
+                        / NVME</span>
+                    </div>
+                    <h4 class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-primary font-bold">
+                      Synapse-KV
+                    </h4>
+                    <p class="font-body-sm text-body-sm text-text-secondary mt-space-xs leading-relaxed">
+                      Lock-free Raft consensus cluster engine bypassing kernel filesystem overhead using io_uring Direct
+                      I/O and polled completion rings.
+                    </p>
+                  </div>
+                  <div
+                    class="mt-space-md pt-space-sm border-t border-border-hairline flex items-center justify-between">
+                    <span class="font-label-mono-xs text-label-mono-xs text-text-secondary">IO: DIRECT_URING</span>
+                    <div class="flex space-x-space-xs">
+                      <a class="font-label-mono-xs text-label-mono-xs uppercase underline hover:bg-primary hover:text-on-primary px-1 py-0.5 border border-transparent hover:border-border-hairline"
+                        href="#artifacts">[BENCHMARKS]</a>
+                      <a class="font-label-mono-xs text-label-mono-xs uppercase underline hover:bg-primary hover:text-on-primary px-1 py-0.5 border border-transparent hover:border-border-hairline"
+                        href="#artifacts">[SOURCE]</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- MODULE 04: EDITORIAL WRITINGS & RESEARCH PAPERS ARCHIVE -->
+            <div class="p-gutter md:p-space-lg lg:p-space-xl space-y-space-md" id="writing">
+              <div
+                class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-border-hairline pb-space-sm gap-space-xs">
+                <div class="flex items-center space-x-space-sm">
+                  <span
+                    class="font-label-mono text-label-mono uppercase tracking-widest text-text-secondary font-bold">04
+                    //</span>
+                  <span
+                    class="font-label-mono text-label-mono uppercase tracking-widest text-text-primary font-bold">RESEARCH
+                    NOTES &amp; ESSAYS</span>
+                </div>
+                <div class="font-label-mono-xs text-label-mono-xs uppercase tracking-wider text-text-secondary">
+                  PEER-REVIEWED &amp; INTERNAL MEMOS
+                </div>
+              </div>
+              <!-- Structured High-Density Table View -->
+              <div class="border border-border-hairline bg-surface-canvas overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr
+                      class="bg-surface-subtle border-b border-border-hairline font-label-mono text-label-mono text-text-primary">
+                      <th class="p-space-sm uppercase font-semibold w-24">DATE</th>
+                      <th class="p-space-sm uppercase font-semibold">TITLE / DISPATCH</th>
+                      <th class="p-space-sm uppercase font-semibold hidden md:table-cell w-36">DISCIPLINE</th>
+                      <th class="p-space-sm uppercase font-semibold text-right w-28">ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-border-hairline font-body-sm text-body-sm">
+                    <tr class="hover:bg-surface-subtle transition-none group">
+                      <td class="p-space-sm font-code-block text-code-block text-text-secondary whitespace-nowrap">
+                        2025.02</td>
+                      <td class="p-space-sm font-semibold text-text-primary group-hover:underline">
+                        The Illusion of Asynchronous Safety in Distributed Actors
+                      </td>
+                      <td
+                        class="p-space-sm font-label-mono-xs text-label-mono-xs uppercase text-text-secondary hidden md:table-cell">
+                        [SYSTEMS]
+                      </td>
+                      <td class="p-space-sm text-right">
+                        <a class="font-label-mono text-label-mono uppercase font-bold text-text-primary underline"
+                          href="#writing">
+                          READ →
+                        </a>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-surface-subtle transition-none group">
+                      <td class="p-space-sm font-code-block text-code-block text-text-secondary whitespace-nowrap">
+                        2024.11</td>
+                      <td class="p-space-sm font-semibold text-text-primary group-hover:underline">
+                        Compiling Dependent Types to Zero-Cost Machine Code
+                      </td>
+                      <td
+                        class="p-space-sm font-label-mono-xs text-label-mono-xs uppercase text-text-secondary hidden md:table-cell">
+                        [COMPILERS]
+                      </td>
+                      <td class="p-space-sm text-right">
+                        <a class="font-label-mono text-label-mono uppercase font-bold text-text-primary underline"
+                          href="#writing">
+                          READ →
+                        </a>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-surface-subtle transition-none group">
+                      <td class="p-space-sm font-code-block text-code-block text-text-secondary whitespace-nowrap">
+                        2024.08</td>
+                      <td class="p-space-sm font-semibold text-text-primary group-hover:underline">
+                        Formal Invariants in Production: Lessons from 10B Daily Events
+                      </td>
+                      <td
+                        class="p-space-sm font-label-mono-xs text-label-mono-xs uppercase text-text-secondary hidden md:table-cell">
+                        [VERIFICATION]
+                      </td>
+                      <td class="p-space-sm text-right">
+                        <a class="font-label-mono text-label-mono uppercase font-bold text-text-primary underline"
+                          href="#writing">
+                          READ →
+                        </a>
+                      </td>
+                    </tr>
+                    <tr class="hover:bg-surface-subtle transition-none group">
+                      <td class="p-space-sm font-code-block text-code-block text-text-secondary whitespace-nowrap">
+                        2024.04</td>
+                      <td class="p-space-sm font-semibold text-text-primary group-hover:underline">
+                        Linear Logic as an Allocation Strategy for Embedded Kernels
+                      </td>
+                      <td
+                        class="p-space-sm font-label-mono-xs text-label-mono-xs uppercase text-text-secondary hidden md:table-cell">
+                        [THEORY]
+                      </td>
+                      <td class="p-space-sm text-right">
+                        <a class="font-label-mono text-label-mono uppercase font-bold text-text-primary underline"
+                          href="#writing">
+                          READ →
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- MODULE 05: EXPERIENCE & CHRONOLOGY MATRIX (TYPESAFE.AI-STYLE EXPANDABLE ROWS) -->
+            <div class="p-gutter md:p-space-lg lg:p-space-xl space-y-space-md" id="experience">
+              <div
+                class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-border-hairline pb-space-sm gap-space-xs">
+                <div class="flex items-center space-x-space-sm">
+                  <span
+                    class="font-label-mono text-label-mono uppercase tracking-widest text-text-secondary font-bold">05
+                    //</span>
+                  <span
+                    class="font-label-mono text-label-mono uppercase tracking-widest text-text-primary font-bold">CHRONOLOGY
+                    &amp; IMPACT MATRIX</span>
+                </div>
+                <div class="font-label-mono-xs text-label-mono-xs uppercase tracking-wider text-text-secondary">
+                  2017 — PRESENT
+                </div>
+              </div>
+              <div class="border border-border-hairline divide-y divide-border-hairline bg-surface-canvas">
+                <!-- Accordion 01 -->
+                <div class="flex flex-col">
+                  <button
+                    class="w-full text-left p-space-md flex items-start justify-between bg-surface-canvas hover:bg-surface-subtle transition-none"
+                    onclick="toggleExp('exp-1')">
+                    <div class="space-y-space-xs pr-space-md">
+                      <div class="flex flex-wrap items-center gap-space-sm">
+                        <span class="font-headline-sm text-headline-sm uppercase font-bold text-text-primary">LEAD
+                          SYSTEMS ARCHITECT</span>
+                        <span
+                          class="font-label-mono-xs text-label-mono-xs border border-border-hairline px-1.5 py-0.5 bg-surface-subtle">HYPERION
+                          RESEARCH</span>
+                      </div>
+                      <div class="font-label-mono text-label-mono text-text-secondary">
+                        2022 — PRESENT // RUNTIME ARCHITECTURE GROUP
+                      </div>
+                    </div>
+                    <span class="font-code-block text-code-block font-bold text-text-primary" id="exp-1-icon">[−]</span>
+                  </button>
+                  <div
+                    class="px-space-md pb-space-md pt-0 bg-surface-subtle border-t border-border-hairline space-y-space-sm"
+                    id="exp-1">
+                    <p class="font-body-md text-body-md text-text-primary pt-space-sm leading-relaxed">
+                      Directing the core systems team in developing a high-throughput Byzantine fault-tolerant
+                      coordination layer. Re-engineered the zero-copy networking pipeline yielding a 65% reduction in
+                      latency variance across 4,000 nodes.
+                    </p>
+                    <div class="flex flex-wrap gap-space-xs pt-space-xs font-label-mono-xs text-label-mono-xs">
+                      <span class="border border-border-hairline px-2 py-0.5 bg-surface-canvas">[RFC-018: CONSENSUS
+                        BOUNDS]</span>
+                      <span class="border border-border-hairline px-2 py-0.5 bg-surface-canvas">[EBPF TELEMETRY
+                        MESH]</span>
+                      <span class="border border-border-hairline px-2 py-0.5 bg-surface-canvas">[VERIFIED DISK
+                        LOGGING]</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Accordion 02 -->
+                <div class="flex flex-col">
+                  <button
+                    class="w-full text-left p-space-md flex items-start justify-between bg-surface-canvas hover:bg-surface-subtle transition-none"
+                    onclick="toggleExp('exp-2')">
+                    <div class="space-y-space-xs pr-space-md">
+                      <div class="flex flex-wrap items-center gap-space-sm">
+                        <span class="font-headline-sm text-headline-sm uppercase font-bold text-text-primary">SENIOR
+                          STAFF ENGINEER</span>
+                        <span
+                          class="font-label-mono-xs text-label-mono-xs border border-border-hairline px-1.5 py-0.5 bg-surface-subtle">VECTOR
+                          LABS</span>
+                      </div>
+                      <div class="font-label-mono text-label-mono text-text-secondary">
+                        2019 — 2022 // COMPILER INFRASTRUCTURE
+                      </div>
+                    </div>
+                    <span class="font-code-block text-code-block font-bold text-text-primary" id="exp-2-icon">[+]</span>
+                  </button>
+                  <div
+                    class="hidden px-space-md pb-space-md pt-0 bg-surface-subtle border-t border-border-hairline space-y-space-sm"
+                    id="exp-2">
+                    <p class="font-body-md text-body-md text-text-primary pt-space-sm leading-relaxed">
+                      Architected the JIT compilation engine for a distributed streaming analytics pipeline. Introduced
+                      custom LLVM target optimization passes that eliminated redundant bounds checks in inner
+                      computational loops.
+                    </p>
+                    <div class="flex flex-wrap gap-space-xs pt-space-xs font-label-mono-xs text-label-mono-xs">
+                      <span class="border border-border-hairline px-2 py-0.5 bg-surface-canvas">[LLVM BACKEND
+                        EMISSION]</span>
+                      <span class="border border-border-hairline px-2 py-0.5 bg-surface-canvas">[STREAM PARTITION
+                        ENGINE]</span>
+                      <span class="border border-border-hairline px-2 py-0.5 bg-surface-canvas">[SUB-MS PIPELINE]</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Accordion 03 -->
+                <div class="flex flex-col">
+                  <button
+                    class="w-full text-left p-space-md flex items-start justify-between bg-surface-canvas hover:bg-surface-subtle transition-none"
+                    onclick="toggleExp('exp-3')">
+                    <div class="space-y-space-xs pr-space-md">
+                      <div class="flex flex-wrap items-center gap-space-sm">
+                        <span class="font-headline-sm text-headline-sm uppercase font-bold text-text-primary">CORE
+                          CONTRIBUTOR</span>
+                        <span
+                          class="font-label-mono-xs text-label-mono-xs border border-border-hairline px-1.5 py-0.5 bg-surface-subtle">RUST
+                          COMPILER WG</span>
+                      </div>
+                      <div class="font-label-mono text-label-mono text-text-secondary">
+                        2017 — 2019 // TYPE SYSTEM &amp; POLONIUS
+                      </div>
+                    </div>
+                    <span class="font-code-block text-code-block font-bold text-text-primary" id="exp-3-icon">[+]</span>
+                  </button>
+                  <div
+                    class="hidden px-space-md pb-space-md pt-0 bg-surface-subtle border-t border-border-hairline space-y-space-sm"
+                    id="exp-3">
+                    <p class="font-body-md text-body-md text-text-primary pt-space-sm leading-relaxed">
+                      Contributed to the non-lexical lifetimes (NLL) analysis engine and Chalk trait-solver unification.
+                      Authored high-precision diagnostic traces for complex higher-ranked trait bounds (HRTBs).
+                    </p>
+                    <div class="flex flex-wrap gap-space-xs pt-space-xs font-label-mono-xs text-label-mono-xs">
+                      <span class="border border-border-hairline px-2 py-0.5 bg-surface-canvas">[POLONIUS BORROW
+                        CHECKER]</span>
+                      <span class="border border-border-hairline px-2 py-0.5 bg-surface-canvas">[CHALK TRAIT
+                        SOLVER]</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- MODULE 06: PERSONAL LOGS & ANALOG EXPERIMENTS (3-COLUMN MATRIX) -->
+            <div class="p-gutter md:p-space-lg lg:p-space-xl space-y-space-md" id="archive">
+              <div
+                class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-border-hairline pb-space-sm gap-space-xs">
+                <div class="flex items-center space-x-space-sm">
+                  <span
+                    class="font-label-mono text-label-mono uppercase tracking-widest text-text-secondary font-bold">06
+                    //</span>
+                  <span
+                    class="font-label-mono text-label-mono uppercase tracking-widest text-text-primary font-bold">ANALOG
+                    EXPERIMENTS &amp; MONOGRAPHS</span>
+                </div>
+                <div class="font-label-mono-xs text-label-mono-xs uppercase tracking-wider text-text-secondary">
+                  PHYSICAL LAB NOTEBOOK
+                </div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-border-hairline border border-border-hairline">
+                <!-- Analog Card 1 -->
+                <div class="bg-surface-canvas p-space-md flex flex-col justify-between">
+                  <div>
+                    <div
+                      class="font-label-mono-xs text-label-mono-xs uppercase text-text-secondary font-bold mb-space-xs border-b border-border-hairline pb-1">
+                      [LOG: OPTICS_120MM]
+                    </div>
+                    <h5 class="font-headline-sm text-headline-sm uppercase font-bold text-text-primary mb-space-xs">
+                      Medium Format Calibration
+                    </h5>
+                    <p class="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+                      Hasselblad 500C/M &amp; Zeiss Planar 80mm f/2.8. Chemical processing of Kodak Tri-X 400 in Rodinal
+                      1:50. Optical bench resolution measurements against chrome USAF 1951 test charts.
+                    </p>
+                  </div>
+                  <div
+                    class="mt-space-md pt-space-xs border-t border-border-subtle font-code-block text-label-mono-xs text-text-primary">
+                    INDEX: 6X6_SQUARE_MONOCHROME
+                  </div>
+                </div>
+                <!-- Analog Card 2 -->
+                <div class="bg-surface-canvas p-space-md flex flex-col justify-between">
+                  <div>
+                    <div
+                      class="font-label-mono-xs text-label-mono-xs uppercase text-text-secondary font-bold mb-space-xs border-b border-border-hairline pb-1">
+                      [LOG: HARDWARE_FIRMWARE]
+                    </div>
+                    <h5 class="font-headline-sm text-headline-sm uppercase font-bold text-text-primary mb-space-xs">
+                      Columnar Keyboards
+                    </h5>
+                    <p class="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+                      Custom split 36-key Corne chassis milled from solid aluminum blocks. Choc V1 linear switches
+                      modified with 35g springs. Bespoke embedded firmware written in bare-metal Rust with zero heap.
+                    </p>
+                  </div>
+                  <div
+                    class="mt-space-md pt-space-xs border-t border-border-subtle font-code-block text-label-mono-xs text-text-primary">
+                    LATENCY: 125μS SCAN_RATE
+                  </div>
+                </div>
+                <!-- Analog Card 3 -->
+                <div class="bg-surface-canvas p-space-md flex flex-col justify-between">
+                  <div>
+                    <div
+                      class="font-label-mono-xs text-label-mono-xs uppercase text-text-secondary font-bold mb-space-xs border-b border-border-hairline pb-1">
+                      [LOG: MONOGRAPHS]
+                    </div>
+                    <h5 class="font-headline-sm text-headline-sm uppercase font-bold text-text-primary mb-space-xs">
+                      Seminal Readings
+                    </h5>
+                    <p class="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+                      Re-annotating Benjamin Pierce's <span class="text-text-primary italic">Types and Programming
+                        Languages</span> and Lamport's original 1978 time paper. Examining categorical semantics of
+                      linear state.
+                    </p>
+                  </div>
+                  <div
+                    class="mt-space-md pt-space-xs border-t border-border-subtle font-code-block text-label-mono-xs text-text-primary">
+                    VOLUME: TAPL_CH14_HOARE
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- MODULE 07: COLLABORATION BANNER & DISPATCH TRANSMITTER -->
+            <div class="p-gutter md:p-space-lg lg:p-space-xl bg-primary text-on-primary" id="contact">
+              <div class="space-y-space-md">
+                <div class="flex items-center justify-between border-b border-on-primary pb-space-sm">
+                  <span class="font-label-mono text-label-mono uppercase tracking-widest text-on-primary font-bold">07
+                    // SYSTEM UPLINK</span>
+                  <span
+                    class="font-label-mono-xs text-label-mono-xs uppercase tracking-widest bg-surface-canvas text-primary px-1.5 py-0.5 font-bold">
+                    ENCRYPTED TRANSIT
+                  </span>
+                </div>
+                <h3
+                  class="font-headline-lg text-headline-lg tracking-tight uppercase leading-tight text-on-primary font-bold">
+                  READY TO ARCHITECT RESILIENT COMPUTATIONAL SYSTEMS?
+                </h3>
+                <p class="font-body-lg text-body-lg text-surface-dim max-w-xl">
+                  Accepting select consultative research engagements, type-system audits, and high-stakes distributed
+                  consensus architectural reviews.
+                </p>
+                <!-- Monospace Contact Array -->
+                <div
+                  class="grid grid-cols-1 md:grid-cols-2 gap-space-sm border border-on-primary p-space-md bg-primary">
+                  <div class="space-y-1 font-label-mono text-label-mono">
+                    <div class="text-surface-dim uppercase text-label-mono-xs">PRIMARY DISPATCH:</div>
+                    <div class="font-code-block text-code-block font-bold select-all text-on-primary">kai@chen.systems
+                    </div>
+                  </div>
+                  <div class="space-y-1 font-label-mono text-label-mono">
+                    <div class="text-surface-dim uppercase text-label-mono-xs">PGP FINGERPRINT:</div>
+                    <div class="font-code-block text-label-mono-xs select-all text-on-primary">4A89 F012 BE93 C127 D854
+                      9901 2F88 BA21</div>
+                  </div>
+                  <div class="space-y-1 font-label-mono text-label-mono">
+                    <div class="text-surface-dim uppercase text-label-mono-xs">ORCID RESEARCH RECORD:</div>
+                    <div class="font-code-block text-code-block select-all text-on-primary">0000-0002-1825-0001</div>
+                  </div>
+                  <div class="space-y-1 font-label-mono text-label-mono">
+                    <div class="text-surface-dim uppercase text-label-mono-xs">VERSION CONTROL:</div>
+                    <div class="font-code-block text-code-block select-all text-on-primary">github.com/kaichen-sys</div>
+                  </div>
+                </div>
+                <div class="pt-space-sm">
+                  <a class="inline-block bg-surface-canvas text-primary border border-surface-canvas px-space-lg py-space-md font-label-mono text-label-mono font-bold uppercase tracking-wider hover:bg-surface-subtle hover:text-primary transition-none select-none"
+                    href="mailto:kai@chen.systems">
+                    INITIATE TRANSMISSION →
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+      <!-- INTERACTIVE VANILLA JAVASCRIPT CONTROLLERS -->
+      <script>
+        // Accordion Toggle Logic
+        function toggleExp(id) {
+          const panel = document.getElementById(id);
+          const icon = document.getElementById(id + '-icon');
+          if (!panel || !icon) return;
+
+          const isHidden = panel.classList.contains('hidden');
+          if (isHidden) {
+            panel.classList.remove('hidden');
+            icon.textContent = '[-]';
+          } else {
+            panel.classList.add('hidden');
+            icon.textContent = '[+]';
+          }
+        }
+
+        // Benchmark Run Simulation
+        function runBenchmarkMock() {
+          const btn = document.getElementById('btn-run-bench');
+          const tput = document.getElementById('metric-tput');
+          const lat = document.getElementById('metric-lat');
+          const alloc = document.getElementById('metric-alloc');
+
+          if (!btn) return;
+
+          const origText = btn.textContent;
+          btn.textContent = '[EXECUTING...]';
+          btn.classList.add('bg-text-secondary');
+
+          setTimeout(function () {
+            if (tput) tput.textContent = '+384.6%';
+            if (lat) lat.textContent = '1.08 μs';
+            if (alloc) alloc.textContent = '0 / OP [PINNED]';
+            btn.textContent = '[DONE: 10M ITER]';
+            btn.classList.remove('bg-text-secondary');
+
+            setTimeout(function () {
+              btn.textContent = origText;
+            }, 2000);
+          }, 600);
+        }
+
+        // AST Copy Feedback Simulation
+        function copyAstMock() {
+          const btn = document.getElementById('btn-copy-ast');
+          if (!btn) return;
+
+          const origText = btn.textContent;
+          btn.textContent = '[AST COPIED]';
+          setTimeout(function () {
+            btn.textContent = origText;
+          }, 1500);
+        }
+      </script>
+    </div>
+  </main>
+  <footer class="w-full bg-primary text-on-primary border-t border-border-hairline">
+    <div class="w-full px-gutter md:px-margin-desktop py-space-xl">
+      <div
+        class="flex flex-col md:flex-row md:items-center md:justify-between gap-space-lg border-b border-on-primary pb-space-xl mb-space-lg">
+        <div>
+          <div class="font-label-mono text-label-mono uppercase text-on-primary tracking-widest mb-space-xs">// RESEARCH
+            INITIATIVES &amp; COLLABORATION</div>
+          <div class="font-headline-md text-headline-md tracking-tight uppercase text-on-primary">INITIALIZE PROTOCOL
+            COMMUNICATION</div>
+        </div>
+        <div><a
+            class="inline-block bg-surface-canvas text-primary font-label-mono text-label-mono uppercase px-space-lg py-space-md border border-border-hairline hover:bg-surface-subtle hover:text-on-surface transition-none select-none"
+            data-path="contact" href="#">TRANSMIT DISPATCH [INQUIRE]</a></div>
+      </div>
+      <div
+        class="flex flex-col md:flex-row md:items-center justify-between gap-space-md font-label-mono-xs text-label-mono-xs uppercase text-surface-dim">
+        <div class="flex items-center gap-space-lg"><span class="select-none">SYS_REF: KOR-SF-2025.ARCHIVE</span><span
+            class="select-none">SWISS NEO-BRUTALIST ARCHITECTURE</span></div>
+        <div class="flex items-center gap-space-md"><span class="select-none">ALL SYSTEM LOGS SECURED</span><span
+            class="select-none">TYPE // SAFE // RIGOR</span></div>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
