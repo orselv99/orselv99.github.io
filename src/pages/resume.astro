@@ -414,7 +414,11 @@ const totalProjects = experiences.reduce((acc, curr) => acc + curr.projects.leng
                                   <!-- 임의링크 (Arbitrary Link) -->
                                   {task.link && (
                                     <a
-                                      href={task.link.href}
+                                      href={
+                                        task.link.href.startsWith("/") && !task.link.href.startsWith(import.meta.env.BASE_URL)
+                                          ? `${import.meta.env.BASE_URL.replace(/\/$/, "")}${task.link.href}`
+                                          : task.link.href
+                                      }
                                       class="inline-flex items-center gap-1.5 font-label-mono-xs text-label-mono-xs uppercase border border-border-hairline px-2 py-0.5 bg-surface-canvas hover:bg-surface-inverse hover:text-text-inverse transition-none select-none shrink-0 self-start md:self-auto group font-bold"
                                       title={`View documentation / artifact for ${task.link.label}`}
                                     >
