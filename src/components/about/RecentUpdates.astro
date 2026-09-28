@@ -1,0 +1,102 @@
+---
+export interface UpdateItem {
+  date: string;
+  tag: string;
+  title: string;
+  href: string;
+}
+
+interface Props {
+  title?: string;
+  updates?: UpdateItem[];
+  class?: string;
+}
+
+const defaultUpdates: UpdateItem[] = [
+  {
+    date: "2026.03.14",
+    tag: "SYSTEMS",
+    title: "The Illusion of Asynchronous Safety in Distributed Actors",
+    href: "/writing",
+  },
+  {
+    date: "2026.01.20",
+    tag: "COMPILERS",
+    title: "Compiling Dependent Types to Zero-Cost Machine Code",
+    href: "/writing",
+  },
+  {
+    date: "2025.11.28",
+    tag: "KERNEL/IPC",
+    title: "Deterministic Time-Travel Execution for Microkernel IPC",
+    href: "/writing",
+  },
+  {
+    date: "2025.09.15",
+    tag: "THEORY",
+    title: "Linear Logic as an Allocation Strategy for Embedded Kernels",
+    href: "/writing",
+  },
+  {
+    date: "2025.06.02",
+    tag: "CONSENSUS",
+    title: "High-Entropy Fault Injection in Raft Consensus Engines",
+    href: "/writing",
+  },
+];
+
+const {
+  title = "RECENT UPDATES & DISPATCHES",
+  updates = defaultUpdates,
+  class: className = "",
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    "border border-border-hairline bg-surface-canvas h-full flex flex-col justify-between",
+    className,
+  ]}
+>
+  <div>
+    <!-- Header Bar -->
+    <div
+      class="h-10 bg-surface-subtle px-space-md border-b border-border-hairline flex items-center justify-between"
+    >
+      <span
+        class="font-label-mono-xs text-label-mono-xs uppercase font-semibold tracking-wider text-text-secondary"
+      >
+        {title}
+      </span>
+    </div>
+
+    <!-- List of items -->
+    <div
+      class="divide-y divide-border-hairline font-label-mono text-label-mono"
+    >
+      {
+        updates.map((item) => (
+          <a
+            href={item.href}
+            class="group grid grid-cols-1 sm:grid-cols-12 px-space-md py-space-sm items-baseline hover:bg-surface-subtle transition-none gap-y-1"
+          >
+            <div class="sm:col-span-3 font-code-block text-label-mono-xs text-text-secondary whitespace-nowrap">
+              {item.date}
+            </div>
+            <div class="sm:col-span-3 hidden sm:block">
+              <span class="font-label-mono-xs text-label-mono-xs uppercase border border-border-hairline px-1.5 py-0.5 bg-surface-subtle text-text-primary font-medium">
+                #{item.tag}
+              </span>
+            </div>
+            <div class="sm:col-span-5 font-body-sm text-body-sm font-semibold text-text-primary group-hover:underline truncate pr-space-xs">
+              {item.title}
+            </div>
+            <div class="sm:col-span-1 text-right font-label-mono text-label-mono font-bold text-text-primary group-hover:translate-x-0.5 transition-none">
+              →
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import aboutData from "../../docs/about.json";
+import { 
+  BuildSignature,
+  RecentUpdates,
+  SocialLinks
+} from "../components/about";
+
+const { name, role, thesis, socials } = aboutData;
+---
+
+<BaseLayout
+  title={name}
+  description={`${name} — ${role}. ${thesis.replace(/[“”"]/g, "")}`}
+  currentPath="/about"
+>
+  <div class="flex flex-col w-full bg-surface-canvas" id="about">
+    <section class="space-y-space-lg bg-surface-canvas border-b border-border-hairline">
+      <!-- 제목 -->
+      <div class="space-y-space-md">
+        <div class="space-y-space-sm">
+          <h1 class="font-display-hero text-headline-lg md:text-display-hero tracking-tighter text-text-primary leading-none select-none">
+            {name}
+          </h1>
+          <p class="font-headline-sm text-headline-sm uppercase tracking-tight text-text-primary pt-space-xs font-bold">
+            {role}
+          </p>
+        </div>
+      </div>
+
+      <!-- 멋있는 말 -->
+      <div class="space-y-space-sm">
+        <blockquote class="font-body-lg text-body-lg text-text-primary leading-relaxed tracking-tight border-l-2 border-border-hairline pl-space-md py-space-xs max-w-4xl">
+          {thesis}
+        </blockquote>
+      </div>
+
+      <!-- SNS (Email, GitHub, LinkedIn) -->
+      <div class="pb-space-lg">
+        <SocialLinks socials={socials} />
+      </div>
+    </section>
+
+    <section
+      class="py-space-lg md:py-space-xl space-y-space-lg bg-surface-canvas"
+    >
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+        <!-- LEFT: Build Signature (5 cols on desktop) -->
+        <BuildSignature class="lg:col-span-5" />
+
+        <!-- RIGHT: Recent Updates & Dispatches (7 cols on desktop, max 5 items) -->
+        <RecentUpdates class="lg:col-span-7" />
+      </div>
+    </section>
+  </div>
+</BaseLayout>

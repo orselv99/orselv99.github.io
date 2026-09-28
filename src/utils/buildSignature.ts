@@ -1,37 +1,37 @@
-import crypto from 'node:crypto';
+import { createHmac } from 'node:crypto';
 import { execSync } from 'node:child_process';
+import { Buffer } from 'node:buffer';
+import * as process from 'node:process';
 
-export interface CryptoAttestation {
-  /** The 64-character SHA-256 hex digest of the attestation */
+export interface BuildSignature {
+  /** 빌드 시그니처의 64자리 SHA-256 16진수 다이제스트 */
   sigHex: string;
-  /** Formatted signature display: e.g. SIG: SHA256:... [VALIDATED: 2026.09.22] */
-  sigFormatted: string;
-  /** Git commit ID (7-char short hash or fallback) used as seed */
+  /** 시드로 사용된 Git 커밋 ID (7자리 단축 해시 또는 폴백값) */
   commitId: string;
-  /** Commit date or build date (YYYY.MM.DD) */
+  /** 커밋 일자 또는 빌드 일자 (YYYY.MM.DD) */
   commitDate: string;
-  /** Primary cubic Bézier waveform path */
+  /** 메인 3차 베지에(Cubic Bézier) 곡선 파형 경로 */
   primaryPath: string;
-  /** Secondary dashed harmonic verification trace */
+  /** 보조 점선 하모닉 파형 경로 */
   secondaryPath: string;
-  /** Checkpoint / parity marker dots derived from hash bytes */
+  /** 해시 바이트로부터 추출된 체크포인트 / 패리티 마커 점 */
   markerDots: Array<{ cx: number; cy: number; r: number }>;
 }
 
 /**
- * Retrieves the Git commit ID and commit date from the environment or local git repository.
- * Falls back gracefully to git tree or local dev fallback if no commit has been made yet.
+ * 환경 변수 또는 로컬 Git 저장소에서 Git 커밋 ID 및 커밋 일자를 가져옵니다.
+ * 아직 커밋이 없는 경우 Git 트리 또는 로컬 개발용 기본값으로 안전하게 대체됩니다.
  */
 function getGitCommitInfo(): { commitId: string; commitDate: string } {
   let commitId = '';
   let commitDate = '';
 
-  // 1. Check CI environment variables (GitHub Actions, etc.)
+  // 1. CI 환경 변수 확인 (GitHub Actions 등)
   if (process.env.GITHUB_SHA) {
     commitId = process.env.GITHUB_SHA.slice(0, 7);
   }
 
-  // 2. Try git rev-parse HEAD for short commit hash
+  // 2. 단축 커밋 해시 조회를 위해 git rev-parse HEAD 실행 시도
   if (!commitId) {
     try {
       commitId = execSync('git rev-parse --short HEAD', {
@@ -39,7 +39,6 @@ function getGitCommitInfo(): { commitId: string; commitDate: string } {
         stdio: ['ignore', 'pipe', 'ignore'],
       }).trim();
     } catch {
-      // If repo has no commits yet, check git write-tree or fallback
       try {
         const tree = execSync('git write-tree', {
           encoding: 'utf-8',
@@ -52,7 +51,7 @@ function getGitCommitInfo(): { commitId: string; commitDate: string } {
     }
   }
 
-  // 3. Try to get git commit date formatted as YYYY.MM.DD
+  // 3. YYYY.MM.DD 형식의 Git 커밋 일자 조회 시도
   try {
     const rawDate = execSync('git log -1 --format=%cs', {
       encoding: 'utf-8',
@@ -62,7 +61,7 @@ function getGitCommitInfo(): { commitId: string; commitDate: string } {
       commitDate = rawDate.replace(/-/g, '.');
     }
   } catch {
-    // If no commits yet, fallback below
+    // 아직 커밋이 없는 경우 아래 기본값 로직으로 진행
   }
 
   if (!commitDate) {
@@ -77,44 +76,44 @@ function getGitCommitInfo(): { commitId: string; commitDate: string } {
 }
 
 /**
- * Generates an authentic cryptographic attestation at build time using the Git commit as seed:
- * 1. Derives a deterministic HMAC-SHA256 digest keyed with the Git commit ID.
- * 2. Formats the signature with [VALIDATED: YYYY.MM.DD].
- * 3. Deterministically synthesizes SVG waveform paths from hash bytes.
+ * 빌드 시점에 Git 커밋을 시드로 활용하여 고유한 빌드 시그니처를 생성합니다:
+ * 1. Git 커밋 ID를 키로 하여 결정론적 HMAC-SHA256 다이제스트를 도출합니다.
+ * 2. 시그니처 일자를 [BUILD: YYYY.MM.DD] 형식으로 구성합니다.
+ * 3. 해시 바이트로부터 SVG 파형 경로를 결정론적으로 합성합니다.
  */
-export function generateCryptoAttestation(seedPayload?: Record<string, unknown>): CryptoAttestation {
+export function generateBuildSignature(seedPayload?: Record<string, unknown>): BuildSignature {
   const { commitId, commitDate } = getGitCommitInfo();
 
-  // 1. System manifest payload seeded with commitId and commitDate
+  // 1. commitId 및 commitDate를 시드로 포함한 시스템 매니페스트 페이로드
   const manifest = JSON.stringify({
     commitId,
     commitDate,
     systemId: 'ARCH-0922',
     revision: '2026.1',
     spec: 'SPEC-V4.8',
-    subject: 'KAI CHEN // SYSTEMS ARCHITECT & COMPILER RESEARCHER',
+    subject: 'ORSEL // SYSTEMS ARCHITECT & COMPILER RESEARCHER',
     ...seedPayload,
   });
 
-  // 2. Deterministic HMAC-SHA256 keyed with commitId
-  const sigHex = crypto.createHmac('sha256', commitId).update(manifest).digest('hex');
-  const bytes = Buffer.from(sigHex, 'hex'); // 32 bytes (0..255 each)
+  // 2. commitId를 키로 하는 결정론적 HMAC-SHA256 생성
+  const sigHex = createHmac('sha256', commitId).update(manifest).digest('hex');
+  const bytes = Buffer.from(sigHex, 'hex'); // 32바이트 (각 0..255)
 
-  // 3. Construct Primary Oscillogram / Waveform Path (Cubic Bézier Spline)
-  // 9 anchor points spanning x from 10 to 290 within viewBox="0 0 300 40"
+  // 3. 메인 오실로그램 / 파형 경로 생성 (3차 베지에 스플라인)
+  // viewBox="0 0 300 40" 내에서 x 좌표 10부터 290까지 9개의 앵커 포인트 구성
   const numPoints = 9;
-  const stepX = (290 - 10) / (numPoints - 1); // 35px spacing
+  const stepX = (290 - 10) / (numPoints - 1); // 35px 간격
   const points: Array<{ x: number; y: number }> = [];
 
   for (let i = 0; i < numPoints; i++) {
     const x = Number((10 + i * stepX).toFixed(1));
-    // Map byte [0..255] to y in range [7..33]
+    // 바이트 값 [0..255]을 y 좌표 범위 [7..33]으로 매핑
     const b = bytes[i];
     const y = Number((7 + (b / 255) * 26).toFixed(1));
     points.push({ x, y });
   }
 
-  // Smooth Catmull-Rom to Cubic Bézier conversion
+  // 부드러운 캣멀-롬(Catmull-Rom) 곡선을 3차 베지에 곡선으로 변환
   let primaryPath = `M ${points[0].x} ${points[0].y}`;
   for (let i = 0; i < points.length - 1; i++) {
     const p0 = i > 0 ? points[i - 1] : { x: points[0].x - stepX, y: points[0].y };
@@ -133,10 +132,10 @@ export function generateCryptoAttestation(seedPayload?: Record<string, unknown>)
     primaryPath += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${p2.x} ${p2.y}`;
   }
 
-  // 4. Secondary Harmonic Trace (Dashed verification curve using bytes 12..16)
+  // 4. 보조 하모닉 트레이스 (바이트 12..16을 활용한 점선 곡선)
   const secPoints: Array<{ x: number; y: number }> = [];
   const secCount = 5;
-  const secStepX = (260 - 40) / (secCount - 1); // 55px spacing
+  const secStepX = (260 - 40) / (secCount - 1); // 55px 간격
   for (let i = 0; i < secCount; i++) {
     const x = Number((40 + i * secStepX).toFixed(1));
     const b = bytes[12 + i];
@@ -152,7 +151,7 @@ export function generateCryptoAttestation(seedPayload?: Record<string, unknown>)
     secondaryPath += ` Q ${midX} ${p1.y}, ${p2.x} ${p2.y}`;
   }
 
-  // 5. Checkpoint / Parity dots (derived from points on curve)
+  // 5. 체크포인트 / 패리티 점 (곡선 상의 포인트에서 도출)
   const markerDots = [
     { cx: points[2].x, cy: points[2].y, r: 1.5 },
     { cx: points[6].x, cy: points[6].y, r: 1.5 },
@@ -160,7 +159,6 @@ export function generateCryptoAttestation(seedPayload?: Record<string, unknown>)
 
   return {
     sigHex,
-    sigFormatted: `SIG: ${sigHex} [VALIDATED: ${commitDate}]`,
     commitId,
     commitDate,
     primaryPath,

@@ -3,30 +3,27 @@ interface Props {
   currentPath?: string;
 }
 
-const { currentPath = "/" } = Astro.props;
+const { currentPath = "/about" } = Astro.props;
 
 const navItems = [
-  { label: "01. PHILOSOPHY", href: "/", id: "philosophy" },
-  { label: "02. WRITING", href: "/writing", id: "writing" },
-  { label: "03. ARTIFACTS", href: "#artifacts", id: "artifacts" },
-  { label: "04. ARCHIVE", href: "#archive", id: "archive" },
-  { label: "05. CONTACT", href: "/#contact", id: "contact" },
+  { label: "01. ABOUT", href: "/about", id: "about" },
+  { label: "02. RESUME", href: "/resume", id: "resume" },
+  { label: "03. WRITING", href: "/writing", id: "writing" },
+  { label: "04. ARTIFACTS", href: "/artifacts", id: "artifacts" },
 ];
 ---
 
 <header class="top-0 z-50 w-full bg-surface-canvas">
-  <div
-    class="h-10 w-full flex items-center justify-between bg-surface-canvas overflow-x-auto"
-  >
+  <div class="h-10 w-full flex items-center justify-between bg-surface-canvas overflow-x-auto">
     <!-- GNB Navigation -->
     <nav class="flex items-center gap-space-md md:gap-space-lg h-full shrink-0">
       {
         navItems.map((item) => {
-          const isHome = currentPath === "/" || currentPath === "";
+          const isHome = currentPath === "/about" || currentPath === "";
           const isWriting =
             currentPath === "/writing" || currentPath.startsWith("/writing");
           const isActive =
-            (item.href === "/" && isHome) ||
+            (item.href === "/about" && isHome) ||
             (item.href === "/writing" && isWriting) ||
             item.href === currentPath;
           return (
@@ -57,6 +54,13 @@ const navItems = [
         <span class="w-1.5 h-1.5 bg-accent-spec inline-block"></span>
         <span id="theme-text">[THEME: LIGHT]</span>
       </button>
+      <script is:inline>
+        (function () {
+          const isDark = document.documentElement.classList.contains("dark");
+          const el = document.getElementById("theme-text");
+          if (el) el.textContent = isDark ? "[THEME: DARK]" : "[THEME: LIGHT]";
+        })();
+      </script>
     </div>
   </div>
 </header>
@@ -77,7 +81,7 @@ const navItems = [
 
     updateThemeUI();
 
-    btn.addEventListener("click", () => {
+    btn.onclick = () => {
       const isDark = document.documentElement.classList.contains("dark");
       if (isDark) {
         document.documentElement.classList.remove("dark");
@@ -87,7 +91,7 @@ const navItems = [
         localStorage.setItem("theme", "dark");
       }
       updateThemeUI();
-    });
+    };
   }
 
   // 2. Nav Active Bottom Line State Controller
@@ -114,13 +118,13 @@ const navItems = [
     navLinks.forEach((link) => {
       link.addEventListener("click", (e) => {
         const href = link.getAttribute("href");
-        const pathname = window.location.pathname.replace(/\/$/, "") || "/";
-        if ((href === "/" || href === "#philosophy") && pathname === "/") {
+        const pathname = window.location.pathname.replace(/\/$/, "") || "/about";
+        if (href === "/about" && pathname === "/about") {
           e.preventDefault();
           window.scrollTo({ top: 0, behavior: "smooth" });
-          history.pushState(null, "", "/");
+          history.pushState(null, "", "/about");
           setActiveLink(link);
-        } else if (href === "/#contact" && pathname === "/") {
+        } else if (href === "/#contact" && pathname === "/about") {
           e.preventDefault();
           const target = document.getElementById("contact");
           if (target) {
@@ -133,14 +137,14 @@ const navItems = [
     });
 
     // Scroll spy on home page to maintain line for active section in view
-    const sectionIds = ["philosophy", "contact"];
+    const sectionIds = ["about", "contact"];
     const sections = sectionIds
       .map((id) => document.getElementById(id))
       .filter(Boolean) as HTMLElement[];
 
     if (
       sections.length > 0 &&
-      (window.location.pathname === "/" || window.location.pathname === "")
+      (window.location.pathname === "/about" || window.location.pathname === "")
     ) {
       const observer = new IntersectionObserver(
         (entries) => {
@@ -164,7 +168,7 @@ const navItems = [
       window.addEventListener("scroll", () => {
         if (window.scrollY < 200) {
           const first = document.querySelector(
-            '.nav-link[data-nav-id="philosophy"]',
+            '.nav-link[data-nav-id="about"]',
           );
           if (first && !first.classList.contains("border-text-primary")) {
             setActiveLink(first);
@@ -174,11 +178,15 @@ const navItems = [
     }
   }
 
-  // Initial execution
+  // Initial execution & Astro View Transitions lifecycle
   initThemeToggle();
   initNavActiveState();
 
   document.addEventListener("astro:after-swap", () => {
+    initThemeToggle();
+    initNavActiveState();
+  });
+  document.addEventListener("astro:page-load", () => {
     initThemeToggle();
     initNavActiveState();
   });
