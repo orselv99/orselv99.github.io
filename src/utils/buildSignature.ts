@@ -8,7 +8,7 @@ export interface BuildSignature {
   sigHex: string;
   /** 시드로 사용된 Git 커밋 ID (7자리 단축 해시 또는 폴백값) */
   commitId: string;
-  /** 커밋 일자 또는 빌드 일자 (YYYY.MM.DD) */
+  /** 커밋 일자 또는 빌드 일자 (YYYY.MM.DD HH:MM:SS) */
   commitDate: string;
   /** 메인 3차 베지에(Cubic Bézier) 곡선 파형 경로 */
   primaryPath: string;
@@ -51,14 +51,17 @@ function getGitCommitInfo(): { commitId: string; commitDate: string } {
     }
   }
 
-  // 3. YYYY.MM.DD 형식의 Git 커밋 일자 조회 시도
+  // 3. YYYY.MM.DD HH:MM:SS 형식의 Git 커밋 일자 조회 시도
   try {
-    const rawDate = execSync('git log -1 --format=%cs', {
+    const rawDate = execSync('git log -1 --format=%cI', {
       encoding: 'utf-8',
       stdio: ['ignore', 'pipe', 'ignore'],
     }).trim();
     if (rawDate) {
-      commitDate = rawDate.replace(/-/g, '.');
+      const match = rawDate.match(/^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2}):(\d{2})/);
+      if (match) {
+        commitDate = `${match[1]}.${match[2]}.${match[3]} ${match[4]}:${match[5]}:${match[6]}`;
+      }
     }
   } catch {
     // 아직 커밋이 없는 경우 아래 기본값 로직으로 진행
@@ -69,7 +72,10 @@ function getGitCommitInfo(): { commitId: string; commitDate: string } {
     const yyyy = now.getFullYear();
     const mm = String(now.getMonth() + 1).padStart(2, '0');
     const dd = String(now.getDate()).padStart(2, '0');
-    commitDate = `${yyyy}.${mm}.${dd}`;
+    const hh = String(now.getHours()).padStart(2, '0');
+    const min = String(now.getMinutes()).padStart(2, '0');
+    const ss = String(now.getSeconds()).padStart(2, '0');
+    commitDate = `${yyyy}.${mm}.${dd} ${hh}:${min}:${ss}`;
   }
 
   return { commitId, commitDate };
@@ -78,7 +84,7 @@ function getGitCommitInfo(): { commitId: string; commitDate: string } {
 /**
  * 빌드 시점에 Git 커밋을 시드로 활용하여 고유한 빌드 시그니처를 생성합니다:
  * 1. Git 커밋 ID를 키로 하여 결정론적 HMAC-SHA256 다이제스트를 도출합니다.
- * 2. 시그니처 일자를 [BUILD: YYYY.MM.DD] 형식으로 구성합니다.
+ * 2. 시그니처 일자를 [BUILD: YYYY.MM.DD HH:MM:SS] 형식으로 구성합니다.
  * 3. 해시 바이트로부터 SVG 파형 경로를 결정론적으로 합성합니다.
  */
 export function generateBuildSignature(seedPayload?: Record<string, unknown>): BuildSignature {

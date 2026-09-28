@@ -1,0 +1,159 @@
+[
+  {
+    "id": "wizvera",
+    "index": "01",
+    "company": "위즈베라 ",
+    "period": "2023.06 — PRESENT",
+    "role": "Software Engineer / Frontend 2팀",
+    "location": "성수 / SEOUL",
+    "category": "client",
+    "isCurrent": true,
+    "projects": [
+      {
+        "title": "상용 AI 서비스 제어 솔루션",
+        "period": "2026.02 — 2026.09",
+        "description": "사내 AI 인프라를 활용해, 상용 AI 서비스로 나가는 프롬프트와 첨부파일을 LLM으로 검사하는 서비스를 약 한 달 반 동안 혼자 전 영역 설계·구현했습니다. Python 프록시, LLM 분석 레이어, 브라우저 확장, 데스크톱 앱, Next.js 백오피스까지.",
+        "tasks": [
+          {
+            "description": "AI 코딩 도구에 구현을 맡기고 아키텍처·장애 정책·오탐 처리는 직접 판단",
+            "href": "/writing"
+          },
+          {
+            "description": "모바일 앱의 SSL Pinning 때문에 프록시 기반 방식의 근본 한계를 확인하고 피봇 제안",
+            "href": "/writing"
+          },
+          {
+            "description": "LLM 추론 지연(2–4초)을 줄이기 위한 규칙 기반 1차 필터 + LLM 2차 판정 구조 ",
+            "href": "/writing"
+          }
+        ],
+        "techStack": ["Python", "Next.js", "ForwardProxy", "Docker", "vLLM"]
+      },
+      {
+        "title": "사용자 행동 분석 솔루션",
+        "period": "2023.06 — 2026.01",
+        "description": "PC에서 발생하는 프로세스·파일·네트워크 이벤트를 수집해 Logstash → ElasticSearch로 보내는 파이프라인과, 이를 조회하는 Next.js 백오피스를 만들었습니다.",
+        "tasks": [
+          {
+            "description": "전송 실패 시 로컬 버퍼링, 복구 시 배치를 줄여 서버를 다시 쓰러뜨리지 않게",
+            "href": "/writing"
+          },
+          {
+            "description": "사용자가 바꿀 수 있는 로컬 시간 대신 수집 측 UTC를 병기",
+            "href": "/writing"
+          },
+          {
+            "description": "대량 데이터에서 text/keyword 매핑 재설계, deep pagination 대응",
+            "href": "/writing"
+          },
+          {
+            "description": "상시 실행이 무거운 파일 스캔은 사용자가 자리를 비우는 시간으로 스케줄 이동",
+            "href": "/writing"
+          },
+          {
+            "description": "백오피스를 CSR 대신 Next.js로 — 내부 API 노출 표면 기준 선택",
+            "href": "/writing"
+          }
+        ],
+        "techStack": ["Qt", "Windows", "ElasticSearch", "WebView", "React.Js"]
+      }
+    ]
+  },
+  {
+    "id": "wonderpeople",
+    "index": "02",
+    "company": "원더피플",
+    "period": "2021.10 — 2023.01",
+    "role": "Game Platform Engineer / 플랫폼실",
+    "location": "강남 / SEOUL",
+    "category": "platform",
+    "projects": [
+      {
+        "title": "게임 플랫폼 데스크탑 클라이언트",
+        "period": "2021.10 — 2023.01",
+        "description": "전 세계 100개국 유저 대상 지연시간(RTT) 기반 최적 데이터센터 라우팅 및 티켓 큐 기반 랭크 매칭 알고리즘 구현",
+        "tasks": [
+          {
+            "description": "델타 패치에 임계치를 두어, 여러 버전을 건너뛴 유저는 전체 다운로드로",
+            "href": "40be512b-7b9b-4d48-9556-d7362103a2b2"
+          },
+          {
+            "description": "진행 명세서를 먼저 기록해, 중단된 다운로드·패치를 그 지점부터 재개",
+            "href": "3273bd62-a3f0-481a-a6a6-0c7789a3c72d"
+          },
+          {
+            "description": "바이너리 업로드가 끝난 뒤 메타데이터를 마지막에 올려 부분 배포 노출 방지",
+            "href": "997699df-b4a9-41eb-9e2c-2838e85243ea"
+          },
+          {
+            "description": "특정 OS 서비스가 항상 있다는 전제가 깨진 장애를 Sentry로 추적",
+            "href": "d28f60a1-e6d7-4969-a182-f3821a7b422d"
+          },
+          {
+            "description": "네이티브 GNB + WebView 콘텐츠로 배포 주기를 분리, 이후 Electron 차세대 클라이언트(약 70%, 회사 사정으로 중단)",
+            "href": "ef4ba1fa-2412-46b3-a9ed-3e3d1e34f202"
+          },
+          {
+            "description": "FPS 핵 대응으로 계정에 휴대폰 인증을 붙여 재가입 비용을 올림",
+            "href": "f56d5dbd-0177-40a5-82e0-436dce65cce5"
+          }
+        ],
+        "techStack": ["Qt", "RtPatch", "Electron", "React.Js", "Advanced Installer", "Sentry"]
+      }
+    ]
+  },
+  {
+    "id": "inzent",
+    "index": "03",
+    "company": "인젠트",
+    "period": "2018.05 — 2021.09",
+    "role": "Software Engineer / ECM 개발팀",
+    "location": "여의도 / SEOUL",
+    "category": "systems",
+    "projects": [
+      {
+        "title": "DLP · 문서중앙화 솔루션",
+        "period": "2019.03 — 2020.05",
+        "description": "WebRTC 및 QUIC 프로토콜 기반 대규모 인터랙티브 라이브 방송 P2P 릴레이 게이트웨이 아키텍처 설계 및 프로덕션 배포",
+        "tasks": [
+          {
+            "description": "QUIC / HTTP3 기반 프록시 파이프라인 작성으로 패킷 손실률 15% 환경에서도 무중단 오디오/비디오 전송 달성",
+            "href": "#"
+          },
+          {
+            "description": "커스텀 메모리 풀링(sync.Pool) 튜닝을 통해 GC Stop-the-world 지연 92% 제거 및 초당 버퍼 메모리 할당 병목 해소",
+            "href": "#"
+          }
+        ],
+        "techStack": ["C/C++", "Windows", "C#.Net Framework", "Express", "React.Js", "Jenkins", "Inno Setup"]
+      }
+    ]
+  },
+  {
+    "id": "itmsystem",
+    "index": "05",
+    "company": "아이티엠시스템",
+    "period": "2012.11 — 2015.04",
+    "role": "Software Engineer / 연구소",
+    "location": "구로 / SEOUL",
+    "category": "systems",
+    "projects": [
+      {
+        "title": "DLP 솔루션",
+        "period": "2016.03 — 2017.12",
+        "description": "HTML5 Canvas 및 Node.js 기반 실시간 다자간 상호작용 웹 게임 플랫폼 개발 및 프론트엔드/백엔드 풀스택 구현",
+        "tasks": [
+          {
+            "description": "클라이언트 사이드 예측(Client-side prediction) 및 래그 보정(Lag compensation) 알고리즘 구현으로 입력 반응성 개선",
+            "href": "#"
+          },
+          {
+            "description": "AWS EC2 Auto-scaling 기반 탄력적 서버 풀링 구성 및 무중단 배포 자동화 스크립트 작성",
+            "href": "#"
+          }
+        ],
+        "techStack": ["C/C++", "Vb6.0", "Jenkins", "Inno Setup"]
+      }
+    ]
+  }
+]

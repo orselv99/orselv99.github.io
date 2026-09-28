@@ -1,0 +1,63 @@
+---
+import type { WritingPost } from "./types";
+
+interface Props {
+  post: WritingPost;
+}
+
+const { post: item } = Astro.props;
+---
+
+<article
+  class="archive-row group block w-full bg-surface-canvas hover:bg-surface-subtle transition-none border-b md:border-b-0 border-border-hairline"
+  data-category={item.category}
+>
+  <div class="grid grid-cols-1 md:grid-cols-12 md:divide-x md:divide-border-hairline">
+    <!-- ID -->
+    <div class="md:col-span-1 p-space-md font-label-mono text-label-mono font-bold flex items-center md:items-start text-text-primary">
+      [{item.index}]
+    </div>
+
+    <!-- Timestamp -->
+    <div class="md:col-span-2 p-space-md font-label-mono text-label-mono text-text-secondary flex items-center md:items-start font-code-block">
+      {item.date}
+    </div>
+
+    <!-- Title, Summary & Tags below -->
+    <div class="md:col-span-7 p-space-md flex flex-col gap-space-xs">
+      <a href={item.href} class="group/title block">
+        <h2 class="font-headline-sm text-headline-sm uppercase text-text-primary font-bold group-hover/title:underline">
+          {item.title}
+        </h2>
+      </a>
+      {item.summary && (
+        <p class="font-body-sm text-body-sm text-text-secondary leading-relaxed">
+          {item.summary}
+        </p>
+      )}
+      {((item.tags && item.tags.length > 0) || item.ref) && (
+        <div class="flex items-center gap-space-xs pt-1 flex-wrap">
+          {item.ref && (
+            <span class="md:hidden font-label-mono-xs text-label-mono-xs border border-border-hairline px-space-xs py-0.5 bg-surface-subtle text-text-primary font-bold">
+              #{item.ref}
+            </span>
+          )}
+          {item.tags?.map((tag) => (
+            <span class="font-label-mono-xs text-label-mono-xs border border-border-subtle px-1.5 py-0.5 uppercase text-text-secondary bg-surface-canvas">
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <!-- Ref (Desktop) -->
+    <div class="hidden md:flex md:col-span-2 p-space-md items-start">
+      {item.ref && (
+        <span class="font-label-mono-xs text-label-mono-xs border border-border-hairline px-1.5 py-0.5 uppercase text-text-primary bg-surface-subtle font-bold">
+          #{item.ref}
+        </span>
+      )}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,24 @@
+---
+import type { Experience } from "./types";
+import ExperienceItem from "./ExperienceItem.astro";
+
+interface Props {
+  experiences: Experience[];
+  class?: string;
+}
+
+const { experiences, class: className = "" } = Astro.props;
+---
+
+<div class:list={["relative pl-6 sm:pl-8 md:pl-10", className]} id="timeline-container">
+  <!-- Left Continuous Vertical Line -->
+  <div
+    class="absolute left-[7px] top-3 bottom-6 w-0.5 bg-border-hairline pointer-events-none"
+    aria-hidden="true"
+  />
+
+  <!-- Timeline Entries -->
+  <div class="space-y-space-xl" id="timeline-entries">
+    {experiences.map((exp) => <ExperienceItem experience={exp} />)}
+  </div>
+</div>

@@ -1,0 +1,77 @@
+---
+import type { Experience } from "./types";
+import ProjectCard from "./ProjectCard.astro";
+
+interface Props {
+  experience: Experience;
+}
+
+const { experience: exp } = Astro.props;
+---
+
+<article class="relative group" id={`station-${exp.id}`}>
+  <!-- Content Start Dot on the Left Vertical Line -->
+  <div
+    class="absolute -left-6 sm:-left-8 md:-left-10 top-1.5 flex items-center justify-center select-none"
+    aria-hidden="true"
+  >
+    {
+      exp.isCurrent ? (
+        <div class="relative flex items-center justify-center">
+          <span
+            class="absolute w-5 h-5 rounded-full bg-accent-spec/25 animate-ping pointer-events-none"
+            style="border-radius: 9999px !important;"
+          />
+          <svg class="w-4 h-4 text-accent-spec relative z-10" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="2" fill="var(--color-surface-canvas)" />
+            <circle cx="8" cy="8" r="3" fill="currentColor" />
+          </svg>
+        </div>
+      ) : (
+        <div class="relative flex items-center justify-center">
+          <svg class="w-4 h-4 text-text-primary relative z-10" viewBox="0 0 16 16" fill="none">
+            <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="2" fill="var(--color-surface-canvas)" />
+            <circle cx="8" cy="8" r="3" fill="currentColor" />
+          </svg>
+        </div>
+      )
+    }
+  </div>
+
+  <!-- Main Company & Projects Wrapper -->
+  <div class="space-y-space-md">
+    <!-- COMPANY HEADER BLOCK: {회사이름} · {시작-끝} · {직책} -->
+    <header class="pb-space-xs border-b border-border-hairline">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-sm">
+        <div class="flex flex-col items-baseline gap-x-space-sm gap-y-1">
+          <!-- 회사이름 -->
+          <h2 class="font-headline-md text-headline-md uppercase font-bold text-text-primary tracking-tight">
+            {exp.company}
+          </h2>
+
+          <!-- 직책 -->
+          <span class="font-label-mono text-label-mono uppercase font-bold text-text-primary">
+            {exp.role}
+          </span>
+
+          <!-- 기간 -->
+          <span class="font-label-mono text-label-mono uppercase text-text-secondary font-code-block font-semibold">
+            {exp.period}
+          </span>
+        </div>
+
+        <!-- 위치 -->
+        <div class="flex items-center gap-space-xs shrink-0 text-label-mono-xs uppercase text-text-secondary">
+          <span class="border border-border-hairline px-2 py-0.5 bg-surface-subtle font-inter font-medium tracking-wider">
+            {exp.location}
+          </span>
+        </div>
+      </div>
+    </header>
+
+    <!-- PROJECTS CONTAINER -->
+    <div class="space-y-space-md">
+      {exp.projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,228 @@
+---
+import type { WritingPost } from "./types";
+import WritingRow from "./WritingRow.astro";
+import WritingFilter from "./WritingFilter.astro";
+
+interface Props {
+  posts: WritingPost[];
+  class?: string;
+}
+
+const { posts, class: className = "" } = Astro.props;
+
+const totalCount = posts.length;
+
+// Unique categories with counts
+const categoryCounts = posts.reduce(
+  (acc, curr) => {
+    acc[curr.category] = (acc[curr.category] || 0) + 1;
+    return acc;
+  },
+  {} as Record<string, number>
+);
+
+const categories = ["all", ...Object.keys(categoryCounts)];
+---
+
+<div class:list={["w-full flex flex-col gap-space-md", className]}>
+  <!-- Query Filter & Search Controls -->
+  <WritingFilter
+    categories={categories}
+    categoryCounts={categoryCounts}
+    totalCount={totalCount}
+  />
+
+  <!-- Archival Data Matrix -->
+  <section class="py-space-md bg-surface-canvas">
+    <div class="w-full border border-border-hairline bg-surface-canvas">
+      <!-- Table Header Bar: 1 + 2 + 7 + 2 = 12 columns -->
+      <div class="hidden md:grid grid-cols-12 border-b border-border-hairline bg-surface-subtle font-label-mono-xs text-label-mono-xs uppercase text-text-primary divide-x divide-border-hairline select-none font-bold">
+        <div class="col-span-1 px-space-md py-space-sm">ID</div>
+        <div class="col-span-2 px-space-md py-space-sm">TIMESTAMP</div>
+        <div class="col-span-7 px-space-md py-space-sm">DOCUMENT TITLE, SUMMARY &amp; TAGS</div>
+        <div class="col-span-2 px-space-md py-space-sm">REF</div>
+      </div>
+
+      <!-- Rows Container -->
+      <div class="divide-y divide-border-hairline" id="archive-entries">
+        {posts.map((item) => <WritingRow post={item} />)}
+      </div>
+
+      <!-- Table Footer: Count & Dynamic 10-item Pagination -->
+      <div class="bg-surface-subtle p-space-md border-t border-border-hairline flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-mono-xs text-label-mono-xs uppercase text-text-secondary">
+        <div class="flex items-center space-x-2">
+          <span class="w-1.5 h-1.5 bg-accent-spec inline-block"></span>
+          <span id="entries-count">
+            01-{String(Math.min(10, totalCount)).padStart(2, "0")} OF {String(totalCount).padStart(2, "0")} POSTS [PAGE 1/{Math.max(1, Math.ceil(totalCount / 10))}]
+          </span>
+        </div>
+        <div class="flex items-center space-x-1" id="pagination-container">
+          <!-- Dynamic Pagination Buttons rendered by initArchiveFilter -->
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  function initArchiveFilter() {
+    const filterBtns = document.querySelectorAll<HTMLButtonElement>(".archive-filter-btn");
+    const rows = Array.from(document.querySelectorAll<HTMLElement>(".archive-row"));
+    const countEl = document.getElementById("entries-count");
+    const searchInput = document.getElementById("archive-search") as HTMLInputElement | null;
+    const paginationContainer = document.getElementById("pagination-container");
+
+    if (!rows.length) return;
+
+    const PAGE_SIZE = 10;
+    let activeFilter = "all";
+    let currentPage = 1;
+
+    function updateTable() {
+      const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
+
+      // 1. Filter matching rows
+      const matchingRows = rows.filter((row) => {
+        const category = row.getAttribute("data-category") || "general";
+        const text = row.innerText.toLowerCase();
+        const matchesCategory = activeFilter === "all" || category === activeFilter;
+        const matchesQuery = query === "" || text.includes(query);
+        return matchesCategory && matchesQuery;
+      });
+
+      const totalMatching = matchingRows.length;
+      const totalPages = Math.max(1, Math.ceil(totalMatching / PAGE_SIZE));
+
+      if (currentPage > totalPages) {
+        currentPage = totalPages;
+      }
+      if (currentPage < 1) {
+        currentPage = 1;
+      }
+
+      const startIndex = (currentPage - 1) * PAGE_SIZE;
+      const endIndex = startIndex + PAGE_SIZE;
+
+      // 2. Hide all rows, show only rows in the current page
+      rows.forEach((row) => {
+        row.style.display = "none";
+      });
+
+      matchingRows.forEach((row, idx) => {
+        if (idx >= startIndex && idx < endIndex) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+
+      // 3. Update entries count label
+      if (countEl) {
+        if (totalMatching === 0) {
+          countEl.textContent = "00 OF 00 POSTS [PAGE 0/0]";
+        } else {
+          const from = String(startIndex + 1).padStart(2, "0");
+          const to = String(Math.min(endIndex, totalMatching)).padStart(2, "0");
+          const total = String(totalMatching).padStart(2, "0");
+          countEl.textContent = `${from}-${to} OF ${total} POSTS [PAGE ${currentPage}/${totalPages}]`;
+        }
+      }
+
+      // 4. Render pagination buttons
+      renderPagination(totalPages);
+    }
+
+    function renderPagination(totalPages: number) {
+      if (!paginationContainer) return;
+      paginationContainer.innerHTML = "";
+
+      // Prev Button
+      const prevBtn = document.createElement("button");
+      prevBtn.type = "button";
+      prevBtn.textContent = "[PREV <<]";
+      prevBtn.className =
+        "px-space-sm py-space-xs border border-border-hairline font-label-mono text-label-mono uppercase select-none transition-none";
+
+      if (currentPage <= 1) {
+        prevBtn.disabled = true;
+        prevBtn.classList.add("bg-surface-canvas", "text-text-muted", "cursor-not-allowed", "opacity-50");
+      } else {
+        prevBtn.classList.add("bg-surface-subtle", "text-text-primary", "hover:bg-surface-canvas", "cursor-pointer");
+        prevBtn.addEventListener("click", () => {
+          currentPage--;
+          updateTable();
+        });
+      }
+      paginationContainer.appendChild(prevBtn);
+
+      // Page Number Buttons
+      for (let p = 1; p <= totalPages; p++) {
+        const pageBtn = document.createElement("button");
+        pageBtn.type = "button";
+        pageBtn.textContent = `[${String(p).padStart(2, "0")}]`;
+        pageBtn.className =
+          "px-space-sm py-space-xs border border-border-hairline font-label-mono text-label-mono uppercase select-none transition-none";
+
+        if (p === currentPage) {
+          pageBtn.classList.add("bg-surface-inverse", "text-text-inverse", "font-bold");
+        } else {
+          pageBtn.classList.add("bg-surface-subtle", "text-text-secondary", "hover:text-text-primary", "cursor-pointer");
+          pageBtn.addEventListener("click", () => {
+            currentPage = p;
+            updateTable();
+          });
+        }
+        paginationContainer.appendChild(pageBtn);
+      }
+
+      // Next Button
+      const nextBtn = document.createElement("button");
+      nextBtn.type = "button";
+      nextBtn.textContent = "[>> NEXT]";
+      nextBtn.className =
+        "px-space-sm py-space-xs border border-border-hairline font-label-mono text-label-mono uppercase select-none transition-none";
+
+      if (currentPage >= totalPages) {
+        nextBtn.disabled = true;
+        nextBtn.classList.add("bg-surface-canvas", "text-text-muted", "cursor-not-allowed", "opacity-50");
+      } else {
+        nextBtn.classList.add("bg-surface-subtle", "text-text-primary", "hover:bg-surface-canvas", "cursor-pointer");
+        nextBtn.addEventListener("click", () => {
+          currentPage++;
+          updateTable();
+        });
+      }
+      paginationContainer.appendChild(nextBtn);
+    }
+
+    // Filter Buttons Event Listeners
+    filterBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach((b) => {
+          b.classList.remove("bg-surface-subtle", "text-text-primary", "font-bold", "border-text-primary");
+          b.classList.add("bg-surface-canvas", "text-text-secondary", "border-transparent");
+        });
+        btn.classList.remove("bg-surface-canvas", "text-text-secondary", "border-transparent");
+        btn.classList.add("bg-surface-subtle", "text-text-primary", "font-bold", "border-text-primary");
+
+        activeFilter = btn.getAttribute("data-filter") || "all";
+        currentPage = 1;
+        updateTable();
+      });
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener("input", () => {
+        currentPage = 1;
+        updateTable();
+      });
+    }
+
+    // Initial render
+    updateTable();
+  }
+
+  // Initialize on load and page transition
+  initArchiveFilter();
+  document.addEventListener("astro:after-swap", initArchiveFilter);
+</script>
