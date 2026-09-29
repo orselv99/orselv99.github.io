@@ -113,6 +113,12 @@ html.dark {
     font-family: var(--font-inter);
     background-color: var(--color-surface-canvas);
     color: var(--color-text-primary);
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    cursor: default;
+    caret-color: transparent;
   }
 
   body {
@@ -122,6 +128,21 @@ html.dark {
     color: var(--color-text-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    cursor: default;
+    caret-color: transparent;
+  }
+
+  /* Prevent text dragging selection & caret blinking across all elements */
+  *,
+  *::before,
+  *::after {
+    user-select: none;
+    -webkit-user-select: none;
+    caret-color: transparent;
   }
 
   /* Planar Depth: No Drop Shadow or Blur */
@@ -142,8 +163,30 @@ html.dark {
   }
 
   ::selection {
-    background-color: var(--color-surface-inverse);
-    color: var(--color-text-inverse);
+    background: transparent !important;
+    color: inherit !important;
+  }
+
+  /* Disallow image and anchor ghost dragging */
+  img,
+  a {
+    -webkit-user-drag: none;
+    user-drag: none;
+  }
+
+  /* Interactive inputs allow typing while maintaining caret styling */
+  input,
+  textarea {
+    user-select: text;
+    -webkit-user-select: text;
+    cursor: text;
+    caret-color: var(--color-text-primary);
+  }
+
+  input::selection,
+  textarea::selection {
+    background-color: var(--color-surface-inverse) !important;
+    color: var(--color-text-inverse) !important;
   }
 }
 

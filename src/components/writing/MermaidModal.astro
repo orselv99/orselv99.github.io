@@ -487,6 +487,121 @@
       securityLevel: "loose",
     });
 
+    // Post-processing to enhance sequence diagram alt & else control structures
+    function enhanceSequenceLoops(container: HTMLElement) {
+      const controlGroups = container.querySelectorAll<SVGGElement>(
+        'g[data-et="control-structure"], g:has(> polygon.labelBox)'
+      );
+
+      controlGroups.forEach((group) => {
+        const labelBox = group.querySelector<SVGPolygonElement>("polygon.labelBox");
+        const labelText = group.querySelector<SVGTextElement>("text.labelText");
+        const loopText = group.querySelector<SVGTextElement>("text.loopText");
+
+        if (!labelBox || !labelText) return;
+
+        const labelContent = labelText.textContent?.trim().toLowerCase();
+        if (labelContent !== "alt" && labelContent !== "opt") return;
+
+        // Extract coordinates from labelBox points: "x1,y1 x2,y2 x3,y3 x4,y4 x5,y5"
+        const pointsStr = labelBox.getAttribute("points") || "";
+        const pointPairs = pointsStr
+          .trim()
+          .split(/\s+/)
+          .map((p) => p.split(",").map(Number));
+
+        if (pointPairs.length < 5 || isNaN(pointPairs[0][0]) || isNaN(pointPairs[0][1])) return;
+
+        const startX = pointPairs[0][0];
+        const startY = pointPairs[0][1];
+        const boxW = pointPairs[1][0] - startX;
+        const boxH = pointPairs[4][1] - startY;
+
+        // 1. Move loopText (e.g. "[테스트 통과 (OK)]") to top-left next to the "alt" badge
+        if (loopText) {
+          const targetX = startX + boxW + 12;
+          const targetY = parseFloat(labelText.getAttribute("y") || String(startY + boxH / 2));
+
+          loopText.setAttribute("x", String(targetX));
+          loopText.setAttribute("y", String(targetY));
+          loopText.setAttribute("text-anchor", "start");
+          loopText.setAttribute("dominant-baseline", "middle");
+          loopText.setAttribute("alignment-baseline", "middle");
+
+          loopText.querySelectorAll("tspan").forEach((tspan) => {
+            tspan.setAttribute("x", String(targetX));
+            tspan.setAttribute("text-anchor", "start");
+          });
+        }
+
+        if (labelContent === "alt") {
+          // 2. Locate dashed dividing lines representing "else" sections
+          const allLines = Array.from(group.querySelectorAll<SVGLineElement>("line.loopLine"));
+          const dividerLines = allLines.filter((line) => {
+            const style = line.getAttribute("style") || "";
+            const dash = line.getAttribute("stroke-dasharray") || "";
+            return (
+              style.includes("stroke-dasharray") ||
+              Boolean(line.style.strokeDasharray) ||
+              dash.length > 0
+            );
+          });
+
+          const sectionTitles = Array.from(
+            group.querySelectorAll<SVGTextElement>("text.sectionTitle")
+          );
+
+          dividerLines.forEach((divLine, idx) => {
+            const divX = parseFloat(divLine.getAttribute("x1") || String(startX));
+            const divY = parseFloat(divLine.getAttribute("y1") || "0");
+            if (isNaN(divY) || divY === 0) return;
+
+            // Mermaid polygon badge generator (pentagon with folded-corner notch)
+            const cut = 7;
+            const genPoints = (x: number, y: number, w: number, h: number) =>
+              `${x},${y} ${x + w},${y} ${x + w},${y + h - cut} ${x + w - cut * 1.2},${y + h} ${x},${y + h}`;
+
+            // Create "else" badge box polygon
+            const elseBox = labelBox.cloneNode(true) as SVGPolygonElement;
+            elseBox.setAttribute("points", genPoints(divX, divY, boxW, boxH));
+            elseBox.classList.add("elseLabelBox");
+            group.appendChild(elseBox);
+
+            // Create "else" badge text
+            const elseText = labelText.cloneNode(true) as SVGTextElement;
+            elseText.textContent = "else";
+            elseText.setAttribute("x", String(divX + boxW / 2));
+            elseText.setAttribute("y", String(divY + boxH / 2));
+            elseText.setAttribute("text-anchor", "middle");
+            elseText.setAttribute("dominant-baseline", "middle");
+            elseText.setAttribute("alignment-baseline", "middle");
+            group.appendChild(elseText);
+
+            // Adjust divider line so dashed line starts cleanly after the badge
+            divLine.setAttribute("x1", String(divX + boxW));
+
+            // Position corresponding sectionTitle (e.g. "[버그 발견 (NG)]") next to "else" badge
+            const secTitle = sectionTitles[idx];
+            if (secTitle) {
+              const targetX = divX + boxW + 12;
+              const targetY = divY + boxH / 2;
+
+              secTitle.setAttribute("x", String(targetX));
+              secTitle.setAttribute("y", String(targetY));
+              secTitle.setAttribute("text-anchor", "start");
+              secTitle.setAttribute("dominant-baseline", "middle");
+              secTitle.setAttribute("alignment-baseline", "middle");
+
+              secTitle.querySelectorAll("tspan").forEach((tspan) => {
+                tspan.setAttribute("x", String(targetX));
+                tspan.setAttribute("text-anchor", "start");
+              });
+            }
+          });
+        }
+      });
+    }
+
     // Re-render existing charts if theme changed
     for (const container of Array.from(existingCharts)) {
       const rawCode = container.getAttribute("data-raw-mermaid");
@@ -495,6 +610,7 @@
         const id = `mermaid-svg-${Date.now()}-${++renderCount}`;
         const { svg } = await mermaid.render(id, rawCode);
         container.innerHTML = svg;
+        enhanceSequenceLoops(container);
       } catch (err) {
         console.error("Failed to re-render Mermaid diagram:", err);
       }
@@ -521,6 +637,7 @@
         container.className = "mermaid-chart";
         container.setAttribute("data-raw-mermaid", rawCode);
         container.innerHTML = svg;
+        enhanceSequenceLoops(container);
 
         pre.replaceWith(container);
       } catch (err) {
