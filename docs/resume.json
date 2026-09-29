@@ -145,8 +145,8 @@
             "href": "#"
           },
           {
-            "description": "Jenkins 및 Inno Setup 기반 윈도우 서비스 자동 패키징 파이프라인 구축으로 배포 신뢰성 확보",
-            "href": "#"
+            "description": "관리자 권한의 ie 에서 url 확인",
+            "href": "f878f08d39c746b5a7c4a1ca6e545693"
           }
         ],
         "techStack": [
@@ -175,12 +175,12 @@
         "description": "HTML5 Canvas 및 Node.js 기반 실시간 다자간 상호작용 웹 게임 플랫폼 개발 및 프론트엔드/백엔드 풀스택 구현",
         "tasks": [
           {
-            "description": "클라이언트 사이드 예측(Client-side prediction) 및 래그 보정(Lag compensation) 알고리즘 구현으로 입력 반응성 개선",
-            "href": "#"
+            "description": "서비스 세션에서 사용자 세션의 관리자 권한으로 프로세스 실행",
+            "href": "0245b1cc-7dc4-4c1d-a1d2-c598b6d4110e"
           },
           {
-            "description": "AWS EC2 Auto-scaling 기반 탄력적 서버 풀링 구성 및 무중단 배포 자동화 스크립트 작성",
-            "href": "#"
+            "description": "고객 환경정보를 포함한 배포 서비스 만들기",
+            "href": "9b05cca7-2fa1-4a36-b7ab-058a4ee96371"
           }
         ],
         "techStack": [
