@@ -30,7 +30,13 @@
             "href": "ce2fe1e1-367a-4145-94ba-91af1ef0bd5a"
           }
         ],
-        "techStack": ["Python", "Next.js", "mitmproxy", "Docker", "vLLM"]
+        "techStack": [
+          "Python",
+          "Next.js",
+          "mitmproxy",
+          "Docker",
+          "vLLM"
+        ]
       },
       {
         "title": "사용자 행동 분석 솔루션",
@@ -58,7 +64,13 @@
             "href": "/writing"
           }
         ],
-        "techStack": ["Qt", "Windows", "ElasticSearch", "WebView", "React.Js"]
+        "techStack": [
+          "Qt",
+          "Windows",
+          "ElasticSearch",
+          "WebView",
+          "React.Js"
+        ]
       }
     ]
   },
@@ -100,7 +112,14 @@
             "href": "f56d5dbd-0177-40a5-82e0-436dce65cce5"
           }
         ],
-        "techStack": ["Qt", "RtPatch", "Electron", "React.Js", "Advanced Installer", "Sentry"]
+        "techStack": [
+          "Qt",
+          "RtPatch",
+          "Electron",
+          "React.Js",
+          "Advanced Installer",
+          "Sentry"
+        ]
       }
     ]
   },
@@ -115,18 +134,30 @@
       {
         "title": "DLP · 문서중앙화 솔루션",
         "period": "2019.03 — 2020.05",
-        "description": "WebRTC 및 QUIC 프로토콜 기반 대규모 인터랙티브 라이브 방송 P2P 릴레이 게이트웨이 아키텍처 설계 및 프로덕션 배포",
+        "description": "사내 중요 정보 유출 방지를 위한 Windows 엔드포인트 보안 에이전트 및 중앙 웹 관제 플랫폼 개발·운영",
         "tasks": [
           {
-            "description": "QUIC / HTTP3 기반 프록시 파이프라인 작성으로 패킷 손실률 15% 환경에서도 무중단 오디오/비디오 전송 달성",
+            "description": "CreateDesktop API 기반 보안 데스크톱 격리 환경 구축으로 화면 우회 차단 및 가상 로그온 잠금 구현",
+            "href": "64d73edf-8a31-4203-b3da-95192d9175ea"
+          },
+          {
+            "description": "Win32 디바이스 이벤트 감시 기반 외부 저장매체(USB/외장스토리지) 실시간 I/O 제어 및 데이터 유출 방지",
             "href": "#"
           },
           {
-            "description": "커스텀 메모리 풀링(sync.Pool) 튜닝을 통해 GC Stop-the-world 지연 92% 제거 및 초당 버퍼 메모리 할당 병목 해소",
+            "description": "Jenkins 및 Inno Setup 기반 윈도우 서비스 자동 패키징 파이프라인 구축으로 배포 신뢰성 확보",
             "href": "#"
           }
         ],
-        "techStack": ["C/C++", "C#.Net Framework", "Express", "React.Js", "Jenkins", "Inno Setup", "Windows"]
+        "techStack": [
+          "C/C++",
+          "C#.Net Framework",
+          "Express",
+          "React.Js",
+          "Jenkins",
+          "Inno Setup",
+          "Windows"
+        ]
       }
     ]
   },
@@ -152,7 +183,12 @@
             "href": "#"
           }
         ],
-        "techStack": ["C/C++", "Vb6.0", "Jenkins", "Inno Setup"]
+        "techStack": [
+          "C/C++",
+          "Vb6.0",
+          "Jenkins",
+          "Inno Setup"
+        ]
       }
     ]
   }
