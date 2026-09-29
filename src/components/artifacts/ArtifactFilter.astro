@@ -11,7 +11,7 @@ const { categories, categoryCounts, totalCount } = Astro.props;
 <section class="py-space-md bg-surface-canvas">
   <div class="border border-border-hairline flex flex-col lg:flex-row items-stretch justify-between bg-surface-canvas divide-y lg:divide-y-0 lg:divide-x divide-border-hairline">
     <!-- Category Filters -->
-    <div class="flex-1 flex items-stretch overflow-x-auto divide-x divide-border-hairline" id="filter-group">
+    <div class="flex-1 flex items-stretch overflow-x-auto divide-x divide-border-hairline" id="artifact-filter-group">
       {
         categories.map((cat) => {
           const count = cat === "all" ? totalCount : (categoryCounts[cat] || 0);
@@ -20,7 +20,7 @@ const { categories, categoryCounts, totalCount } = Astro.props;
           return (
             <button
               class:list={[
-                "archive-filter-btn flex-1 min-w-fit flex items-center justify-center px-space-md py-space-sm font-label-mono text-label-mono uppercase whitespace-nowrap cursor-pointer transition-none select-none border-b-2 text-center",
+                "artifact-filter-btn flex-1 min-w-fit flex items-center justify-center px-space-md py-space-sm font-label-mono text-label-mono uppercase whitespace-nowrap cursor-pointer transition-none select-none border-b-2 text-center",
                 isAll
                   ? "bg-surface-subtle text-text-primary font-bold border-text-primary"
                   : "bg-surface-canvas text-text-secondary hover:text-text-primary hover:bg-surface-subtle border-transparent"
@@ -35,12 +35,12 @@ const { categories, categoryCounts, totalCount } = Astro.props;
       }
     </div>
 
-    <!-- Search & Sorter Controls -->
+    <!-- Search Controls -->
     <div class="flex flex-col sm:flex-row items-stretch divide-y sm:divide-y-0 sm:divide-x divide-border-hairline lg:border-l-0 shrink-0">
       <div class="relative flex items-center min-w-[280px]">
         <input
           class="w-full bg-surface-canvas text-text-primary placeholder:text-text-muted font-label-mono text-label-mono pl-space-md pr-9 py-space-sm focus:outline-none focus:bg-surface-subtle border-0 uppercase"
-          id="archive-search"
+          id="artifact-search"
           placeholder="[QUERY]"
           type="text"
         />

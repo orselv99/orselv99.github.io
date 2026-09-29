@@ -1,0 +1,151 @@
+---
+import type { ArtifactWithRefs } from "./types";
+import ArtifactCard from "./ArtifactCard.astro";
+import ArtifactFilter from "./ArtifactFilter.astro";
+
+interface Props {
+  artifacts: ArtifactWithRefs[];
+  categories: string[];
+  categoryCounts: Record<string, number>;
+  totalCount: number;
+}
+
+const { artifacts, categories, categoryCounts, totalCount } = Astro.props;
+---
+
+<div class="w-full flex flex-col gap-space-md">
+  <!-- Category Filter & Search Bar -->
+  <ArtifactFilter
+    categories={categories}
+    categoryCounts={categoryCounts}
+    totalCount={totalCount}
+  />
+
+  <!-- Artifacts Grid / List Container -->
+  <section class="py-space-md bg-surface-canvas">
+    <div class="space-y-space-lg" id="artifact-list">
+      {artifacts.map((artifact) => (
+        <ArtifactCard artifact={artifact} />
+      ))}
+    </div>
+
+    <!-- Empty State (Hidden by default, shown when search has no matches) -->
+    <div
+      id="artifact-empty-state"
+      class="hidden p-space-xl border border-dashed border-border-hairline text-center space-y-space-xs font-label-mono text-label-mono uppercase text-text-secondary"
+    >
+      <p class="font-bold text-text-primary">[NO MATCHING ARTIFACTS FOUND]</p>
+      <p class="text-label-mono-xs text-text-muted">TRY ADJUSTING YOUR SEARCH QUERY OR CATEGORY FILTER.</p>
+    </div>
+
+    <!-- Footer Stats Bar -->
+    <div class="mt-space-lg bg-surface-subtle p-space-md border border-border-hairline flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-mono-xs text-label-mono-xs uppercase text-text-secondary select-none">
+      <div class="flex items-center space-x-2">
+        <span class="w-1.5 h-1.5 bg-accent-spec inline-block"></span>
+        <span id="artifact-count-label">
+          01-{String(Math.min(artifacts.length, totalCount)).padStart(2, "0")} OF {String(totalCount).padStart(2, "0")} ARTIFACTS
+        </span>
+      </div>
+      <div class="text-text-muted font-code-block">
+        // SPECIFICATION REGISTRY // PRODUCTION PLATFORMS
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  function initArtifactInteractions() {
+    let activeCategory = "all";
+    let activeQuery = "";
+
+    const filterBtns = document.querySelectorAll<HTMLButtonElement>(".artifact-filter-btn");
+    const searchInput = document.getElementById("artifact-search") as HTMLInputElement | null;
+    const cards = document.querySelectorAll<HTMLElement>(".artifact-card");
+    const countLabel = document.getElementById("artifact-count-label");
+    const emptyState = document.getElementById("artifact-empty-state");
+
+    function updateArtifactView() {
+      const q = activeQuery.toLowerCase().trim();
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const category = card.getAttribute("data-category") || "";
+        const corpus = (card.getAttribute("data-search-corpus") || "").toLowerCase();
+
+        const matchesCat = activeCategory === "all" || category.toLowerCase() === activeCategory.toLowerCase();
+        const matchesQuery = !q || corpus.includes(q);
+
+        if (matchesCat && matchesQuery) {
+          card.style.display = "";
+          visibleCount++;
+        } else {
+          card.style.display = "none";
+        }
+      });
+
+      // Update count label
+      if (countLabel) {
+        if (visibleCount === 0) {
+          countLabel.textContent = "00 OF 00 ARTIFACTS";
+        } else {
+          countLabel.textContent = `01-${String(visibleCount).padStart(2, "0")} OF ${String(cards.length).padStart(2, "0")} ARTIFACTS`;
+        }
+      }
+
+      // Update empty state
+      if (emptyState) {
+        if (visibleCount === 0) {
+          emptyState.classList.remove("hidden");
+        } else {
+          emptyState.classList.add("hidden");
+        }
+      }
+    }
+
+    // Category Button Clicks
+    filterBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach((b) => {
+          b.classList.remove("bg-surface-subtle", "text-text-primary", "font-bold", "border-text-primary");
+          b.classList.add("bg-surface-canvas", "text-text-secondary", "border-transparent");
+        });
+
+        btn.classList.remove("bg-surface-canvas", "text-text-secondary", "border-transparent");
+        btn.classList.add("bg-surface-subtle", "text-text-primary", "font-bold", "border-text-primary");
+
+        activeCategory = btn.getAttribute("data-filter") || "all";
+        updateArtifactView();
+      });
+    });
+
+    // Search Input
+    if (searchInput) {
+      searchInput.addEventListener("input", (e) => {
+        activeQuery = (e.target as HTMLInputElement).value;
+        updateArtifactView();
+      });
+    }
+
+    // Ref Row Delegated Click
+    document.addEventListener("click", (e) => {
+      const refLi = (e.target as HTMLElement)?.closest<HTMLElement>("li[data-ref-href]");
+      if (!refLi) return;
+
+      // If clicked directly on the anchor, let native navigation take over
+      if ((e.target as HTMLElement)?.closest("a")) return;
+
+      const anchor = refLi.querySelector<HTMLAnchorElement>("a[href]");
+      if (anchor) {
+        if (e.metaKey || e.ctrlKey) {
+          window.open(anchor.href, "_blank");
+        } else {
+          anchor.click();
+        }
+      }
+    });
+  }
+
+  // Initialize on load and Astro page transition
+  initArtifactInteractions();
+  document.addEventListener("astro:after-swap", initArtifactInteractions);
+</script>

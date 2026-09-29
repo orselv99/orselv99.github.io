@@ -1,0 +1,96 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import artifactsRaw from "../../docs/artifacts.json";
+import resumeData from "../../docs/resume.json";
+import { ArtifactList, type ArtifactItem, type ArtifactWithRefs } from "../components/artifacts";
+
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+// 1. Load writing posts collection for resolving refs
+const writingPosts = await getCollection("writing");
+const postMap = new Map(
+  writingPosts.map((p) => {
+    const uuid = p.id.split("/").pop()?.replace(/\.md$/, "") || p.id;
+    return [uuid, p];
+  })
+);
+
+// 2. Load resume tasks map for fallback ref titles
+interface ResumeTask {
+  description: string;
+  href?: string;
+}
+const resumeTaskMap = new Map<string, ResumeTask>();
+if (Array.isArray(resumeData)) {
+  resumeData.forEach((exp: any) => {
+    (exp.projects || []).forEach((proj: any) => {
+      (proj.tasks || []).forEach((t: ResumeTask) => {
+        if (t.href) {
+          resumeTaskMap.set(t.href, t);
+        }
+      });
+    });
+  });
+}
+
+// 3. Process artifacts with resolved references
+const artifactsData = artifactsRaw as ArtifactItem[];
+
+const artifacts: ArtifactWithRefs[] = artifactsData.map((item) => {
+  const cleanTags = (item.tags || []).filter((t) => Boolean(t && t.trim()));
+  const cleanTechStack = (item.techStack || []).filter((t) => Boolean(t && t.trim()));
+  const displayTitle = item.title.trim();
+  const refDocs = (item.refs || []).map((refUuid) => {
+    const post = postMap.get(refUuid);
+    const resumeTask = resumeTaskMap.get(refUuid);
+    const title = post?.data.title || resumeTask?.description || `DOCUMENT // ${refUuid.slice(0, 8)}`;
+    const rawDate = post?.data.date;
+    const date = rawDate ? rawDate.slice(0, 10).replace(/-/g, ".") : undefined;
+    const href = `${basePath}/writing/${refUuid}`;
+
+    return {
+      uuid: refUuid,
+      title,
+      href,
+      date,
+      summary: post?.data.summary,
+      tags: post?.data.tags,
+    };
+  });
+
+  return {
+    ...item,
+    displayTitle,
+    cleanTags,
+    cleanTechStack,
+    refDocs,
+  };
+});
+
+// 4. Compute unique categories & counts
+const categoryCounts = artifacts.reduce(
+  (acc, curr) => {
+    acc[curr.category] = (acc[curr.category] || 0) + 1;
+    return acc;
+  },
+  {} as Record<string, number>
+);
+
+const categories = ["all", ...Object.keys(categoryCounts)];
+---
+
+<BaseLayout
+  title="Artifacts"
+  description="Production system deliverables, architectural specifications, and platform engineering artifacts."
+  currentPath="/artifacts"
+>
+  <div class="flex flex-col w-full divide-y divide-border-hairline bg-surface-canvas">
+    <ArtifactList
+      artifacts={artifacts}
+      categories={categories}
+      categoryCounts={categoryCounts}
+      totalCount={artifacts.length}
+    />
+  </div>
+</BaseLayout>

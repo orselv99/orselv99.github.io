@@ -30,7 +30,7 @@
             "href": "ce2fe1e1-367a-4145-94ba-91af1ef0bd5a"
           }
         ],
-        "techStack": ["Python", "Next.js", "ForwardProxy", "Docker", "vLLM"]
+        "techStack": ["Python", "Next.js", "mitmproxy", "Docker", "vLLM"]
       },
       {
         "title": "사용자 행동 분석 솔루션",
@@ -126,7 +126,7 @@
             "href": "#"
           }
         ],
-        "techStack": ["C/C++", "Windows", "C#.Net Framework", "Express", "React.Js", "Jenkins", "Inno Setup"]
+        "techStack": ["C/C++", "C#.Net Framework", "Express", "React.Js", "Jenkins", "Inno Setup", "Windows"]
       }
     ]
   },

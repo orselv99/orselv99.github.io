@@ -48,31 +48,41 @@ function resolveTaskHref(href: string): string {
   <!-- 프로젝트 작업 상세 설명 -->
   <div class="space-y-space-xs pt-space-xs">
     <ul class="space-y-space-xs font-body-sm text-body-sm">
-      {project.tasks.map((task) => (
-        <li class="group/task relative py-space-xs px-2.5 flex flex-col md:flex-row md:items-baseline justify-between gap-space-xs transition-all duration-200 ease-out hover:bg-surface-subtle border-l-2 border-transparent hover:border-accent-spec">
-          <!-- 프로젝트 작업 상세 설명 -->
-          <div class="flex items-start gap-space-sm flex-1 pr-space-md">
-            <svg class="w-1.5 h-1.5 text-text-secondary shrink-0 mt-1.5 transition-all duration-200 group-hover/task:text-accent-spec group-hover/task:scale-125" viewBox="0 0 6 6" fill="none">
-              <circle cx="3" cy="3" r="2.5" fill="currentColor"/>
-            </svg>
-            <span class="text-text-primary leading-relaxed font-normal">
-              {task.description}
-            </span>
-          </div>
+      {project.tasks.map((task) => {
+        const hasValidHref = Boolean(task.href && task.href !== "#");
+        const taskHref = hasValidHref ? resolveTaskHref(task.href!) : null;
+        return (
+          <li
+            class:list={[
+              "group/task relative py-space-xs px-2.5 flex flex-col md:flex-row md:items-baseline justify-between gap-space-xs transition-all duration-200 ease-out hover:bg-surface-subtle border-l-2 border-transparent hover:border-accent-spec",
+              hasValidHref && "cursor-pointer"
+            ]}
+            data-task-href={taskHref}
+          >
+            <!-- 작업 상세 설명 -->
+            <div class="flex items-start gap-space-sm flex-1 pr-space-md">
+              <svg class="w-1.5 h-1.5 text-text-secondary shrink-0 mt-1.5 transition-all duration-200 group-hover/task:text-accent-spec group-hover/task:scale-125" viewBox="0 0 6 6" fill="none">
+                <circle cx="3" cy="3" r="2.5" fill="currentColor"/>
+              </svg>
+              <span class="text-text-primary leading-relaxed font-normal">
+                {task.description}
+              </span>
+            </div>
 
-          <!-- 게시물 링크 -->
-          {task.href && (
-            <a
-              href={resolveTaskHref(task.href)}
-              class="inline-flex items-center gap-1.5 font-label-mono-xs text-label-mono-xs uppercase border border-border-hairline px-2 py-0.5 bg-surface-canvas hover:bg-surface-inverse hover:text-text-inverse group-hover/task:border-text-primary transition-all duration-150 select-none shrink-0 self-start md:self-auto font-bold cursor-pointer"
-              title={`View documentation / artifact for ${task.href}`}
-            >
-              <span>{task.href.length > 8 ? task.href.substring(0, 8) : task.href}</span>
-              <span class="transition-transform duration-150 group-hover/task:translate-x-0.5 text-text-secondary hover:text-text-inverse">→</span>
-            </a>
-          )}
-        </li>
-      ))}
+            <!-- 게시물 링크 -->
+            {task.href && (
+              <a
+                href={resolveTaskHref(task.href)}
+                class="inline-flex items-center gap-1.5 font-label-mono-xs text-label-mono-xs uppercase border border-border-hairline px-2 py-0.5 bg-surface-canvas transition-all duration-150 select-none shrink-0 self-start md:self-auto font-bold cursor-pointer relative z-10"
+                title={`View documentation / artifact for ${task.href}`}
+              >
+                <span>{task.href.length > 8 ? task.href.substring(0, 8) : task.href}</span>
+                <span class="transition-transform duration-150 group-hover/task:translate-x-0.5 text-text-secondary hover:text-text-inverse">→</span>
+              </a>
+            )}
+          </li>
+        );
+      })}
     </ul>
   </div>
 
@@ -90,3 +100,26 @@ function resolveTaskHref(href: string): string {
     </div>
   )}
 </div>
+
+<script>
+  function setupTaskItemClicks() {
+    document.addEventListener("click", (e) => {
+      const taskLi = (e.target as HTMLElement)?.closest<HTMLElement>("li[data-task-href]");
+      if (!taskLi) return;
+
+      // If user clicked directly on an anchor or interactive element, let default behavior handle it
+      if ((e.target as HTMLElement)?.closest("a")) return;
+
+      const anchor = taskLi.querySelector<HTMLAnchorElement>("a[href]");
+      if (anchor) {
+        if (e.metaKey || e.ctrlKey) {
+          window.open(anchor.href, "_blank");
+        } else {
+          anchor.click();
+        }
+      }
+    });
+  }
+
+  setupTaskItemClicks();
+</script>

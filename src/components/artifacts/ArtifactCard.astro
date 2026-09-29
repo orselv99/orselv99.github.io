@@ -1,0 +1,128 @@
+---
+import type { ArtifactWithRefs } from "./types";
+
+interface Props {
+  artifact: ArtifactWithRefs;
+}
+
+const { artifact } = Astro.props;
+---
+
+<article
+  class="artifact-card border border-border-hairline bg-surface-canvas flex flex-col divide-y divide-border-hairline transition-all duration-150"
+  data-category={artifact.category}
+  data-search-corpus={`${artifact.index} ${artifact.category} ${artifact.displayTitle} ${artifact.summary} ${artifact.cleanTags.join(" ")} ${artifact.cleanTechStack.join(" ")} ${artifact.refDocs.map((r) => `${r.title} ${r.uuid}`).join(" ")}`}
+>
+  <!-- Artifact Card Header: Index, Category, Period -->
+  <div class="h-10 px-space-md bg-surface-subtle flex items-center justify-between font-label-mono-xs text-label-mono-xs uppercase text-text-primary shrink-0 select-none">
+    <div class="flex items-center gap-space-sm">
+      <span class="w-1.5 h-1.5 bg-accent-spec inline-block"></span>
+      <span class="font-bold tracking-wider">SPEC-{artifact.index}</span>
+      <span class="border border-border-hairline px-1.5 py-0.2 bg-surface-canvas font-bold">
+        {artifact.category.toUpperCase()}
+      </span>
+    </div>
+
+    <div class="font-code-block text-label-mono-xs text-text-secondary font-bold">
+      {artifact.period}
+    </div>
+  </div>
+
+  <!-- Artifact Card Main Content -->
+  <div class="p-space-md sm:p-space-lg space-y-space-md">
+    <!-- Title -->
+    <h3 class="font-headline-md text-headline-md uppercase font-bold text-text-primary tracking-tight">
+      {artifact.displayTitle}
+    </h3>
+
+    <!-- Summary / Problem Scope -->
+    {artifact.summary && (
+      <span class="font-body-md text-body-md text-text-secondary leading-relaxed bg-surface-canvas">
+        {artifact.summary}
+      </span>
+    )}
+
+    <!-- Tags & Tech Stack Specs -->
+    { (artifact.cleanTags.length > 0 || artifact.cleanTechStack.length > 0) && (
+      <div class="flex flex-wrap items-center gap-x-space-md gap-y-space-xs pt-space-xs">
+        {artifact.cleanTags.length > 0 && (
+          <div class="flex flex-wrap items-center gap-1">
+            <span class="font-label-mono-xs text-label-mono-xs uppercase text-text-muted font-bold mr-1">
+              TAGS:
+            </span>
+            {artifact.cleanTags.map((tag) => (
+              <span class="font-code-block text-label-mono-xs border border-border-subtle px-1.5 py-0.2 bg-surface-canvas text-text-secondary uppercase">
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {artifact.cleanTechStack.length > 0 && (
+          <div class="flex flex-wrap items-center gap-1">
+            <span class="font-label-mono-xs text-label-mono-xs uppercase text-text-muted font-bold mr-1">
+              STACK_SPECS:
+            </span>
+            {artifact.cleanTechStack.map((tech) => (
+              <span class="font-code-block text-label-mono-xs border border-border-subtle px-1.5 py-0.2 bg-surface-canvas text-text-secondary uppercase font-semibold">
+                {tech}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    )}
+
+    <!-- Connected Specifications & Dispatches (refs) -->
+    {artifact.refDocs.length > 0 && (
+      <div class="space-y-space-xs pt-space-sm">
+        <div class="flex items-center gap-2 font-label-mono-xs text-label-mono-xs uppercase text-text-secondary font-bold tracking-wider select-none">
+          <span class="w-1.5 h-1.5 bg-text-secondary inline-block"></span>
+          <span>// CONNECTED SPECIFICATIONS &amp; DISPATCHES ({String(artifact.refDocs.length).padStart(2, "0")})</span>
+        </div>
+
+        <ul class="border border-border-hairline divide-y divide-border-hairline font-body-sm text-body-sm bg-surface-canvas">
+          {artifact.refDocs.map((refDoc) => (
+            <li
+              class="group/ref relative py-space-xs px-2.5 flex flex-col md:flex-row md:items-baseline justify-between gap-space-xs transition-all duration-150 ease-out hover:bg-surface-subtle border-l-2 border-transparent hover:border-accent-spec cursor-pointer"
+              data-ref-href={refDoc.href}
+            >
+              <!-- Ref Document Title -->
+              <div class="flex items-start gap-space-sm flex-1 pr-space-md">
+                <svg
+                  class="w-1.5 h-1.5 text-text-secondary shrink-0 mt-1.5 transition-all duration-150 group-hover/ref:text-accent-spec group-hover/ref:scale-125"
+                  viewBox="0 0 6 6"
+                  fill="none"
+                >
+                  <circle cx="3" cy="3" r="2.5" fill="currentColor" />
+                </svg>
+                <div class="flex flex-col sm:flex-row sm:items-baseline gap-x-2">
+                  <span class="text-text-primary leading-relaxed font-normal">
+                    {refDoc.title}
+                  </span>
+                  {refDoc.date && (
+                    <span class="font-code-block text-label-mono-xs text-text-muted shrink-0">
+                      [{refDoc.date}]
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <!-- Ref Link Button Badge -->
+              <a
+                href={refDoc.href}
+                class="inline-flex items-center gap-1.5 font-label-mono-xs text-label-mono-xs uppercase border border-border-hairline px-2 py-0.5 bg-surface-canvas hover:bg-surface-inverse hover:text-text-inverse group-hover/ref:border-text-primary transition-all duration-150 select-none shrink-0 self-start md:self-auto font-bold cursor-pointer relative z-10"
+                title={`View documentation / artifact for ${refDoc.uuid}`}
+              >
+                <span>{refDoc.uuid.length > 8 ? refDoc.uuid.substring(0, 8) : refDoc.uuid}</span>
+                <span class="transition-transform duration-150 group-hover/ref:translate-x-0.5 text-text-secondary hover:text-text-inverse">
+                  →
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </div>
+</article>
