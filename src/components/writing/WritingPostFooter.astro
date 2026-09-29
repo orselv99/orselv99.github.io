@@ -1,0 +1,24 @@
+---
+interface Props {
+  backUrl: string;
+  uuid: string;
+}
+
+const { backUrl, uuid } = Astro.props;
+---
+
+<!-- Bottom Footer Navigation -->
+<section class="py-space-md bg-surface-canvas">
+  <div class="flex items-center justify-between pt-space-md">
+    <a
+      href={backUrl}
+      class="inline-flex items-center gap-1 font-label-mono-xs text-label-mono-xs uppercase text-text-secondary hover:text-text-primary font-bold"
+    >
+      <span>←</span>
+      <span>[RETURN TO ARCHIVE]</span>
+    </a>
+    <span class="font-code-block text-label-mono-xs text-text-muted">
+      UUID: {uuid}
+    </span>
+  </div>
+</section>

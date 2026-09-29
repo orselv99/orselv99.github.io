@@ -99,92 +99,31 @@ const navItems = [
     };
   }
 
-  // 2. Nav Active Bottom Line State Controller
-  function initNavActiveState() {
-    const navLinks = document.querySelectorAll(".nav-link");
-
-    function setActiveLink(activeEl: Element) {
-      navLinks.forEach((link) => {
-        link.classList.remove(
-          "border-text-primary",
-          "text-text-primary",
-          "font-bold",
-        );
-        link.classList.add("border-transparent", "text-text-secondary");
-      });
-      activeEl.classList.remove("border-transparent", "text-text-secondary");
-      activeEl.classList.add(
-        "border-text-primary",
-        "text-text-primary",
-        "font-bold",
-      );
-    }
-
-    navLinks.forEach((link) => {
-      link.addEventListener("click", (e) => {
-        const href = link.getAttribute("href");
-        const pathname = window.location.pathname.replace(/\/$/, "");
-        const targetHref = (href || "").replace(/\/$/, "");
-        if (targetHref && pathname === targetHref) {
-          e.preventDefault();
-          window.scrollTo({ top: 0, behavior: "smooth" });
-          setActiveLink(link);
-        }
-      });
-    });
-
-    // Scroll spy on home page to maintain line for active section in view
-    const sectionIds = ["about", "contact"];
-    const sections = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter(Boolean) as HTMLElement[];
-
-    if (
-      sections.length > 0 &&
-      (window.location.pathname === "/" || window.location.pathname === "")
-    ) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const id = entry.target.id;
-              const matching = document.querySelector(
-                `.nav-link[data-nav-id="${id}"]`,
-              );
-              if (matching) {
-                setActiveLink(matching);
-              }
-            }
-          });
-        },
-        { rootMargin: "-20% 0px -70% 0px" },
-      );
-
-      sections.forEach((sec) => observer.observe(sec));
-
-      window.addEventListener("scroll", () => {
-        if (window.scrollY < 200) {
-          const first = document.querySelector(
-            '.nav-link[data-nav-id="about"]',
-          );
-          if (first && !first.classList.contains("border-text-primary")) {
-            setActiveLink(first);
-          }
-        }
-      });
+  // 2. Smooth Scroll To Top when clicking the current page's active nav link
+  function handleNavClick(e: MouseEvent) {
+    const link = (e.target as HTMLElement)?.closest<HTMLAnchorElement>(".nav-link");
+    if (!link) return;
+    const href = (link.getAttribute("href") || "").replace(/\/$/, "");
+    const pathname = window.location.pathname.replace(/\/$/, "");
+    if (href && pathname === href) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }
 
-  // Initial execution & Astro View Transitions lifecycle
+  document.addEventListener("click", handleNavClick);
+
+  // Initialize Theme Toggle on load and Astro page transitions
   initThemeToggle();
-  initNavActiveState();
 
   document.addEventListener("astro:after-swap", () => {
     initThemeToggle();
-    initNavActiveState();
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
   });
+
   document.addEventListener("astro:page-load", () => {
     initThemeToggle();
-    initNavActiveState();
   });
 </script>

@@ -7,6 +7,5 @@ export interface WritingPost {
   category: string;
   summary: string;
   tags: string[];
-  ref: string;
   href: string;
 }

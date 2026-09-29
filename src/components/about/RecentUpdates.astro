@@ -32,7 +32,7 @@ if (!displayUpdates) {
     .map((post) => {
       const uuid = post.id.split("/").pop()?.replace(/\.md$/, "") || post.id;
       const rawDate = post.data.date;
-      const tag = post.data.ref || post.data.tags?.[0] || post.data.category || "DISPATCH";
+      const tag = post.data.tags?.[0] || post.data.category || "DISPATCH";
       return {
         date: rawDate,
         tag: tag.toUpperCase(),

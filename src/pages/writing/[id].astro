@@ -1,24 +1,32 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
+import {
+  WritingPostHeader,
+  WritingPostFooter,
+  MermaidModal,
+} from "../../components/writing";
+import "../../styles/markdown.css";
 
 export async function getStaticPaths() {
   const posts = await getCollection("writing");
-  return posts.map((post) => {
-    // Extract filename uuid without directory and extension
-    const uuid = post.id.split("/").pop()?.replace(/\.md$/, "") || post.id;
-    return {
-      params: { id: uuid },
-      props: { post, uuid },
-    };
-  });
+  return posts
+    .filter((post) => Boolean(post.data.date && post.data.title && post.data.title !== "Untitled"))
+    .map((post) => {
+      // Extract filename uuid without directory and extension
+      const uuid = post.id.split("/").pop()?.replace(/\.md$/, "") || post.id;
+      return {
+        params: { id: uuid },
+        props: { post, uuid },
+      };
+    });
 }
 
 const { post, uuid } = Astro.props;
 const { Content } = await render(post);
 
 const backUrl = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/writing`;
-const dateFormatted = post.data.date.replace(/-/g, ".");
+const dateFormatted = post.data.date ? post.data.date.replace(/-/g, ".") : "";
 ---
 
 <BaseLayout
@@ -26,180 +34,29 @@ const dateFormatted = post.data.date.replace(/-/g, ".");
   description={post.data.summary || post.data.title}
   currentPath="/writing"
 >
-  <div class="flex flex-col w-full divide-y divide-border-hairline bg-surface-canvas">
-    
-    <!-- Top Breadcrumb & Navigation Bar -->
-    <section class="py-space-md bg-surface-canvas">
-      <div class="flex flex-wrap items-center justify-between gap-space-sm pb-space-xs border-b border-border-hairline">
-        <div class="flex items-center gap-space-sm font-label-mono-xs text-label-mono-xs uppercase text-text-primary tracking-widest">
-          <span class="inline-block w-2 h-2 bg-accent-spec"></span>
-          <span>// 04. WRITING // {post.data.category?.toUpperCase() || "DOCUMENT"} // {uuid}</span>
-        </div>
-        <a
-          href={backUrl}
-          class="inline-flex items-center gap-1 font-label-mono-xs text-label-mono-xs uppercase text-text-secondary hover:text-text-primary hover:underline font-bold"
-        >
-          <span>←</span>
-          <span>[BACK TO WRITING ARCHIVE]</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- Post Masthead / Header -->
-    <section class="py-space-lg bg-surface-canvas">
-      <div class="flex flex-col gap-space-md">
-        <!-- Top Metadata Bar -->
-        <div class="flex flex-wrap items-center gap-space-xs font-label-mono-xs text-label-mono-xs uppercase text-text-secondary">
-          <span class="border border-border-hairline px-2 py-0.5 bg-surface-subtle font-code-block font-bold text-text-primary">
-            {dateFormatted}
-          </span>
-          {post.data.category && (
-            <span class="border border-border-hairline px-2 py-0.5 bg-surface-subtle text-accent-spec font-bold">
-              [{post.data.category.toUpperCase()}]
-            </span>
-          )}
-          {post.data.ref && (
-            <span class="border border-border-hairline px-2 py-0.5 bg-surface-canvas text-text-primary font-bold">
-              #{post.data.ref}
-            </span>
-          )}
-        </div>
-
-        <!-- Title -->
-        <h1 class="font-headline-lg text-headline-lg uppercase font-bold text-text-primary tracking-tight leading-tight">
-          {post.data.title}
-        </h1>
-
-        <!-- Abstract / Summary Box -->
-        {post.data.summary && (
-          <blockquote class="font-body-md text-body-md text-text-primary leading-relaxed border-l-2 border-border-hairline pl-space-md py-1 bg-surface-subtle">
-            {post.data.summary}
-          </blockquote>
-        )}
-
-        <!-- Tags below Title & Summary -->
-        {post.data.tags && post.data.tags.length > 0 && (
-          <div class="flex flex-wrap items-center gap-space-xs font-label-mono-xs text-label-mono-xs uppercase text-text-secondary pt-1">
-            <span class="font-bold text-text-muted mr-1">TAGS:</span>
-            {post.data.tags.map((tag) => (
-              <span class="border border-border-subtle px-1.5 py-0.5 bg-surface-canvas text-text-secondary">
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
-    </section>
+  <div class="flex flex-col w-full bg-surface-canvas">
+    <!-- Header with Back Button, Metadata, Title, Summary, Tags -->
+    <WritingPostHeader
+      title={post.data.title}
+      date={dateFormatted}
+      category={post.data.category}
+      ref={post.data.ref}
+      summary={post.data.summary}
+      tags={post.data.tags}
+      backUrl={backUrl}
+    />
 
     <!-- Main Markdown Body -->
-    <section class="py-space-xl bg-surface-canvas">
-      <article class="markdown-body font-body-md text-body-md text-text-primary max-w-4xl">
+    <section class="flex justify-center bg-surface-canvas">
+      <article class="markdown-body font-body-md text-body-md text-text-primary w-4xl">
         <Content />
       </article>
     </section>
 
-    <!-- Bottom Footer Navigation -->
-    <section class="py-space-md bg-surface-canvas">
-      <div class="flex items-center justify-between border-t border-border-hairline pt-space-md">
-        <a
-          href={backUrl}
-          class="inline-flex items-center gap-1 font-label-mono-xs text-label-mono-xs uppercase text-text-secondary hover:text-text-primary font-bold"
-        >
-          <span>←</span>
-          <span>[RETURN TO ARCHIVE]</span>
-        </a>
-        <span class="font-code-block text-label-mono-xs text-text-muted">
-          UUID: {uuid}
-        </span>
-      </div>
-    </section>
-
+    <!-- Footer Navigation & UUID -->
+    <WritingPostFooter backUrl={backUrl} uuid={uuid} />
   </div>
-</BaseLayout>
 
-<style>
-  .markdown-body :global(h1) {
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin-top: 2.5rem;
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--color-border-hairline);
-    color: var(--color-text-primary);
-  }
-  .markdown-body :global(h2) {
-    font-size: 1.35rem;
-    font-weight: 700;
-    margin-top: 2rem;
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.35rem;
-    border-bottom: 1px solid var(--color-border-subtle);
-    color: var(--color-text-primary);
-  }
-  .markdown-body :global(h3) {
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--color-text-primary);
-  }
-  .markdown-body :global(p) {
-    margin-bottom: 1.25rem;
-    line-height: 1.75;
-  }
-  .markdown-body :global(ul) {
-    list-style-type: disc;
-    margin-left: 1.5rem;
-    margin-bottom: 1.25rem;
-  }
-  .markdown-body :global(ol) {
-    list-style-type: decimal;
-    margin-left: 1.5rem;
-    margin-bottom: 1.25rem;
-  }
-  .markdown-body :global(li) {
-    margin-bottom: 0.35rem;
-    line-height: 1.6;
-  }
-  .markdown-body :global(blockquote) {
-    border-left: 3px solid var(--color-border-hairline);
-    padding-left: 1rem;
-    margin: 1.5rem 0;
-    color: var(--color-text-secondary);
-    background: var(--color-surface-subtle);
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-  }
-  .markdown-body :global(code) {
-    font-family: var(--font-mono);
-    font-size: 0.875em;
-    background-color: var(--color-surface-subtle);
-    border: 1px solid var(--color-border-subtle);
-    padding: 0.15em 0.35em;
-  }
-  .markdown-body :global(pre) {
-    background-color: var(--color-surface-subtle);
-    border: 1px solid var(--color-border-hairline);
-    padding: 1rem;
-    overflow-x: auto;
-    margin-bottom: 1.5rem;
-  }
-  .markdown-body :global(pre code) {
-    background: transparent;
-    border: none;
-    padding: 0;
-  }
-  .markdown-body :global(hr) {
-    border: 0;
-    border-top: 1px solid var(--color-border-hairline);
-    margin: 2rem 0;
-  }
-  .markdown-body :global(a) {
-    color: var(--color-text-primary);
-    text-decoration: underline;
-    font-weight: 500;
-  }
-  .markdown-body :global(a:hover) {
-    opacity: 0.8;
-  }
-</style>
+  <!-- Interactive Pan & Zoom Modal for Diagrams -->
+  <MermaidModal />
+</BaseLayout>

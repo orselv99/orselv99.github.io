@@ -16,15 +16,19 @@
         "tasks": [
           {
             "description": "AI 코딩 도구에 구현을 맡기고 아키텍처·장애 정책·오탐 처리는 직접 판단",
-            "href": "/writing"
+            "href": "7bd20ada-46ce-4ccd-8f76-02cb266c8b04"
           },
           {
             "description": "모바일 앱의 SSL Pinning 때문에 프록시 기반 방식의 근본 한계를 확인하고 피봇 제안",
-            "href": "/writing"
+            "href": "3db5725f-fb22-47a0-aad4-e97356f94e0b"
+          },
+          {
+            "description": "PII 탐지와 마스킹",
+            "href": "6db6c2c3-0ad0-4819-a843-da3f357ef8f6"
           },
           {
             "description": "LLM 추론 지연(2–4초)을 줄이기 위한 규칙 기반 1차 필터 + LLM 2차 판정 구조 ",
-            "href": "/writing"
+            "href": "ce2fe1e1-367a-4145-94ba-91af1ef0bd5a"
           }
         ],
         "techStack": ["Python", "Next.js", "ForwardProxy", "Docker", "vLLM"]

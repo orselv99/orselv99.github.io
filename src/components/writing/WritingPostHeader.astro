@@ -1,0 +1,74 @@
+---
+interface Props {
+  title: string;
+  date?: string;
+  category?: string;
+  ref?: string;
+  summary?: string;
+  tags?: string[];
+  backUrl: string;
+}
+
+const { title, date, category, ref, summary, tags = [], backUrl } = Astro.props;
+---
+
+<!-- 뒤로가기 -->
+<section class="bg-surface-canvas">
+  <div class="flex flex-row-reverse items-center justify-between gap-space-sm pb-space-sm">
+    <a
+      href={backUrl}
+      class="inline-flex items-center gap-1 font-label-mono-xs text-label-mono-xs uppercase text-text-secondary hover:text-text-primary hover:underline font-bold"
+    >
+      <span>←</span>
+      <span>[BACK TO WRITING ARCHIVE]</span>
+    </a>
+  </div>
+</section>
+
+<!-- 메타데이터 및 포스트 헤더 -->
+<section class="flex justify-center py-space-lg bg-surface-canvas">
+  <div class="flex flex-col gap-space-md w-4xl">
+    <!-- Top Metadata Bar -->
+    <div class="flex flex-wrap items-center gap-space-xs font-label-mono-xs text-label-mono-xs uppercase text-text-secondary">
+      {date && (
+        <span class="font-code-block text-text-primary">
+          {date}
+        </span>
+      )}
+      {category && (
+        <span class="px-2 bg-surface-canvas text-accent-spec font-bold">
+          #{category}
+        </span>
+      )}
+      {ref && (
+        <span class="border border-border-hairline px-2 py-0.5 bg-surface-canvas text-text-primary font-bold">
+          #{ref}
+        </span>
+      )}
+    </div>
+
+    <!-- Title -->
+    <h1 class="font-headline-lg text-headline-lg uppercase font-bold text-text-primary tracking-tight leading-tight">
+      {title}
+    </h1>
+
+    <!-- Abstract / Summary Box -->
+    {summary && (
+      <blockquote class="font-body-md text-body-md text-text-primary leading-relaxed border-l-2 border-border-hairline pl-space-md py-1">
+        {summary}
+      </blockquote>
+    )}
+
+    <!-- Tags below Title & Summary -->
+    {tags.length > 0 && (
+      <div class="flex flex-wrap items-center gap-space-xs font-label-mono-xs text-label-mono-xs uppercase text-text-secondary pt-1">
+        <span class="font-bold text-text-muted mr-1">TAGS:</span>
+        {tags.map((tag) => (
+          <span class="border border-border-subtle px-1.5 py-0.5 bg-surface-canvas text-text-secondary">
+            {tag}
+          </span>
+        ))}
+      </div>
+    )}
+  </div>
+</section>

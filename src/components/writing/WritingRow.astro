@@ -35,11 +35,11 @@ const { post: item } = Astro.props;
           {item.summary}
         </p>
       )}
-      {((item.tags && item.tags.length > 0) || item.ref) && (
+      {((item.tags && item.tags.length > 0) || item.category) && (
         <div class="flex items-center gap-space-xs pt-1 flex-wrap">
-          {item.ref && (
+          {item.category && (
             <span class="md:hidden font-label-mono-xs text-label-mono-xs border border-border-hairline px-space-xs py-0.5 bg-surface-subtle text-text-primary font-bold">
-              #{item.ref}
+              #{item.category}
             </span>
           )}
           {item.tags?.map((tag) => (
@@ -53,9 +53,9 @@ const { post: item } = Astro.props;
 
     <!-- Ref (Desktop) -->
     <div class="hidden md:flex md:col-span-2 p-space-md items-start">
-      {item.ref && (
+      {item.category && (
         <span class="font-label-mono-xs text-label-mono-xs border border-border-hairline px-1.5 py-0.5 uppercase text-text-primary bg-surface-subtle font-bold">
-          #{item.ref}
+          #{item.category}
         </span>
       )}
     </div>
