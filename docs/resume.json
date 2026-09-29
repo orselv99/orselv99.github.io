@@ -6,7 +6,6 @@
     "period": "2023.06 — PRESENT",
     "role": "Software Engineer / Frontend 2팀",
     "location": "성수 / SEOUL",
-    "category": "client",
     "isCurrent": true,
     "projects": [
       {
@@ -70,7 +69,6 @@
     "period": "2021.10 — 2023.01",
     "role": "Game Platform Engineer / 플랫폼실",
     "location": "강남 / SEOUL",
-    "category": "platform",
     "projects": [
       {
         "title": "게임 플랫폼 데스크탑 클라이언트",
@@ -113,7 +111,6 @@
     "period": "2018.05 — 2021.09",
     "role": "Software Engineer / ECM 개발팀",
     "location": "여의도 / SEOUL",
-    "category": "systems",
     "projects": [
       {
         "title": "DLP · 문서중앙화 솔루션",
@@ -140,7 +137,6 @@
     "period": "2012.11 — 2015.04",
     "role": "Software Engineer / 연구소",
     "location": "구로 / SEOUL",
-    "category": "systems",
     "projects": [
       {
         "title": "DLP 솔루션",

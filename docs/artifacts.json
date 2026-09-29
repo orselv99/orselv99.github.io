@@ -1,0 +1,17 @@
+[
+    {
+        "index": "01",
+        "period": "2023.06 — PRESENT",
+        "category": "dlp",
+        "title":"",
+        "summary": "외부로 요청되는 사용자 프롬프트에서 PII (Personally Identifiable Information) 탐지",
+        "tags": [],
+        "refs": [
+            "7bd20ada-46ce-4ccd-8f76-02cb266c8b04",
+            "3db5725f-fb22-47a0-aad4-e97356f94e0b",
+            "6db6c2c3-0ad0-4819-a843-da3f357ef8f6",
+            "ce2fe1e1-367a-4145-94ba-91af1ef0bd5a"
+        ],
+        "techStack": [""]
+    }
+]
