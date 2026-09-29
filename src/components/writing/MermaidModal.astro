@@ -357,9 +357,17 @@
 
   // Diagram rendering logic
   async function renderMermaidCharts() {
+    // Ensure all markdown codeblocks have data-language attribute for badge display
+    document.querySelectorAll<HTMLElement>('.markdown-body pre:not([data-language]) code[class*="language-"]').forEach((code) => {
+      const match = code.className.match(/language-([a-zA-Z0-9_-]+)/);
+      if (match && match[1] && code.parentElement) {
+        code.parentElement.setAttribute("data-language", match[1]);
+      }
+    });
+
     const preList = Array.from(
       document.querySelectorAll<HTMLElement>(
-        '.markdown-body pre[data-language="mermaid"], .markdown-body pre:has(code.language-mermaid)'
+        '.markdown-body pre[data-language="mermaid"], .markdown-body pre[data-language="sequenceDiagram"], .markdown-body pre[data-language="sequencediagram"], .markdown-body pre:has(code.language-mermaid), .markdown-body pre:has(code.language-sequenceDiagram), .markdown-body pre:has(code.language-sequencediagram)'
       )
     );
 
@@ -368,6 +376,7 @@
       const text = (pre.textContent || "").trim();
       if (
         text.startsWith("graph ") ||
+        text.startsWith("graph\n") ||
         text.startsWith("flowchart") ||
         text.startsWith("sequenceDiagram") ||
         text.startsWith("classDiagram") ||
@@ -375,7 +384,9 @@
         text.startsWith("erDiagram") ||
         text.startsWith("gantt") ||
         text.startsWith("pie") ||
-        text.startsWith("gitGraph")
+        text.startsWith("gitGraph") ||
+        text.startsWith("mindmap") ||
+        text.startsWith("timeline")
       ) {
         preList.push(pre);
       }
@@ -406,6 +417,23 @@
             textColor: "#ededed",
             fontFamily: "Inter, sans-serif",
             fontSize: "13px",
+            // Sequence Diagram specific theme tokens
+            actorBkg: "#202227",
+            actorBorder: "#3a3d47",
+            actorTextColor: "#ededed",
+            actorLineColor: "#4b505c",
+            signalColor: "#9b9ea8",
+            signalTextColor: "#ededed",
+            labelBoxBkgColor: "#202227",
+            labelBoxBorderColor: "#3a3d47",
+            labelTextColor: "#ededed",
+            loopTextColor: "#ededed",
+            noteBkgColor: "#181a1f",
+            noteBorderColor: "#3a3d47",
+            noteTextColor: "#ededed",
+            activationBkgColor: "#2d3139",
+            activationBorderColor: "#ea580c",
+            sequenceNumberColor: "#ffffff",
           }
         : {
             darkMode: false,
@@ -417,7 +445,45 @@
             textColor: "#1c1d22",
             fontFamily: "Inter, sans-serif",
             fontSize: "13px",
+            // Sequence Diagram specific theme tokens
+            actorBkg: "#ffffff",
+            actorBorder: "#2d3139",
+            actorTextColor: "#1c1d22",
+            actorLineColor: "#c2c0b8",
+            signalColor: "#2d3139",
+            signalTextColor: "#1c1d22",
+            labelBoxBkgColor: "#f5f4ef",
+            labelBoxBorderColor: "#2d3139",
+            labelTextColor: "#1c1d22",
+            loopTextColor: "#1c1d22",
+            noteBkgColor: "#f5f4ef",
+            noteBorderColor: "#2d3139",
+            noteTextColor: "#1c1d22",
+            activationBkgColor: "#e8e5de",
+            activationBorderColor: "#2d3139",
+            sequenceNumberColor: "#ffffff",
           },
+      sequence: {
+        diagramMarginX: 60,
+        diagramMarginY: 50,
+        actorMargin: 100,
+        width: 170,
+        height: 60,
+        boxMargin: 38,
+        boxTextMargin: 10,
+        noteMargin: 18,
+        messageMargin: 65,
+        mirrorActors: false,
+        bottomMarginAdj: 1,
+        useMaxWidth: true,
+        autonumber: true,
+        actorFontSize: 13,
+        actorFontFamily: "Inter, sans-serif",
+        noteFontSize: 12,
+        noteFontFamily: "Inter, sans-serif",
+        messageFontSize: 12,
+        messageFontFamily: "Inter, sans-serif",
+      },
       securityLevel: "loose",
     });
 
@@ -436,8 +502,16 @@
 
     // Render new pre blocks
     for (const pre of preList) {
-      const rawCode = (pre.textContent || "").trim();
+      let rawCode = (pre.textContent || "").trim();
       if (!rawCode) continue;
+
+      const lang = (pre.getAttribute("data-language") || "").toLowerCase();
+      if (
+        (lang === "sequencediagram" || lang === "sequence") &&
+        !rawCode.startsWith("sequenceDiagram")
+      ) {
+        rawCode = "sequenceDiagram\n" + rawCode;
+      }
 
       try {
         const id = `mermaid-svg-${Date.now()}-${++renderCount}`;
@@ -460,6 +534,11 @@
   setupModalControls();
 
   document.addEventListener("astro:page-load", () => {
+    renderMermaidCharts();
+    setupModalControls();
+  });
+
+  document.addEventListener("astro:after-swap", () => {
     renderMermaidCharts();
     setupModalControls();
   });
