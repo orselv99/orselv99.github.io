@@ -27,9 +27,6 @@ function resolveTaskHref(href: string): string {
   <div class="flex flex-col sm:flex-row sm:items-baseline pb-space-xs gap-space-xs">
     <!-- 제목 -->
     <div class="flex flex-wrap items-baseline gap-x-space-sm gap-y-1">
-      <svg class="w-2.5 h-2.5 text-text-secondary shrink-0" viewBox="0 0 10 10" fill="none">
-        <circle cx="5" cy="5" r="3.5" fill="currentColor"/>
-      </svg>                                
       <h3 class="font-headline-sm text-headline-sm uppercase font-bold text-text-primary tracking-tight">
         {project.title}
       </h3>
@@ -90,7 +87,7 @@ function resolveTaskHref(href: string): string {
   {project.techStack && (
     <div class="flex flex-wrap items-center gap-space-xs pt-space-md border-t border-border-subtle">
       <span class="font-label-mono-xs text-label-mono-xs uppercase text-text-muted font-bold mr-1">
-        STACK_SPECS:
+        TECH STACK:
       </span>
       {project.techStack.map((tech) => (
         <span class="font-code-block text-label-mono-xs border border-border-subtle px-1.5 py-0.5 bg-surface-canvas text-text-secondary uppercase">

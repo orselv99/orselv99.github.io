@@ -66,7 +66,6 @@
         ],
         "techStack": [
           "Qt",
-          "Windows",
           "ElasticSearch",
           "WebView",
           "React.Js"
@@ -151,12 +150,11 @@
         ],
         "techStack": [
           "C/C++",
-          "C#.Net Framework",
+          ".NetFramework",
           "Express",
           "React.Js",
           "Jenkins",
-          "Inno Setup",
-          "Windows"
+          "Inno Setup"
         ]
       }
     ]
@@ -171,11 +169,11 @@
     "projects": [
       {
         "title": "DLP 솔루션",
-        "period": "2016.03 — 2017.12",
-        "description": "HTML5 Canvas 및 Node.js 기반 실시간 다자간 상호작용 웹 게임 플랫폼 개발 및 프론트엔드/백엔드 풀스택 구현",
+        "period": "2012.11 — 2015.04",
+        "description": "사내 자산 유출 방지를 위한 Windows 엔드포인트 보안 에이전트 개발·운영",
         "tasks": [
           {
-            "description": "서비스 세션에서 사용자 세션의 관리자 권한으로 프로세스 실행",
+            "description": "Windows 서비스에서 사용자 세션의 관리자 권한 프로세스 실행",
             "href": "0245b1cc-7dc4-4c1d-a1d2-c598b6d4110e"
           },
           {
