@@ -6,6 +6,13 @@ interface Props {
 }
 
 const { post: item } = Astro.props;
+
+const MAX_SUMMARY_LENGTH = 120;
+const formattedSummary = item.summary
+  ? item.summary.length > MAX_SUMMARY_LENGTH
+    ? `${item.summary.slice(0, MAX_SUMMARY_LENGTH).trimEnd()}...`
+    : item.summary
+  : "";
 ---
 
 <article
@@ -30,9 +37,9 @@ const { post: item } = Astro.props;
           {item.title}
         </h2>
       </a>
-      {item.summary && (
+      {formattedSummary && (
         <p class="font-body-sm text-body-sm text-text-secondary leading-relaxed">
-          {item.summary}
+          {formattedSummary}
         </p>
       )}
       {((item.tags && item.tags.length > 0) || item.category) && (

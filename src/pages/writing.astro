@@ -5,7 +5,7 @@ import { WritingArchive, type WritingPost } from "../components/writing";
 
 const rawPosts = await getCollection("writing");
 
-// Sort by date descending and assign 2-digit indices
+// Sort by date descending and assign reverse-chronological indices
 const posts: WritingPost[] = rawPosts
   .filter((post) => Boolean(post.data.date && post.data.title && post.data.title !== "Untitled"))
   .map((post) => {
@@ -14,7 +14,7 @@ const posts: WritingPost[] = rawPosts
     const displayDate = rawDate.slice(0, 10).replace(/-/g, ".");
     return {
       uuid,
-      index: "00",
+      index: "000",
       title: post.data.title,
       rawDate,
       date: displayDate,
@@ -25,14 +25,14 @@ const posts: WritingPost[] = rawPosts
     };
   })
   .sort((a, b) => (b.rawDate > a.rawDate ? 1 : b.rawDate < a.rawDate ? -1 : 0))
-  .map((item, idx) => ({
+  .map((item, idx, arr) => ({
     ...item,
-    index: String(idx + 1).padStart(2, "0"),
+    index: String(arr.length - idx).padStart(3, "0"),
   }));
 ---
 
 <BaseLayout
-  title="Writting"
+  title="Writing"
   description="Technical documentation, architecture case studies, and engineering essays."
   currentPath="/writing"
 >

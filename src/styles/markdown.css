@@ -52,12 +52,26 @@
 
 .markdown-body blockquote {
   border-left: 3px solid var(--color-border-hairline);
-  padding-left: 1rem;
+  padding: 0.625rem 1rem;
   margin: 1.5rem 0;
   color: var(--color-text-secondary);
   background: var(--color-surface-subtle);
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+}
+
+.markdown-body blockquote > :first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body blockquote p {
+  margin-bottom: 0.5rem;
+}
+
+.markdown-body blockquote p:last-child {
+  margin-bottom: 0;
 }
 
 .markdown-body code {

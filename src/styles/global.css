@@ -27,7 +27,9 @@
   --color-text-inverse: #f6f5f1;
   /* 반전 요소 내부 텍스트 */
   --color-accent-spec: #c45a72;
-  /* 런타임/디버그/강조 인디케이터 */
+  /* 런타임/디버그/강조 인디케이터 (웜톤) */
+  --color-accent-impl: #5986c4;
+  /* 구현/시스템/정상 인디케이터 (쿨톤) */
 
   --color-primary: #1c1d22;
   --color-on-primary: #f6f5f1;
@@ -59,6 +61,7 @@ html.dark {
   --color-text-inverse: #121316;
   /* 반전 요소 내부 텍스트 */
   --color-accent-spec: #c45a72;
+  --color-accent-impl: #5986c4;
 
   --color-primary: #ededed;
   --color-on-primary: #121316;
@@ -79,6 +82,7 @@ html.dark {
   --color-text-muted: var(--color-text-muted);
   --color-text-inverse: var(--color-text-inverse);
   --color-accent-spec: var(--color-accent-spec);
+  --color-accent-impl: var(--color-accent-impl);
   --color-primary: var(--color-primary);
   --color-on-primary: var(--color-on-primary);
   --color-surface-dim: var(--color-surface-dim);
