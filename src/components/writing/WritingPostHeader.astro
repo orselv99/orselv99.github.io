@@ -17,7 +17,8 @@ const { title, date, category, ref, summary, tags = [], backUrl } = Astro.props;
   <div class="flex flex-row-reverse items-center justify-between gap-space-sm pb-space-sm">
     <a
       href={backUrl}
-      class="inline-flex items-center gap-1 font-label-mono-xs text-label-mono-xs uppercase text-text-secondary hover:text-text-primary hover:underline font-bold"
+      data-back-to-archive
+      class="inline-flex items-center gap-1 font-label-mono-xs text-label-mono-xs uppercase text-text-secondary hover:text-text-primary hover:underline font-bold cursor-pointer"
     >
       <span>←</span>
       <span>[BACK TO WRITING ARCHIVE]</span>

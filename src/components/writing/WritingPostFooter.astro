@@ -12,7 +12,8 @@ const { backUrl, uuid } = Astro.props;
   <div class="flex items-center justify-between pt-space-md">
     <a
       href={backUrl}
-      class="inline-flex items-center gap-1 font-label-mono-xs text-label-mono-xs uppercase text-text-secondary hover:text-text-primary font-bold"
+      data-back-to-archive
+      class="inline-flex items-center gap-1 font-label-mono-xs text-label-mono-xs uppercase text-text-secondary hover:text-text-primary font-bold cursor-pointer"
     >
       <span>←</span>
       <span>[RETURN TO ARCHIVE]</span>

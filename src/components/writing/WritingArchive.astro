@@ -75,18 +75,98 @@ const categories = ["all", ...Object.keys(categoryCounts)];
     if (!rows.length) return;
 
     const PAGE_SIZE = 10;
-    let activeFilter = "all";
-    let currentPage = 1;
 
-    function updateTable() {
-      const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
+    // 1. Read state from URL search params first, fallback to sessionStorage
+    const urlParams = new URLSearchParams(window.location.search);
+    let savedState: { page?: number; category?: string; q?: string } | null = null;
+    try {
+      const raw = sessionStorage.getItem("writing_archive_state");
+      if (raw) savedState = JSON.parse(raw);
+    } catch (e) {}
+
+    const urlPage = parseInt(urlParams.get("page") || "", 10);
+    let currentPage =
+      !isNaN(urlPage) && urlPage > 0
+        ? urlPage
+        : savedState?.page && savedState.page > 0
+          ? savedState.page
+          : 1;
+
+    const urlCategory = urlParams.get("category") || urlParams.get("filter");
+    let activeFilter = urlCategory || savedState?.category || "all";
+
+    const urlQuery = urlParams.get("q") || urlParams.get("query");
+    let query = urlQuery !== null && urlQuery !== undefined ? urlQuery : (savedState?.q || "");
+
+    // Restore search input UI
+    if (searchInput && query) {
+      searchInput.value = query;
+    }
+
+    // Restore active filter button UI
+    filterBtns.forEach((btn) => {
+      const bFilter = btn.getAttribute("data-filter") || "all";
+      if (bFilter === activeFilter) {
+        btn.classList.remove("bg-surface-canvas", "text-text-secondary", "border-transparent");
+        btn.classList.add("bg-surface-subtle", "text-text-primary", "font-bold", "border-text-primary");
+      } else {
+        btn.classList.remove("bg-surface-subtle", "text-text-primary", "font-bold", "border-text-primary");
+        btn.classList.add("bg-surface-canvas", "text-text-secondary", "border-transparent");
+      }
+    });
+
+    function syncStateAndUrl(pushHistory = false) {
+      const currentQuery = searchInput ? searchInput.value.trim() : "";
+
+      // Save to sessionStorage
+      try {
+        sessionStorage.setItem(
+          "writing_archive_state",
+          JSON.stringify({
+            page: currentPage,
+            category: activeFilter,
+            q: currentQuery,
+          })
+        );
+      } catch (e) {}
+
+      // Build search params
+      const params = new URLSearchParams();
+      if (currentPage > 1) {
+        params.set("page", String(currentPage));
+      }
+      if (activeFilter && activeFilter !== "all") {
+        params.set("category", activeFilter);
+      }
+      if (currentQuery) {
+        params.set("q", currentQuery);
+      }
+
+      const qs = params.toString();
+      const newUrl = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
+
+      try {
+        sessionStorage.setItem("writing_archive_url", newUrl);
+      } catch (e) {}
+
+      if (newUrl !== window.location.pathname + window.location.search) {
+        if (pushHistory) {
+          history.pushState({ page: currentPage, category: activeFilter, q: currentQuery }, "", newUrl);
+        } else {
+          history.replaceState({ page: currentPage, category: activeFilter, q: currentQuery }, "", newUrl);
+        }
+      }
+    }
+
+    function updateTable(updateHistory = true, pushHistory = false) {
+      const q = searchInput ? searchInput.value.toLowerCase().trim() : "";
 
       // 1. Filter matching rows
       const matchingRows = rows.filter((row) => {
         const category = row.getAttribute("data-category") || "general";
         const text = row.innerText.toLowerCase();
         const matchesCategory = activeFilter === "all" || category === activeFilter;
-        const matchesQuery = query === "" || text.includes(query);
+        const matchesQuery = q === "" || text.includes(q);
         return matchesCategory && matchesQuery;
       });
 
@@ -98,6 +178,10 @@ const categories = ["all", ...Object.keys(categoryCounts)];
       }
       if (currentPage < 1) {
         currentPage = 1;
+      }
+
+      if (updateHistory) {
+        syncStateAndUrl(pushHistory);
       }
 
       const startIndex = (currentPage - 1) * PAGE_SIZE;
@@ -149,8 +233,10 @@ const categories = ["all", ...Object.keys(categoryCounts)];
       } else {
         prevBtn.classList.add("bg-surface-subtle", "text-text-primary", "hover:bg-surface-canvas", "cursor-pointer");
         prevBtn.addEventListener("click", () => {
-          currentPage--;
-          updateTable();
+          if (currentPage > 1) {
+            currentPage--;
+            updateTable(true, true);
+          }
         });
       }
       paginationContainer.appendChild(prevBtn);
@@ -168,8 +254,10 @@ const categories = ["all", ...Object.keys(categoryCounts)];
         } else {
           pageBtn.classList.add("bg-surface-subtle", "text-text-secondary", "hover:text-text-primary", "cursor-pointer");
           pageBtn.addEventListener("click", () => {
-            currentPage = p;
-            updateTable();
+            if (currentPage !== p) {
+              currentPage = p;
+              updateTable(true, true);
+            }
           });
         }
         paginationContainer.appendChild(pageBtn);
@@ -188,8 +276,10 @@ const categories = ["all", ...Object.keys(categoryCounts)];
       } else {
         nextBtn.classList.add("bg-surface-subtle", "text-text-primary", "hover:bg-surface-canvas", "cursor-pointer");
         nextBtn.addEventListener("click", () => {
-          currentPage++;
-          updateTable();
+          if (currentPage < totalPages) {
+            currentPage++;
+            updateTable(true, true);
+          }
         });
       }
       paginationContainer.appendChild(nextBtn);
@@ -207,22 +297,41 @@ const categories = ["all", ...Object.keys(categoryCounts)];
 
         activeFilter = btn.getAttribute("data-filter") || "all";
         currentPage = 1;
-        updateTable();
+        updateTable(true, true);
       });
     });
 
     if (searchInput) {
       searchInput.addEventListener("input", () => {
         currentPage = 1;
-        updateTable();
+        updateTable(true, false);
       });
     }
 
     // Initial render
-    updateTable();
+    updateTable(true, false);
+  }
+
+  // Handle browser back/forward within writing archive
+  if (!(window as any).__writingPopstateAttached) {
+    (window as any).__writingPopstateAttached = true;
+    window.addEventListener("popstate", () => {
+      if (document.querySelector(".archive-row")) {
+        initArchiveFilter();
+      }
+    });
   }
 
   // Initialize on load and page transition
   initArchiveFilter();
-  document.addEventListener("astro:after-swap", initArchiveFilter);
+  document.addEventListener("astro:page-load", () => {
+    if (document.querySelector(".archive-row")) {
+      initArchiveFilter();
+    }
+  });
+  document.addEventListener("astro:after-swap", () => {
+    if (document.querySelector(".archive-row")) {
+      initArchiveFilter();
+    }
+  });
 </script>

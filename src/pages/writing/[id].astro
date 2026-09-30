@@ -59,4 +59,26 @@ const dateFormatted = post.data.date ? post.data.date.replace(/-/g, ".") : "";
 
   <!-- Interactive Pan & Zoom Modal for Diagrams -->
   <MermaidModal />
+
+  <!-- Back Navigation Handler to preserve archive page state -->
+  <script>
+    function setupBackNav() {
+      const savedUrl = sessionStorage.getItem("writing_archive_url");
+      document.querySelectorAll<HTMLAnchorElement>("[data-back-to-archive]").forEach((btn) => {
+        if (savedUrl) {
+          btn.href = savedUrl;
+        }
+        btn.addEventListener("click", (e) => {
+          if (window.history.length > 1) {
+            e.preventDefault();
+            window.history.back();
+          }
+        });
+      });
+    }
+
+    setupBackNav();
+    document.addEventListener("astro:page-load", setupBackNav);
+    document.addEventListener("astro:after-swap", setupBackNav);
+  </script>
 </BaseLayout>
