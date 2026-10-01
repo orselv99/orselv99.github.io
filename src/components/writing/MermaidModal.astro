@@ -80,6 +80,10 @@
 </div>
 
 <script>
+  window.addEventListener("vite:preloadError", () => {
+    window.location.reload();
+  });
+
   let renderCount = 0;
   let currentZoom = 1;
   let baseWidth = 850;
@@ -663,10 +667,16 @@
       }
     }
 
+    // Sanitize Mermaid code to handle common syntax edge cases (e.g. unescaped backslashes before brackets)
+    function sanitizeMermaidCode(code: string): string {
+      return code.replace(/(?<=[^\\])\\(?=[)\]}])/g, "\\\\");
+    }
+
     // Re-render existing charts if theme changed
     for (const container of Array.from(existingCharts)) {
-      const rawCode = container.getAttribute("data-raw-mermaid");
+      let rawCode = container.getAttribute("data-raw-mermaid");
       if (!rawCode) continue;
+      rawCode = sanitizeMermaidCode(rawCode);
       try {
         const id = `mermaid-svg-${Date.now()}-${++renderCount}`;
         const { svg } = await mermaid.render(id, rawCode);
@@ -690,6 +700,8 @@
       ) {
         rawCode = "sequenceDiagram\n" + rawCode;
       }
+
+      rawCode = sanitizeMermaidCode(rawCode);
 
       try {
         const id = `mermaid-svg-${Date.now()}-${++renderCount}`;
