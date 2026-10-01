@@ -48,20 +48,12 @@
             "href": "/writing"
           },
           {
-            "description": "사용자가 바꿀 수 있는 로컬 시간 대신 수집 측 UTC를 병기",
-            "href": "/writing"
-          },
-          {
-            "description": "대량 데이터에서 text/keyword 매핑 재설계, deep pagination 대응",
-            "href": "/writing"
-          },
-          {
-            "description": "상시 실행이 무거운 파일 스캔은 사용자가 자리를 비우는 시간으로 스케줄 이동",
-            "href": "/writing"
-          },
-          {
             "description": "개인정보를 마스킹하는 화면 캡처 파이프라인",
             "href": "a610256c-70a4-4737-a9c0-39e60092e5a6"
+          },
+          {
+            "description": "NTFS MFT 고속 파일 탐색",
+            "href": "1541949a-2a7d-46a7-a71e-e153745e551c"
           }
         ],
         "techStack": [
