@@ -60,7 +60,7 @@
             "href": "/writing"
           },
           {
-            "description": "privacy 를 보호하는 화면 캡처",
+            "description": "개인정보를 마스킹하는 화면 캡처 파이프라인",
             "href": "a610256c-70a4-4737-a9c0-39e60092e5a6"
           }
         ],
@@ -79,7 +79,7 @@
     "company": "원더피플",
     "period": "2021.10 — 2023.01",
     "role": "Game Platform Engineer / 플랫폼실",
-    "location": "강남 / SEOUL",
+    "location": "삼성 / SEOUL",
     "projects": [
       {
         "title": "게임 플랫폼 데스크탑 클라이언트",
