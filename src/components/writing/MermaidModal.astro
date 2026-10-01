@@ -602,6 +602,67 @@
       });
     }
 
+    // Post-processing to fix Mermaid sequence diagram actor lifelines when mirrorActors: false
+    // Mermaid defaults initial lifeline y2 to 2000 (2e3) and only updates it when mirrorActors is true.
+    // For diagrams taller than 2000px, lifelines prematurely stop at y2=2000 (often around step 17).
+    function fixSequenceLifelines(container: HTMLElement) {
+      const svg = container.querySelector("svg");
+      if (!svg) return;
+
+      const actorLines = Array.from(svg.querySelectorAll<SVGLineElement>("line")).filter((line) => {
+        const id = line.getAttribute("id") || "";
+        const cls = line.getAttribute("class") || "";
+        const et = line.getAttribute("data-et") || "";
+        const x1 = line.getAttribute("x1");
+        const x2 = line.getAttribute("x2");
+        const isVertical = x1 !== null && x1 === x2;
+        return (
+          isVertical &&
+          (/^actor\d+$/.test(id) || cls.includes("actor-line") || et === "life-line")
+        );
+      });
+
+      if (actorLines.length === 0) return;
+
+      // Determine true bottom bound of diagram content
+      const vb = svg.viewBox?.baseVal;
+      let bottomY = 0;
+      if (vb && vb.height > 0) {
+        // In Mermaid, viewBox Y min is -diagramMarginY (-50), and height is boxHeight + 2*diagramMarginY
+        // The bottom-most content ends around: vb.y + vb.height - diagramMarginY
+        bottomY = vb.y + vb.height - 50;
+      }
+
+      // Also compute maximum Y coordinate among all message lines, loop lines, notes, texts
+      let maxContentY = 0;
+      const contentElements = svg.querySelectorAll<SVGElement>(
+        "line.messageLine0, line.messageLine1, line.loopLine, rect.note, rect.actor, text, g[data-et='control-structure']"
+      );
+      contentElements.forEach((el) => {
+        if (actorLines.includes(el as any)) return;
+        const y1 = parseFloat(el.getAttribute("y1") || "0");
+        const y2 = parseFloat(el.getAttribute("y2") || "0");
+        const y = parseFloat(el.getAttribute("y") || "0");
+        const h = parseFloat(el.getAttribute("height") || "0");
+        const maxY = Math.max(y1, y2, y + h);
+        if (maxY > maxContentY && maxY < 100000) {
+          maxContentY = maxY;
+        }
+      });
+
+      // Target Y: ensure lifelines cleanly extend through all steps down to the bottom
+      const targetY = Math.max(bottomY, maxContentY + 15);
+
+      if (targetY > 0) {
+        actorLines.forEach((line) => {
+          const currentY2 = parseFloat(line.getAttribute("y2") || "0");
+          if (currentY2 < targetY) {
+            line.setAttribute("y2", String(Math.round(targetY)));
+          }
+        });
+      }
+    }
+
     // Re-render existing charts if theme changed
     for (const container of Array.from(existingCharts)) {
       const rawCode = container.getAttribute("data-raw-mermaid");
@@ -611,6 +672,7 @@
         const { svg } = await mermaid.render(id, rawCode);
         container.innerHTML = svg;
         enhanceSequenceLoops(container);
+        fixSequenceLifelines(container);
       } catch (err) {
         console.error("Failed to re-render Mermaid diagram:", err);
       }
@@ -638,6 +700,7 @@
         container.setAttribute("data-raw-mermaid", rawCode);
         container.innerHTML = svg;
         enhanceSequenceLoops(container);
+        fixSequenceLifelines(container);
 
         pre.replaceWith(container);
       } catch (err) {

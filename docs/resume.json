@@ -136,12 +136,12 @@
         "description": "사내 중요 정보 유출 방지를 위한 Windows 엔드포인트 보안 에이전트 및 중앙 웹 관제 플랫폼 개발·운영",
         "tasks": [
           {
-            "description": "출력물 워터마크 삽입",
-            "href": "ab82a8e5-1707-4761-a07e-2f4b7b1eb9dc"
-          },
-          {
             "description": "관리자 권한의 Internet Explorer 에서 URL 캡처",
             "href": "f878f08d39c746b5a7c4a1ca6e545693"
+          },
+          {
+            "description": "출력물 워터마크 삽입",
+            "href": "ab82a8e5-1707-4761-a07e-2f4b7b1eb9dc"
           },
           {
             "description": "CreateDesktop API를 활용한 보안화면 잠금 구현",
