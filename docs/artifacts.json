@@ -1,16 +1,14 @@
 [
     {
         "index": "01",
-        "period": "2023.06 — PRESENT",
-        "category": "dlp",
+        "period": "2026.02 — 2026.09",
         "title":"상용 AI 서비스 제어",
-        "summary": "외부로 요청되는 사용자 프롬프트에서 PII (Personally Identifiable Information) 탐지",
-        "tags": [],
+        "summary": "사내 AI 인프라를 활용해, 상용 AI 서비스로 나가는 프롬프트와 첨부파일을 LLM으로 검사하는 서비스를 약 한 달 반 동안 혼자 전 영역 설계·구현했습니다. Python 프록시, LLM 분석 레이어, 브라우저 확장, 데스크톱 앱, Next.js 백오피스까지.",
         "refs": [
-            "7bd20ada-46ce-4ccd-8f76-02cb266c8b04",
             "3db5725f-fb22-47a0-aad4-e97356f94e0b",
             "6db6c2c3-0ad0-4819-a843-da3f357ef8f6",
-            "ce2fe1e1-367a-4145-94ba-91af1ef0bd5a"
+            "ce2fe1e1-367a-4145-94ba-91af1ef0bd5a",
+            "12c61b06-a1d1-4ec8-aa63-2b7b22762bb4"
         ],
         "techStack": ["AI","python", "plasmo", "next.js", "vllm", "grafana", "prometheus"]
     }

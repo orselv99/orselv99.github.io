@@ -12,23 +12,11 @@
         "title": "상용 AI 서비스 제어 솔루션",
         "period": "2026.02 — 2026.09",
         "description": "사내 AI 인프라를 활용해, 상용 AI 서비스로 나가는 프롬프트와 첨부파일을 LLM으로 검사하는 서비스를 약 한 달 반 동안 혼자 전 영역 설계·구현했습니다. Python 프록시, LLM 분석 레이어, 브라우저 확장, 데스크톱 앱, Next.js 백오피스까지.",
-        "tasks": [
-          {
-            "description": "AI 코딩 도구에 구현을 맡기고 아키텍처·장애 정책·오탐 처리는 직접 판단",
-            "href": "7bd20ada-46ce-4ccd-8f76-02cb266c8b04"
-          },
-          {
-            "description": "모바일 앱의 SSL Pinning 때문에 프록시 기반 방식의 근본 한계를 확인하고 피봇 제안",
-            "href": "3db5725f-fb22-47a0-aad4-e97356f94e0b"
-          },
-          {
-            "description": "PII 탐지와 마스킹",
-            "href": "6db6c2c3-0ad0-4819-a843-da3f357ef8f6"
-          },
-          {
-            "description": "LLM 추론 지연(2–4초)을 줄이기 위한 규칙 기반 1차 필터 + LLM 2차 판정 구조 ",
-            "href": "ce2fe1e1-367a-4145-94ba-91af1ef0bd5a"
-          }
+        "refs": [
+          "3db5725f-fb22-47a0-aad4-e97356f94e0b",
+          "6db6c2c3-0ad0-4819-a843-da3f357ef8f6",
+          "ce2fe1e1-367a-4145-94ba-91af1ef0bd5a",
+          "12c61b06-a1d1-4ec8-aa63-2b7b22762bb4"
         ],
         "techStack": [
           "Python",
@@ -42,19 +30,10 @@
         "title": "사용자 행동 분석 솔루션",
         "period": "2023.06 — 2026.01",
         "description": "PC에서 발생하는 프로세스·파일·네트워크 이벤트를 수집해 Logstash → ElasticSearch로 보내는 파이프라인과, 이를 조회하는 Next.js 백오피스를 만들었습니다.",
-        "tasks": [
-          {
-            "description": "전송 실패 시 로컬 버퍼링, 복구 시 배치를 줄여 서버를 다시 쓰러뜨리지 않게",
-            "href": "/writing"
-          },
-          {
-            "description": "개인정보를 마스킹하는 화면 캡처 파이프라인",
-            "href": "a610256c-70a4-4737-a9c0-39e60092e5a6"
-          },
-          {
-            "description": "NTFS MFT 고속 파일 탐색",
-            "href": "1541949a-2a7d-46a7-a71e-e153745e551c"
-          }
+        "refs": [
+          "/writing",
+          "a610256c-70a4-4737-a9c0-39e60092e5a6",
+          "1541949a-2a7d-46a7-a71e-e153745e551c"
         ],
         "techStack": [
           "Qt",
@@ -77,31 +56,13 @@
         "title": "게임 플랫폼 데스크탑 클라이언트",
         "period": "2021.10 — 2023.01",
         "description": "전 세계 100개국 유저 대상 지연시간(RTT) 기반 최적 데이터센터 라우팅 및 티켓 큐 기반 랭크 매칭 알고리즘 구현",
-        "tasks": [
-          {
-            "description": "델타 패치에 임계치를 두어, 여러 버전을 건너뛴 유저는 전체 다운로드로",
-            "href": "40be512b-7b9b-4d48-9556-d7362103a2b2"
-          },
-          {
-            "description": "진행 명세서를 먼저 기록해, 중단된 다운로드·패치를 그 지점부터 재개",
-            "href": "3273bd62-a3f0-481a-a6a6-0c7789a3c72d"
-          },
-          {
-            "description": "바이너리 업로드가 끝난 뒤 메타데이터를 마지막에 올려 부분 배포 노출 방지",
-            "href": "997699df-b4a9-41eb-9e2c-2838e85243ea"
-          },
-          {
-            "description": "특정 OS 서비스가 항상 있다는 전제가 깨진 장애를 Sentry로 추적",
-            "href": "d28f60a1-e6d7-4969-a182-f3821a7b422d"
-          },
-          {
-            "description": "네이티브 GNB + WebView 콘텐츠로 배포 주기를 분리, 이후 Electron 차세대 클라이언트(약 70%, 회사 사정으로 중단)",
-            "href": "ef4ba1fa-2412-46b3-a9ed-3e3d1e34f202"
-          },
-          {
-            "description": "FPS 핵 대응으로 계정에 휴대폰 인증을 붙여 재가입 비용을 올림",
-            "href": "f56d5dbd-0177-40a5-82e0-436dce65cce5"
-          }
+        "refs": [
+          "40be512b-7b9b-4d48-9556-d7362103a2b2",
+          "3273bd62-a3f0-481a-a6a6-0c7789a3c72d",
+          "997699df-b4a9-41eb-9e2c-2838e85243ea",
+          "d28f60a1-e6d7-4969-a182-f3821a7b422d",
+          "ef4ba1fa-2412-46b3-a9ed-3e3d1e34f202",
+          "f56d5dbd-0177-40a5-82e0-436dce65cce5"
         ],
         "techStack": [
           "Qt",
@@ -126,19 +87,10 @@
         "title": "DLP · 문서중앙화 솔루션",
         "period": "2019.03 — 2020.05",
         "description": "사내 중요 정보 유출 방지를 위한 Windows 엔드포인트 보안 에이전트 및 중앙 웹 관제 플랫폼 개발·운영",
-        "tasks": [
-          {
-            "description": "관리자 권한의 Internet Explorer 에서 URL 캡처",
-            "href": "f878f08d39c746b5a7c4a1ca6e545693"
-          },
-          {
-            "description": "출력물 워터마크 삽입",
-            "href": "ab82a8e5-1707-4761-a07e-2f4b7b1eb9dc"
-          },
-          {
-            "description": "CreateDesktop API를 활용한 보안화면 잠금 구현",
-            "href": "64d73edf-8a31-4203-b3da-95192d9175ea"
-          }
+        "refs": [
+          "f878f08d-39c7-46b5-a7c4-a1ca6e545693",
+          "ab82a8e5-1707-4761-a07e-2f4b7b1eb9dc",
+          "64d73edf-8a31-4203-b3da-95192d9175ea"
         ],
         "techStack": [
           "C/C++",
@@ -163,15 +115,9 @@
         "title": "DLP 솔루션",
         "period": "2012.11 — 2015.04",
         "description": "사내 자산 유출 방지를 위한 Windows 엔드포인트 보안 솔루션 개발·운영",
-        "tasks": [
-          {
-            "description": "고객 환경정보를 포함한 자동 배포 파이프라인 구축",
-            "href": "9b05cca7-2fa1-4a36-b7ab-058a4ee96371"
-          },
-          {
-            "description": "Windows 서비스에서 사용자 세션의 관리자 권한 프로세스 실행",
-            "href": "0245b1cc-7dc4-4c1d-a1d2-c598b6d4110e"
-          }
+        "refs": [
+          "9b05cca7-2fa1-4a36-b7ab-058a4ee96371",
+          "0245b1cc-7dc4-4c1d-a1d2-c598b6d4110e"
         ],
         "techStack": [
           "C/C++",
