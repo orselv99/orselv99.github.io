@@ -1,9 +1,66 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
 import experiencesData from "../../docs/resume.json";
-import { ResumeTimeline, type Experience } from "../components/resume";
+import { ResumeTimeline, type Experience, type ResumeRefDoc } from "../components/resume";
 
-const experiences = experiencesData as Experience[];
+const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+// 1. Load writing posts collection for resolving refs
+const writingPosts = await getCollection("writing");
+const postMap = new Map();
+writingPosts.forEach((p) => {
+  const uuid = p.id.split("/").pop()?.replace(/\.md$/, "") || p.id;
+  postMap.set(uuid, p);
+  postMap.set(uuid.replace(/-/g, ""), p);
+});
+
+const DEFAULT_TITLES: Record<string, string> = {
+  "/writing": "전송 실패 시 로컬 버퍼링, 복구 시 배치를 줄여 서버를 다시 쓰러뜨리지 않게",
+};
+
+// 2. Map resume experiences with resolved refDocs from writing posts
+const experiences: Experience[] = (experiencesData as any[]).map((exp) => ({
+  ...exp,
+  projects: (exp.projects || []).map((proj: any) => {
+    const refsList: string[] = proj.refs || (proj.tasks || []).map((t: any) => t.href);
+    const refDocs: ResumeRefDoc[] = refsList.map((refUuid) => {
+      const cleanUuid = refUuid.replace(/^\/+/, "").replace(/^writing\//, "").replace(/\.md$/, "");
+      const post = postMap.get(cleanUuid) || postMap.get(cleanUuid.replace(/-/g, ""));
+      const postSlug = post ? post.id.split("/").pop()?.replace(/\.md$/, "") : cleanUuid;
+
+      let href: string;
+      if (refUuid.startsWith("http")) {
+        href = refUuid;
+      } else if (refUuid.startsWith("/")) {
+        href = `${basePath}${refUuid}`;
+      } else {
+        href = `${basePath}/writing/${postSlug}`;
+      }
+
+      const rawDate = post?.data.date;
+      const date = rawDate ? rawDate.slice(0, 10).replace(/-/g, ".") : undefined;
+      const title =
+        post?.data.title ||
+        DEFAULT_TITLES[refUuid] ||
+        (cleanUuid && cleanUuid !== "writing" ? `DOCUMENT // ${cleanUuid.slice(0, 8)}` : refUuid);
+
+      return {
+        uuid: cleanUuid || refUuid,
+        title,
+        href,
+        date,
+        rawDate,
+        summary: post?.data.summary,
+      };
+    });
+
+    return {
+      ...proj,
+      refDocs,
+    };
+  }),
+}));
 ---
 
 <BaseLayout

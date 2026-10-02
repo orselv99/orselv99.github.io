@@ -1,39 +1,46 @@
 ---
 interface Props {
-  categories: string[];
-  categoryCounts: Record<string, number>;
+  categories?: string[];
+  categoryCounts?: Record<string, number>;
   totalCount: number;
 }
 
-const { categories, categoryCounts, totalCount } = Astro.props;
+const { categories = [], categoryCounts = {}, totalCount } = Astro.props;
+const hasCategories = categories.length > 1;
 ---
 
 <section class="py-space-md bg-surface-canvas">
   <div class="border border-border-hairline flex flex-col lg:flex-row items-stretch justify-between bg-surface-canvas divide-y lg:divide-y-0 lg:divide-x divide-border-hairline">
-    <!-- Category Filters -->
-    <div class="flex-1 flex items-stretch overflow-x-auto divide-x divide-border-hairline" id="artifact-filter-group">
-      {
-        categories.map((cat) => {
-          const count = cat === "all" ? totalCount : (categoryCounts[cat] || 0);
-          const label = cat.toUpperCase();
-          const isAll = cat === "all";
-          return (
-            <button
-              class:list={[
-                "artifact-filter-btn flex-1 min-w-fit flex items-center justify-center px-space-md py-space-sm font-label-mono text-label-mono uppercase whitespace-nowrap cursor-pointer transition-none select-none border-b-2 text-center",
-                isAll
-                  ? "bg-surface-subtle text-text-primary font-bold border-text-primary"
-                  : "bg-surface-canvas text-text-secondary hover:text-text-primary hover:bg-surface-subtle border-transparent"
-              ]}
-              data-filter={cat}
-              type="button"
-            >
-              [{label} ({String(count).padStart(2, "0")})]
-            </button>
-          );
-        })
-      }
-    </div>
+    {hasCategories ? (
+      <div class="flex-1 flex items-stretch overflow-x-auto divide-x divide-border-hairline" id="artifact-filter-group">
+        {
+          categories.map((cat) => {
+            const count = cat === "all" ? totalCount : (categoryCounts[cat] || 0);
+            const label = cat.toUpperCase();
+            const isAll = cat === "all";
+            return (
+              <button
+                class:list={[
+                  "artifact-filter-btn flex-1 min-w-fit flex items-center justify-center px-space-md py-space-sm font-label-mono text-label-mono uppercase whitespace-nowrap cursor-pointer transition-none select-none border-b-2 text-center",
+                  isAll
+                    ? "bg-surface-subtle text-text-primary font-bold border-text-primary"
+                    : "bg-surface-canvas text-text-secondary hover:text-text-primary hover:bg-surface-subtle border-transparent"
+                ]}
+                data-filter={cat}
+                type="button"
+              >
+                [{label} ({String(count).padStart(2, "0")})]
+              </button>
+            );
+          })
+        }
+      </div>
+    ) : (
+      <div class="flex-1 flex items-center px-space-md py-space-sm font-label-mono text-label-mono uppercase text-text-secondary select-none">
+        <span class="w-1.5 h-1.5 bg-accent-spec inline-block mr-2"></span>
+        <span class="font-bold text-text-primary">[ALL ARTIFACTS ({String(totalCount).padStart(2, "0")})]</span>
+      </div>
+    )}
 
     <!-- Search Controls -->
     <div class="flex flex-col sm:flex-row items-stretch divide-y sm:divide-y-0 sm:divide-x divide-border-hairline lg:border-l-0 shrink-0">

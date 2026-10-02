@@ -5,12 +5,12 @@ import ArtifactFilter from "./ArtifactFilter.astro";
 
 interface Props {
   artifacts: ArtifactWithRefs[];
-  categories: string[];
-  categoryCounts: Record<string, number>;
+  categories?: string[];
+  categoryCounts?: Record<string, number>;
   totalCount: number;
 }
 
-const { artifacts, categories, categoryCounts, totalCount } = Astro.props;
+const { artifacts, categories = [], categoryCounts = {}, totalCount } = Astro.props;
 ---
 
 <div class="w-full flex flex-col gap-space-md">
@@ -35,7 +35,7 @@ const { artifacts, categories, categoryCounts, totalCount } = Astro.props;
       class="hidden p-space-xl border border-dashed border-border-hairline text-center space-y-space-xs font-label-mono text-label-mono uppercase text-text-secondary"
     >
       <p class="font-bold text-text-primary">[NO MATCHING ARTIFACTS FOUND]</p>
-      <p class="text-label-mono-xs text-text-muted">TRY ADJUSTING YOUR SEARCH QUERY OR CATEGORY FILTER.</p>
+      <p class="text-label-mono-xs text-text-muted">TRY ADJUSTING YOUR SEARCH QUERY.</p>
     </div>
 
     <!-- Footer Stats Bar -->
@@ -45,9 +45,6 @@ const { artifacts, categories, categoryCounts, totalCount } = Astro.props;
         <span id="artifact-count-label">
           01-{String(Math.min(artifacts.length, totalCount)).padStart(2, "0")} OF {String(totalCount).padStart(2, "0")} ARTIFACTS
         </span>
-      </div>
-      <div class="text-text-muted font-code-block">
-        // SPECIFICATION REGISTRY // PRODUCTION PLATFORMS
       </div>
     </div>
   </section>
@@ -72,7 +69,7 @@ const { artifacts, categories, categoryCounts, totalCount } = Astro.props;
         const category = card.getAttribute("data-category") || "";
         const corpus = (card.getAttribute("data-search-corpus") || "").toLowerCase();
 
-        const matchesCat = activeCategory === "all" || category.toLowerCase() === activeCategory.toLowerCase();
+        const matchesCat = activeCategory === "all" || !category || category.toLowerCase() === activeCategory.toLowerCase();
         const matchesQuery = !q || corpus.includes(q);
 
         if (matchesCat && matchesQuery) {

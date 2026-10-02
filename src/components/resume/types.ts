@@ -1,13 +1,26 @@
-export interface TaskDetail {
-  description: string;
+export interface ResumeRefDoc {
+  uuid: string;
+  title: string;
   href: string;
+  date?: string;
+  rawDate?: string;
+  summary?: string;
+}
+
+export interface TaskDetail {
+  description?: string;
+  href: string;
+  title?: string;
+  date?: string;
 }
 
 export interface Project {
   title: string;
   period: string;
   description: string;
-  tasks: TaskDetail[];
+  refs?: string[];
+  refDocs?: ResumeRefDoc[];
+  tasks?: TaskDetail[];
   techStack?: string[];
 }
 
