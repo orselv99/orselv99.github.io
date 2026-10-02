@@ -1,7 +1,7 @@
 ---
 title: "개인정보 여부 및 비식별화 (masking) #2"
 date: "2026-05-12 18:49:00"
-category: "artifacts"
+category: "dlp"
 summary: "외부로 요청되는 사용자 프롬프트에서 PII (Personally Identifiable Information) 탐지"
 tags: ["AI", "PII"]
 ---
