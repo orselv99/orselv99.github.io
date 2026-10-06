@@ -32,8 +32,9 @@ export interface Experience {
   company: string;
   period: string;
   role: string;
+  responsibilities?: string[];
   location: string;
-  category: "platform" | "systems" | "client" | "etc";
+  category?: "platform" | "systems" | "client" | "etc";
   isCurrent?: boolean;
   projects: Project[];
 }

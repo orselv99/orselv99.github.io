@@ -40,33 +40,53 @@ const { experience: exp } = Astro.props;
 
   <!-- Main Company & Projects Wrapper -->
   <div class="space-y-space-md">
-    <!-- COMPANY HEADER BLOCK: {회사이름} · {시작-끝} · {직책} -->
-    <header class="pb-space-xs border-b border-border-hairline">
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-sm">
-        <div class="flex flex-col items-baseline gap-x-space-sm gap-y-1">
-          <!-- 회사이름 -->
-          <h2 class="font-headline-md text-headline-md uppercase font-bold text-text-primary tracking-tight">
-            {exp.company}
-          </h2>
-
-          <!-- 직책 -->
-          <span class="font-label-mono text-label-mono uppercase font-bold text-text-primary">
-            {exp.role}
-          </span>
-
-          <!-- 기간 -->
-          <span class="font-label-mono text-label-mono uppercase text-text-secondary font-code-block font-semibold">
-            {exp.period}
-          </span>
-        </div>
+    <!-- COMPANY HEADER BLOCK: {회사이름} · {직책} · {기간} · {주요업무} -->
+    <header class="pb-space-sm border-b border-border-hairline space-y-space-xs">
+      <div class="flex items-start justify-between gap-space-sm">
+        <!-- 회사이름 -->
+        <h2 class="font-headline-md text-headline-md uppercase font-bold text-text-primary tracking-tight">
+          {exp.company}
+        </h2>
 
         <!-- 위치 -->
-        <div class="flex items-center gap-space-xs shrink-0 text-label-mono-xs uppercase text-text-secondary">
-          <span class="border border-border-hairline px-2 py-0.5 bg-surface-subtle font-inter font-medium tracking-wider">
-            {exp.location}
-          </span>
-        </div>
+        {exp.location && (
+          <div class="flex items-center gap-space-xs shrink-0 text-label-mono-xs uppercase text-text-secondary pt-1">
+            <span class="border border-border-hairline px-2 py-0.5 bg-surface-subtle font-inter font-medium tracking-wider">
+              {exp.location}
+            </span>
+          </div>
+        )}
       </div>
+
+      <!-- 직책 -->
+      <div class="font-label-mono text-label-mono uppercase font-bold text-text-primary">
+        {exp.role}
+      </div>
+
+      <!-- 기간 -->
+      <div class="font-label-mono text-label-mono uppercase text-text-secondary font-code-block font-semibold">
+        {exp.period}
+      </div>
+
+      <!-- 주요업무 (responsibilities) -->
+      {exp.responsibilities && exp.responsibilities.length > 0 && (
+        <div class="space-y-space-xs pt-space-xs">
+          <ul class="space-y-space-xs font-body-sm text-body-sm">
+            {exp.responsibilities.map((resp) => (
+              <li class="relative py-space-xs px-2.5 flex flex-col md:flex-row md:items-baseline justify-between gap-space-xs border-l-2 border-transparent">
+                <div class="flex items-start gap-space-sm flex-1">
+                  <svg class="w-1.5 h-1.5 text-text-secondary shrink-0 mt-1.5" viewBox="0 0 6 6" fill="none">
+                    <circle cx="3" cy="3" r="2.5" fill="currentColor"/>
+                  </svg>
+                  <span class="font-code-block text-text-primary leading-relaxed font-normal">
+                    {resp}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </header>
 
     <!-- PROJECTS CONTAINER -->

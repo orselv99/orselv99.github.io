@@ -17,8 +17,7 @@ function resolveDocHref(href: string): string {
   return `${basePath}/writing/${href}`;
 }
 
-const roles: string[] = project.roles || [];
-const techStacks: string[] = project.techStacks || project.techStack || [];
+const roles: string[] = project.roles || project.techStacks || project.techStack || [];
 
 const refDocs: ResumeRefDoc[] = (project.refDocs && project.refDocs.length > 0)
   ? project.refDocs
@@ -59,7 +58,7 @@ const sortedRefDocs = [...refDocs].sort((a, b) => {
     {project.description}
   </blockquote>
 
-  <!-- 3. 주요업무 -->
+  <!-- ROLES -->
   {roles.length > 0 && (
     <div class="space-y-space-xs pt-space-xs">
       <span class="font-label-mono-xs text-label-mono-xs uppercase text-text-muted font-bold tracking-wider block">
@@ -72,31 +71,8 @@ const sortedRefDocs = [...refDocs].sort((a, b) => {
               <svg class="w-1.5 h-1.5 text-text-secondary shrink-0 mt-1.5" viewBox="0 0 6 6" fill="none">
                 <circle cx="3" cy="3" r="2.5" fill="currentColor"/>
               </svg>
-              <span class="text-text-primary leading-relaxed font-normal">
-                {role}
-              </span>
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  )}
-
-  <!-- 4. 기술스택 -->
-  {techStacks.length > 0 && (
-    <div class="space-y-space-xs pt-space-xs">
-      <span class="font-label-mono-xs text-label-mono-xs uppercase text-text-muted font-bold tracking-wider block">
-        TECH STACK
-      </span>
-      <ul class="space-y-space-xs font-body-sm text-body-sm">
-        {techStacks.map((tech) => (
-          <li class="relative py-space-xs px-2.5 flex flex-col md:flex-row md:items-baseline justify-between gap-space-xs border-l-2 border-transparent">
-            <div class="flex items-start gap-space-sm flex-1">
-              <svg class="w-1.5 h-1.5 text-text-secondary shrink-0 mt-1.5" viewBox="0 0 6 6" fill="none">
-                <circle cx="3" cy="3" r="2.5" fill="currentColor"/>
-              </svg>
               <span class="font-code-block text-text-primary leading-relaxed font-normal">
-                {tech}
+                {role}
               </span>
             </div>
           </li>
