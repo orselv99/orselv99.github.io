@@ -1,7 +1,7 @@
 ---
 title: "개인정보 여부 및 비식별화 (masking) #2"
-date: "2026-05-12 18:49:00"
-category: "dlp"
+date: "2026-05-12 17:00:00"
+category: "DLP"
 summary: "외부로 요청되는 사용자 프롬프트에서 PII (Personally Identifiable Information) 탐지"
 tags: ["AI", "PII"]
 ---
@@ -12,8 +12,11 @@ tags: ["AI", "PII"]
 > - **작성일자**: 2026-09-29
 > - **대상 모듈**: Presidio Analyzer, Presidio Image Redactor, FastAPI API Server
 > - **검증 샘플**: 
->   - 캐나다 여권 ([sample_foreigner_passport.jpg](file:///d:/.repo/.private0/noname00/app/test_assets/sample_foreigner_passport.jpg))
->   - 한국 모바일 운전면허증 ([sample_korean_driverid.png](file:///d:/.repo/.private0/noname00/app/test_assets/sample_korean_driverid.png))
+>   - 캐나다 여권
+>   - 한국 모바일 운전면허증
+
+![alt text](./f23aa79b-7e91-4b6c-aaab-dbfe6d19620d-0.jpg)
+![alt text](./f23aa79b-7e91-4b6c-aaab-dbfe6d19620d-1.png)
 
 ---
 
