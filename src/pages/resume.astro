@@ -1,8 +1,21 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
-import experiencesData from "../../docs/resume.json";
-import { ResumeTimeline, type Experience, type ResumeRefDoc } from "../components/resume";
+import resumeData from "../../docs/resume.json";
+import {
+  SocialLinks,
+  ResumeTimeline,
+  type Experience,
+  type ResumeRefDoc,
+} from "../components/resume";
+
+const {
+  name,
+  role,
+  introduce,
+  socials,
+  experiences: rawExperiences = [],
+} = resumeData as any;
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
@@ -16,18 +29,33 @@ writingPosts.forEach((p) => {
 });
 
 const DEFAULT_TITLES: Record<string, string> = {
-  "/writing": "전송 실패 시 로컬 버퍼링, 복구 시 배치를 줄여 서버를 다시 쓰러뜨리지 않게",
+  "/writing":
+    "전송 실패 시 로컬 버퍼링, 복구 시 배치를 줄여 서버를 다시 쓰러뜨리지 않게",
 };
 
 // 2. Map resume experiences with resolved refDocs from writing posts
-const experiences: Experience[] = (experiencesData as any[]).map((exp) => ({
+const experiencesList = Array.isArray(rawExperiences)
+  ? rawExperiences
+  : Array.isArray(resumeData)
+    ? resumeData
+    : [];
+
+const experiences: Experience[] = (experiencesList as any[]).map((exp) => ({
   ...exp,
+  responsibilities: exp.responsibilities || [],
   projects: (exp.projects || []).map((proj: any) => {
-    const refsList: string[] = proj.refs || (proj.tasks || []).map((t: any) => t.href);
+    const refsList: string[] =
+      proj.refs || (proj.tasks || []).map((t: any) => t.href);
     const refDocs: ResumeRefDoc[] = refsList.map((refUuid) => {
-      const cleanUuid = refUuid.replace(/^\/+/, "").replace(/^writing\//, "").replace(/\.md$/, "");
-      const post = postMap.get(cleanUuid) || postMap.get(cleanUuid.replace(/-/g, ""));
-      const postSlug = post ? post.id.split("/").pop()?.replace(/\.md$/, "") : cleanUuid;
+      const cleanUuid = refUuid
+        .replace(/^\/+/, "")
+        .replace(/^writing\//, "")
+        .replace(/\.md$/, "");
+      const post =
+        postMap.get(cleanUuid) || postMap.get(cleanUuid.replace(/-/g, ""));
+      const postSlug = post
+        ? post.id.split("/").pop()?.replace(/\.md$/, "")
+        : cleanUuid;
 
       let href: string;
       if (refUuid.startsWith("http")) {
@@ -39,11 +67,15 @@ const experiences: Experience[] = (experiencesData as any[]).map((exp) => ({
       }
 
       const rawDate = post?.data.date;
-      const date = rawDate ? rawDate.slice(0, 10).replace(/-/g, ".") : undefined;
+      const date = rawDate
+        ? rawDate.slice(0, 10).replace(/-/g, ".")
+        : undefined;
       const title =
         post?.data.title ||
         DEFAULT_TITLES[refUuid] ||
-        (cleanUuid && cleanUuid !== "writing" ? `DOCUMENT // ${cleanUuid.slice(0, 8)}` : refUuid);
+        (cleanUuid && cleanUuid !== "writing"
+          ? `DOCUMENT // ${cleanUuid.slice(0, 8)}`
+          : refUuid);
 
       return {
         uuid: cleanUuid || refUuid,
@@ -57,8 +89,7 @@ const experiences: Experience[] = (experiencesData as any[]).map((exp) => ({
 
     return {
       ...proj,
-      roles: proj.roles || [],
-      techStacks: proj.techStacks || proj.techStack || [],
+      roles: proj.roles || proj.techStacks || proj.techStack || [],
       refDocs,
     };
   }),
@@ -67,11 +98,39 @@ const experiences: Experience[] = (experiencesData as any[]).map((exp) => ({
 
 <BaseLayout
   title="Resume"
-  description="Curriculum vitae and professional experience of orseL. Lead Platform Engineer specializing in distributed systems, game platform architecture, and high-performance web runtimes."
+  description={`${name} — ${role}. ${introduce?.replace(/[“”"]/g, "") ?? "Curriculum vitae and professional experience of orseL."}`}
   currentPath="/resume"
 >
-  <div class="flex flex-col w-full divide-y divide-border-hairline bg-surface-canvas">
-    <section class="bg-surface-canvas">
+  <div
+    class="flex flex-col w-full divide-y divide-border-hairline bg-surface-canvas"
+  >
+    <section
+      class="space-y-space-lg bg-surface-canvas border-b border-border-hairline"
+    >
+      <!-- 제목 -->
+      <div class="space-y-space-md">
+        <h1
+          class="font-display-hero text-headline-lg md:text-display-hero tracking-tighter text-text-primary leading-none select-none"
+        >
+          {name}
+        </h1>
+      </div>
+
+      <!-- 소개 -->
+      <div class="space-y-space-sm">
+        <blockquote
+          class="font-body-lg text-body-lg text-text-primary leading-relaxed tracking-tight border-l-2 border-border-hairline pl-space-md py-space-xs max-w-4xl"
+        >
+          {introduce}
+        </blockquote>
+      </div>
+
+      <!-- SNS (Email, GitHub, LinkedIn) -->
+      <div class="pb-space-lg">
+        <SocialLinks socials={socials} />
+      </div>
+    </section>
+    <section class="bg-surface-canvas pt-space-lg">
       <ResumeTimeline experiences={experiences} />
     </section>
   </div>

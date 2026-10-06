@@ -20,7 +20,7 @@ const sortedRefDocs = [...(artifact.refDocs || [])].sort((a, b) => {
 <article
   class="artifact-card border border-border-hairline bg-surface-canvas flex flex-col divide-y divide-border-hairline transition-all duration-150"
   data-category={artifact.category || ""}
-  data-search-corpus={`${artifact.index} ${artifact.category || ""} ${artifact.displayTitle} ${artifact.summary} ${artifact.cleanTechStack.join(" ")} ${sortedRefDocs.map((r) => `${r.title} ${r.uuid}`).join(" ")}`}
+  data-search-corpus={`${artifact.index} ${artifact.category || ""} ${artifact.displayTitle} ${artifact.summary} ${artifact.cleanTags.join(" ")} ${sortedRefDocs.map((r) => `${r.title} ${r.uuid}`).join(" ")}`}
 >
   <!-- Artifact Card Main Content -->
   <div class="p-space-md sm:p-space-lg space-y-space-md">
@@ -100,15 +100,15 @@ const sortedRefDocs = [...(artifact.refDocs || [])].sort((a, b) => {
       </div>
     )}
 
-    <!-- tech stack -->
-    {artifact.cleanTechStack && artifact.cleanTechStack.length > 0 && (
+    <!-- tags -->
+    {artifact.cleanTags && artifact.cleanTags.length > 0 && (
       <div class="flex flex-wrap items-center gap-space-xs pt-space-md border-t border-border-subtle">
         <span class="font-label-mono-xs text-label-mono-xs uppercase text-text-muted font-bold mr-1">
-          TECH STACK:
+          TAGS:
         </span>
-        {artifact.cleanTechStack.map((tech) => (
+        {artifact.cleanTags.map((tag) => (
           <span class="font-code-block text-label-mono-xs border border-border-subtle px-1.5 py-0.5 bg-surface-canvas text-text-secondary uppercase">
-            {tech}
+            {tag}
           </span>
         ))}
       </div>

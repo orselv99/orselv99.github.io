@@ -5,7 +5,7 @@ export interface ArtifactItem {
   title: string;
   summary: string;
   refs: string[];
-  techStack: string[];
+  tags: string[];
 }
 
 export interface ArtifactRefDoc {
@@ -20,6 +20,6 @@ export interface ArtifactRefDoc {
 
 export interface ArtifactWithRefs extends ArtifactItem {
   displayTitle: string;
-  cleanTechStack: string[];
+  cleanTags: string[];
   refDocs: ArtifactRefDoc[];
 }

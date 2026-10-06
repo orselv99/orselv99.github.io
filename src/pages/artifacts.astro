@@ -3,7 +3,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
 import artifactsRaw from "../../docs/artifacts.json";
 import resumeData from "../../docs/resume.json";
-import { ArtifactList, type ArtifactItem, type ArtifactWithRefs } from "../components/artifacts";
+import {
+  ArtifactList,
+  type ArtifactItem,
+  type ArtifactWithRefs,
+} from "../components/artifacts";
 
 const basePath = import.meta.env.BASE_URL.replace(/\/$/, "");
 
@@ -63,15 +67,23 @@ const artifactsData = artifactsRaw as ArtifactItem[];
 
 const artifacts: ArtifactWithRefs[] = artifactsData
   .map((item) => {
-    const cleanTechStack = (item.techStack || []).filter((t) => Boolean(t && t.trim()));
+    const cleanTags = (item.tags || []).filter((t) => Boolean(t && t.trim()));
     const displayTitle = item.title.trim();
     const refDocs = (item.refs || []).map((refUuid) => {
-      const post = postMap.get(refUuid) || postMap.get(refUuid.replace(/-/g, ""));
-      const postSlug = post ? post.id.split("/").pop()?.replace(/\.md$/, "") : refUuid;
+      const post =
+        postMap.get(refUuid) || postMap.get(refUuid.replace(/-/g, ""));
+      const postSlug = post
+        ? post.id.split("/").pop()?.replace(/\.md$/, "")
+        : refUuid;
       const resumeTask = resumeTaskMap.get(refUuid);
-      const title = post?.data.title || resumeTask?.description || `DOCUMENT // ${refUuid.slice(0, 8)}`;
+      const title =
+        post?.data.title ||
+        resumeTask?.description ||
+        `DOCUMENT // ${refUuid.slice(0, 8)}`;
       const rawDate = post?.data.date;
-      const date = rawDate ? rawDate.slice(0, 10).replace(/-/g, ".") : undefined;
+      const date = rawDate
+        ? rawDate.slice(0, 10).replace(/-/g, ".")
+        : undefined;
       const href = `${basePath}/writing/${postSlug}`;
 
       return {
@@ -88,7 +100,7 @@ const artifacts: ArtifactWithRefs[] = artifactsData
     return {
       ...item,
       displayTitle,
-      cleanTechStack,
+      cleanTags,
       refDocs,
     };
   })
@@ -102,10 +114,13 @@ const categoryCounts = artifacts.reduce(
     }
     return acc;
   },
-  {} as Record<string, number>
+  {} as Record<string, number>,
 );
 
-const categories = Object.keys(categoryCounts).length > 0 ? ["all", ...Object.keys(categoryCounts)] : [];
+const categories =
+  Object.keys(categoryCounts).length > 0
+    ? ["all", ...Object.keys(categoryCounts)]
+    : [];
 ---
 
 <BaseLayout
@@ -113,7 +128,9 @@ const categories = Object.keys(categoryCounts).length > 0 ? ["all", ...Object.ke
   description="Production system deliverables, architectural specifications, and platform engineering artifacts."
   currentPath="/artifacts"
 >
-  <div class="flex flex-col w-full divide-y divide-border-hairline bg-surface-canvas">
+  <div
+    class="flex flex-col w-full divide-y divide-border-hairline bg-surface-canvas"
+  >
     <ArtifactList
       artifacts={artifacts}
       categories={categories}
