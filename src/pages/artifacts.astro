@@ -34,39 +34,65 @@ if (Array.isArray(resumeData)) {
   });
 }
 
-// 3. Process artifacts with resolved references
+// 3. Process artifacts with resolved references & sort by period descending
+function parsePeriod(periodStr?: string): { start: string; end: string } {
+  if (!periodStr) return { start: "", end: "" };
+  const parts = periodStr.split(/[—–-]/).map((s) => s.trim());
+  const start = parts[0] || "";
+  let end = parts[1] || start;
+  if (/present|현재/i.test(end)) {
+    end = "9999.99";
+  }
+  return { start, end };
+}
+
+function comparePeriodsDesc(periodA?: string, periodB?: string): number {
+  const a = parsePeriod(periodA);
+  const b = parsePeriod(periodB);
+
+  if (a.end !== b.end) {
+    return b.end.localeCompare(a.end);
+  }
+  if (a.start !== b.start) {
+    return b.start.localeCompare(a.start);
+  }
+  return 0;
+}
+
 const artifactsData = artifactsRaw as ArtifactItem[];
 
-const artifacts: ArtifactWithRefs[] = artifactsData.map((item) => {
-  const cleanTechStack = (item.techStack || []).filter((t) => Boolean(t && t.trim()));
-  const displayTitle = item.title.trim();
-  const refDocs = (item.refs || []).map((refUuid) => {
-    const post = postMap.get(refUuid) || postMap.get(refUuid.replace(/-/g, ""));
-    const postSlug = post ? post.id.split("/").pop()?.replace(/\.md$/, "") : refUuid;
-    const resumeTask = resumeTaskMap.get(refUuid);
-    const title = post?.data.title || resumeTask?.description || `DOCUMENT // ${refUuid.slice(0, 8)}`;
-    const rawDate = post?.data.date;
-    const date = rawDate ? rawDate.slice(0, 10).replace(/-/g, ".") : undefined;
-    const href = `${basePath}/writing/${postSlug}`;
+const artifacts: ArtifactWithRefs[] = artifactsData
+  .map((item) => {
+    const cleanTechStack = (item.techStack || []).filter((t) => Boolean(t && t.trim()));
+    const displayTitle = item.title.trim();
+    const refDocs = (item.refs || []).map((refUuid) => {
+      const post = postMap.get(refUuid) || postMap.get(refUuid.replace(/-/g, ""));
+      const postSlug = post ? post.id.split("/").pop()?.replace(/\.md$/, "") : refUuid;
+      const resumeTask = resumeTaskMap.get(refUuid);
+      const title = post?.data.title || resumeTask?.description || `DOCUMENT // ${refUuid.slice(0, 8)}`;
+      const rawDate = post?.data.date;
+      const date = rawDate ? rawDate.slice(0, 10).replace(/-/g, ".") : undefined;
+      const href = `${basePath}/writing/${postSlug}`;
+
+      return {
+        uuid: refUuid,
+        title,
+        href,
+        date,
+        rawDate,
+        summary: post?.data.summary,
+        tags: post?.data.tags,
+      };
+    });
 
     return {
-      uuid: refUuid,
-      title,
-      href,
-      date,
-      rawDate,
-      summary: post?.data.summary,
-      tags: post?.data.tags,
+      ...item,
+      displayTitle,
+      cleanTechStack,
+      refDocs,
     };
-  });
-
-  return {
-    ...item,
-    displayTitle,
-    cleanTechStack,
-    refDocs,
-  };
-});
+  })
+  .sort((a, b) => comparePeriodsDesc(a.period, b.period));
 
 // 4. Compute unique categories & counts
 const categoryCounts = artifacts.reduce(
