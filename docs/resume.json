@@ -12,34 +12,41 @@
         "title": "상용 AI 서비스 제어 솔루션",
         "period": "2026.02 — 2026.09",
         "description": "사내 AI 인프라를 활용해, 상용 AI 서비스로 나가는 프롬프트와 첨부파일을 LLM으로 검사하는 서비스를 약 한 달 반 동안 혼자 전 영역 설계·구현했습니다. Python 프록시, LLM 분석 레이어, 브라우저 확장, 데스크톱 앱, Next.js 백오피스까지.",
-        "refs": [
-          "3db5725f-fb22-47a0-aad4-e97356f94e0b",
-          "6db6c2c3-0ad0-4819-a843-da3f357ef8f6",
-          "ce2fe1e1-367a-4145-94ba-91af1ef0bd5a",
-          "12c61b06-a1d1-4ec8-aa63-2b7b22762bb4"
-        ],
-        "techStack": [
+        "roles": [],
+        "techStacks": [
           "Python",
           "Next.js",
           "mitmproxy",
           "Docker",
           "vLLM"
+        ],
+        "refs": [
+          "3db5725f-fb22-47a0-aad4-e97356f94e0b",
+          "6db6c2c3-0ad0-4819-a843-da3f357ef8f6",
+          "ce2fe1e1-367a-4145-94ba-91af1ef0bd5a",
+          "12c61b06-a1d1-4ec8-aa63-2b7b22762bb4",
+          "226c72a7-5eaf-4605-b3e3-5a76c4ed1fab"
         ]
       },
       {
         "title": "사용자 행동 분석 솔루션",
         "period": "2023.06 — 2026.01",
         "description": "PC에서 발생하는 프로세스·파일·네트워크 이벤트를 수집해 Logstash → ElasticSearch로 보내는 파이프라인과, 이를 조회하는 Next.js 백오피스를 만들었습니다.",
+        "roles":[
+          "AI 기반 보안 서비스 (LLM 및 ML 탐지) 에 필요한 엔드포인트 데이터 수집 파이프라인 및 사용자 클라이언트, 백오피스 아키텍처 설계 및 개발",
+          "커널/유저 레벨 이벤트 (Process, File, Network 등) 를 실시간 수집 및 가공하여 Elastic Search 기반의 AI 분석 파트 데이터 파이프라인 개발",
+          "사용자 이벤트 수집 모듈 개발",
+          "빌드 및 패키징 서버구성 및 운영"
+        ],
+        "techStacks": [
+          "C++ (이벤트 수집 모듈 및 사용자 클라이언트 Win32 Api, Qt)",
+          "ReactJs (사용자 클라이언트 webview)",
+          "NextJS, PostgreSql",
+          "Jenkins, InnoSetup"
+        ],
         "refs": [
-          "/writing",
           "a610256c-70a4-4737-a9c0-39e60092e5a6",
           "1541949a-2a7d-46a7-a71e-e153745e551c"
-        ],
-        "techStack": [
-          "Qt",
-          "ElasticSearch",
-          "WebView",
-          "React.Js"
         ]
       }
     ]
@@ -56,6 +63,17 @@
         "title": "게임 플랫폼 데스크탑 클라이언트",
         "period": "2021.10 — 2023.01",
         "description": "전 세계 100개국 유저 대상 지연시간(RTT) 기반 최적 데이터센터 라우팅 및 티켓 큐 기반 랭크 매칭 알고리즘 구현",
+        "roles":[
+          "자사 게임 (슈퍼피플, 나이트워커 등) 퍼블리싱 및 플랫폼 (웹/런처) 개발",
+          "게임 클라이언트 배포를 위한 CI/CD 기반 패키징 및 게임 런처, 다운로드, 업데이트 파이프라인 구축"
+        ],
+        "techStacks": [
+          "C++ Qt (사용자 클라이언트)",
+          "C++ RTPatch, ZStandard (업데이트)",
+          "NextJs (WebView 및 브랜딩 페이지)",
+          "Jenkins, Advanced Installer (빌드 및 패키징)",
+          "Electron (차세대 사용자 클라이언트)"
+        ],
         "refs": [
           "40be512b-7b9b-4d48-9556-d7362103a2b2",
           "3273bd62-a3f0-481a-a6a6-0c7789a3c72d",
@@ -63,14 +81,6 @@
           "d28f60a1-e6d7-4969-a182-f3821a7b422d",
           "ef4ba1fa-2412-46b3-a9ed-3e3d1e34f202",
           "f56d5dbd-0177-40a5-82e0-436dce65cce5"
-        ],
-        "techStack": [
-          "Qt",
-          "RtPatch",
-          "Electron",
-          "React.Js",
-          "Advanced Installer",
-          "Sentry"
         ]
       }
     ]
@@ -87,18 +97,23 @@
         "title": "DLP · 문서중앙화 솔루션",
         "period": "2019.03 — 2020.05",
         "description": "사내 중요 정보 유출 방지를 위한 Windows 엔드포인트 보안 에이전트 및 중앙 웹 관제 플랫폼 개발·운영",
+        "roles":[
+          "기업용 문서 보안 및 중앙화 솔루션의 코어 모듈 개발",
+          "사용자 클라이언트 및 백오피스 개발",
+          "DLP 보안모듈 개발",
+          "탐색기 커스터마이징 모듈",
+          "빌드 및 패키징 서버구성 및 운영" 
+        ],
+        "techStacks": [
+          "C/C++ Win32 Api, Api / Message Hooking (DLP 보안모듈)",
+          "C# WPF (사용자 클라이언트)",
+          "ReactJs (백오피스)",
+          "Jenkins, InnoSetup (빌드 및 패키징)"
+        ],
         "refs": [
           "f878f08d-39c7-46b5-a7c4-a1ca6e545693",
           "ab82a8e5-1707-4761-a07e-2f4b7b1eb9dc",
           "64d73edf-8a31-4203-b3da-95192d9175ea"
-        ],
-        "techStack": [
-          "C/C++",
-          ".NetFramework",
-          "Express",
-          "React.Js",
-          "Jenkins",
-          "Inno Setup"
         ]
       }
     ]
@@ -115,15 +130,20 @@
         "title": "DLP 솔루션",
         "period": "2012.11 — 2015.04",
         "description": "사내 자산 유출 방지를 위한 Windows 엔드포인트 보안 솔루션 개발·운영",
+        "roles":[
+          "기업용 문서 유출 방지를 위한 엔드포인트 보안 솔루션의 코어 모듈 개발",
+          "사용자 클라이언트 및 백오피스, 서버 개발",
+          "DLP 보안모듈 개발",
+          "빌드 및 패키징 서버구성 및 운영"
+        ],
+        "techStacks": [
+          "C/C++ (Win32 Api, Api / Message Hooking (DLP 보안모듈)",
+          "Vb6.0  (사용자 클라이언트 및 백오피스, 서버)",
+          "Jenkins, InnoSetup (빌드 및 패키징)"
+        ],
         "refs": [
           "9b05cca7-2fa1-4a36-b7ab-058a4ee96371",
           "0245b1cc-7dc4-4c1d-a1d2-c598b6d4110e"
-        ],
-        "techStack": [
-          "C/C++",
-          "Vb6.0",
-          "Jenkins",
-          "Inno Setup"
         ]
       }
     ]

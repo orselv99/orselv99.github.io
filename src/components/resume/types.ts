@@ -18,10 +18,12 @@ export interface Project {
   title: string;
   period: string;
   description: string;
+  roles?: string[];
+  techStacks?: string[];
+  techStack?: string[];
   refs?: string[];
   refDocs?: ResumeRefDoc[];
   tasks?: TaskDetail[];
-  techStack?: string[];
 }
 
 export interface Experience {

@@ -8,7 +8,8 @@
             "3db5725f-fb22-47a0-aad4-e97356f94e0b",
             "6db6c2c3-0ad0-4819-a843-da3f357ef8f6",
             "ce2fe1e1-367a-4145-94ba-91af1ef0bd5a",
-            "12c61b06-a1d1-4ec8-aa63-2b7b22762bb4"
+            "12c61b06-a1d1-4ec8-aa63-2b7b22762bb4",
+            "226c72a7-5eaf-4605-b3e3-5a76c4ed1fab"
         ],
         "techStack": ["AI","python", "plasmo", "next.js", "vllm", "grafana", "prometheus"]
     }

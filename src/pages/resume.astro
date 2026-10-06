@@ -57,6 +57,8 @@ const experiences: Experience[] = (experiencesData as any[]).map((exp) => ({
 
     return {
       ...proj,
+      roles: proj.roles || [],
+      techStacks: proj.techStacks || proj.techStack || [],
       refDocs,
     };
   }),
