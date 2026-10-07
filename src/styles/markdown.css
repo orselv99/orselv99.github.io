@@ -89,6 +89,9 @@
   padding: 1.25rem;
   overflow-x: auto;
   margin-bottom: 1.75rem;
+  white-space: pre-wrap !important;
+  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
 /* Code block language type badge in top-right corner */
@@ -122,10 +125,14 @@
   border-color: var(--color-text-secondary);
 }
 
-.markdown-body pre code {
+.markdown-body pre code,
+.markdown-body pre .line {
   background: transparent;
   border: none;
   padding: 0;
+  white-space: pre-wrap !important;
+  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
 /* Shiki Dual-Theme (Light & Dark) Support */
