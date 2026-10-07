@@ -419,8 +419,10 @@
             primaryTextColor: "#ededed",
             lineColor: "#9b9ea8",
             textColor: "#ededed",
-            fontFamily: "Inter, sans-serif",
+            fontFamily:
+              "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Pretendard', sans-serif",
             fontSize: "13px",
+            edgeLabelBackground: "transparent",
             // Sequence Diagram specific theme tokens
             actorBkg: "#202227",
             actorBorder: "#3a3d47",
@@ -447,8 +449,10 @@
             primaryTextColor: "#1c1d22",
             lineColor: "#2d3139",
             textColor: "#1c1d22",
-            fontFamily: "Inter, sans-serif",
+            fontFamily:
+              "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Pretendard', sans-serif",
             fontSize: "13px",
+            edgeLabelBackground: "transparent",
             // Sequence Diagram specific theme tokens
             actorBkg: "#ffffff",
             actorBorder: "#2d3139",
@@ -467,6 +471,13 @@
             activationBorderColor: "#2d3139",
             sequenceNumberColor: "#ffffff",
           },
+      flowchart: {
+        htmlLabels: true,
+        padding: 20,
+        nodeSpacing: 50,
+        rankSpacing: 50,
+        curve: "basis",
+      },
       sequence: {
         diagramMarginX: 60,
         diagramMarginY: 50,
@@ -480,7 +491,7 @@
         mirrorActors: false,
         bottomMarginAdj: 1,
         useMaxWidth: true,
-        autonumber: true,
+        // autonumber: true,
         actorFontSize: 13,
         actorFontFamily: "Inter, sans-serif",
         noteFontSize: 12,
