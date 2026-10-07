@@ -30,6 +30,7 @@
   /* 런타임/디버그/강조 인디케이터 (웜톤) */
   --color-accent-impl: #5986c4;
   /* 구현/시스템/정상 인디케이터 (쿨톤) */
+  --color-accent-warn: #fab13a;
 
   --color-primary: #1c1d22;
   --color-on-primary: #f6f5f1;
@@ -62,6 +63,7 @@ html.dark {
   /* 반전 요소 내부 텍스트 */
   --color-accent-spec: #c45a72;
   --color-accent-impl: #5986c4;
+  --color-accent-warn: #fab13a;
 
   --color-primary: #ededed;
   --color-on-primary: #121316;
