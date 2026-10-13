@@ -6,6 +6,8 @@ export interface ArtifactItem {
   summary: string;
   refs: string[];
   tags: string[];
+  demoUrl?: string;
+  embedding?: string;
 }
 
 export interface ArtifactRefDoc {

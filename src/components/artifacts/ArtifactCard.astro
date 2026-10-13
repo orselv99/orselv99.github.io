@@ -15,12 +15,13 @@ const sortedRefDocs = [...(artifact.refDocs || [])].sort((a, b) => {
   if (!dateB) return -1;
   return dateB.localeCompare(dateA);
 });
+const demoUrl = artifact.demoUrl || (artifact as any).embedding || "";
 ---
 
 <article
   class="artifact-card border border-border-hairline bg-surface-canvas flex flex-col divide-y divide-border-hairline transition-all duration-150"
   data-category={artifact.category || ""}
-  data-search-corpus={`${artifact.index} ${artifact.category || ""} ${artifact.displayTitle} ${artifact.summary} ${artifact.cleanTags.join(" ")} ${sortedRefDocs.map((r) => `${r.title} ${r.uuid}`).join(" ")}`}
+  data-search-corpus={`${artifact.index} ${artifact.category || ""} ${artifact.displayTitle} ${artifact.summary} ${artifact.cleanTags.join(" ")} ${sortedRefDocs.map((r) => `${r.title} ${r.uuid}`).join(" ")} ${demoUrl}`}
 >
   <!-- Artifact Card Main Content -->
   <div class="p-space-md sm:p-space-lg space-y-space-md">
@@ -100,6 +101,115 @@ const sortedRefDocs = [...(artifact.refDocs || [])].sort((a, b) => {
       </div>
     )}
 
+    <!-- Interactive Live Demo / Embed Preview (On-Demand Loading) -->
+    {demoUrl && (
+      <div class="artifact-preview pt-space-xs">
+        <div
+          class="artifact-preview-card border border-border-hairline bg-surface-canvas overflow-hidden"
+          data-demo-url={demoUrl}
+          data-state="idle"
+        >
+          <!-- Preview Header Bar -->
+          <div class="px-3 py-1.5 bg-surface-subtle border-b border-border-hairline flex flex-wrap items-center justify-between gap-2 font-label-mono-xs text-label-mono-xs uppercase select-none">
+            <div class="flex items-center gap-2 min-w-0">
+              <span class="preview-status-dot w-2 h-2 inline-block rounded-full bg-border-hairline transition-all duration-300"></span>
+              <span class="font-bold text-text-primary tracking-wider">
+                LIVE RUNTIME
+              </span>
+              <span class="preview-status-text text-text-muted truncate max-w-[180px] sm:max-w-xs font-normal">
+                // STANDBY
+              </span>
+            </div>
+
+            <!-- Action Controls -->
+            <div class="flex items-center gap-1.5 shrink-0">
+              <!-- Always visible: External direct link -->
+              <a
+                href={demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1 font-label-mono-xs text-label-mono-xs uppercase border border-border-hairline px-2 py-0.5 bg-surface-canvas hover:bg-surface-inverse hover:text-text-inverse text-text-primary font-bold transition-all duration-150 cursor-pointer"
+                title="새 창에서 열기"
+              >
+                <span>OPEN</span>
+                <span>↗</span>
+              </a>
+
+              <!-- Controls visible when loaded -->
+              <button
+                type="button"
+                class="preview-reload-btn hidden inline-flex items-center gap-1 font-label-mono-xs text-label-mono-xs uppercase border border-border-hairline px-2 py-0.5 bg-surface-canvas hover:bg-surface-subtle text-text-primary font-bold cursor-pointer transition-colors"
+                title="런타임 새로고침"
+              >
+                <span>RELOAD</span>
+                <span>↻</span>
+              </button>
+
+              <button
+                type="button"
+                class="preview-fullscreen-btn hidden inline-flex items-center gap-1 font-label-mono-xs text-label-mono-xs uppercase border border-border-hairline px-2 py-0.5 bg-surface-canvas hover:bg-surface-subtle text-text-primary font-bold cursor-pointer transition-colors"
+                title="전체화면"
+              >
+                <span>FULLSCREEN</span>
+                <span>⛶</span>
+              </button>
+
+              <button
+                type="button"
+                class="preview-unload-btn hidden inline-flex items-center gap-1 font-label-mono-xs text-label-mono-xs uppercase border border-border-hairline px-2 py-0.5 bg-surface-canvas hover:bg-accent-spec hover:text-text-inverse text-text-primary font-bold cursor-pointer transition-colors"
+                title="런타임 언로드 및 메모리 해제"
+              >
+                <span>UNLOAD</span>
+                <span>✕</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Standby View (Zero Resource Overhead) -->
+          <div class="preview-standby-view p-space-md sm:p-space-lg flex flex-col sm:flex-row items-center justify-between gap-4 bg-surface-canvas/60">
+            <div class="space-y-1 text-center sm:text-left min-w-0">
+              <div class="font-label-mono-xs text-label-mono-xs uppercase text-text-muted font-bold tracking-wider">
+                [INTERACTIVE DEMO READY]
+              </div>
+              <div class="font-code-block text-label-mono-xs text-text-secondary truncate max-w-sm sm:max-w-md">
+                {demoUrl}
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="preview-launch-btn inline-flex items-center gap-2 font-label-mono-xs text-label-mono-xs uppercase border border-border-hairline px-3.5 py-1.5 bg-surface-canvas hover:bg-surface-inverse hover:text-text-inverse text-text-primary font-bold tracking-wider transition-all duration-150 cursor-pointer shadow-xs active:translate-y-0.5"
+            >
+              <span class="w-2 h-2 bg-accent-spec rounded-xs"></span>
+              <span>LAUNCH PREVIEW</span>
+              <span>▶</span>
+            </button>
+          </div>
+
+          <!-- Active Frame View (Dynamically Injected Frame) -->
+          <div class="preview-active-view hidden relative w-full aspect-video min-h-[360px] sm:min-h-[460px] bg-surface-subtle">
+            <!-- Loading Indicator Overlay -->
+            <div class="preview-loading-overlay absolute inset-0 z-10 flex flex-col items-center justify-center bg-surface-canvas/90 backdrop-blur-xs gap-3">
+              <div class="w-6 h-6 border-2 border-border-hairline border-t-accent-spec rounded-full animate-spin"></div>
+              <span class="font-label-mono-xs text-label-mono-xs uppercase text-text-primary font-bold tracking-wider">
+                INITIALIZING RUNTIME & ASSETS...
+              </span>
+            </div>
+
+            <!-- Iframe (src set on demand via script) -->
+            <iframe
+              class="preview-iframe w-full h-full border-0 block"
+              title={`${artifact.displayTitle} Live Demo`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+              allowfullscreen
+              sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+              loading="lazy"
+            ></iframe>
+          </div>
+        </div>
+      </div>
+    )}
+
     <!-- tags -->
     {artifact.cleanTags && artifact.cleanTags.length > 0 && (
       <div class="flex flex-wrap items-center gap-space-xs pt-space-md border-t border-border-subtle">
@@ -115,3 +225,169 @@ const sortedRefDocs = [...(artifact.refDocs || [])].sort((a, b) => {
     )}
   </div>
 </article>
+
+<script>
+  function setupArtifactPreviews() {
+    document.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+
+      // 1. Launch button clicked
+      const launchBtn = target.closest<HTMLButtonElement>(".preview-launch-btn");
+      if (launchBtn) {
+        const card = launchBtn.closest<HTMLElement>(".artifact-preview-card");
+        if (!card) return;
+        const demoUrl = card.getAttribute("data-demo-url");
+        if (!demoUrl) return;
+
+        const standbyView = card.querySelector<HTMLElement>(".preview-standby-view");
+        const activeView = card.querySelector<HTMLElement>(".preview-active-view");
+        const loadingOverlay = card.querySelector<HTMLElement>(".preview-loading-overlay");
+        const iframe = card.querySelector<HTMLIFrameElement>(".preview-iframe");
+        const statusDot = card.querySelector<HTMLElement>(".preview-status-dot");
+        const statusText = card.querySelector<HTMLElement>(".preview-status-text");
+        const reloadBtn = card.querySelector<HTMLButtonElement>(".preview-reload-btn");
+        const fullscreenBtn = card.querySelector<HTMLButtonElement>(".preview-fullscreen-btn");
+        const unloadBtn = card.querySelector<HTMLButtonElement>(".preview-unload-btn");
+
+        card.setAttribute("data-state", "loading");
+        standbyView?.classList.add("hidden");
+        activeView?.classList.remove("hidden");
+        loadingOverlay?.classList.remove("hidden");
+        reloadBtn?.classList.remove("hidden");
+        fullscreenBtn?.classList.remove("hidden");
+        unloadBtn?.classList.remove("hidden");
+
+        if (statusDot) {
+          statusDot.className = "preview-status-dot w-2 h-2 inline-block rounded-full bg-accent-spec animate-pulse";
+        }
+        if (statusText) {
+          statusText.textContent = "// INITIALIZING...";
+        }
+
+        if (iframe) {
+          iframe.onload = () => {
+            loadingOverlay?.classList.add("hidden");
+            card.setAttribute("data-state", "running");
+            if (statusDot) {
+              statusDot.className = "preview-status-dot w-2 h-2 inline-block rounded-full bg-emerald-500";
+            }
+            if (statusText) {
+              statusText.textContent = "// RUNTIME ACTIVE";
+            }
+          };
+          iframe.src = demoUrl;
+        }
+        return;
+      }
+
+      // 2. Unload button clicked
+      const unloadBtn = target.closest<HTMLButtonElement>(".preview-unload-btn");
+      if (unloadBtn) {
+        const card = unloadBtn.closest<HTMLElement>(".artifact-preview-card");
+        if (!card) return;
+
+        const standbyView = card.querySelector<HTMLElement>(".preview-standby-view");
+        const activeView = card.querySelector<HTMLElement>(".preview-active-view");
+        const loadingOverlay = card.querySelector<HTMLElement>(".preview-loading-overlay");
+        const iframe = card.querySelector<HTMLIFrameElement>(".preview-iframe");
+        const statusDot = card.querySelector<HTMLElement>(".preview-status-dot");
+        const statusText = card.querySelector<HTMLElement>(".preview-status-text");
+        const reloadBtn = card.querySelector<HTMLButtonElement>(".preview-reload-btn");
+        const fullscreenBtn = card.querySelector<HTMLButtonElement>(".preview-fullscreen-btn");
+
+        // Clear iframe to release WebGL contexts, memory and audio
+        if (iframe) {
+          iframe.onload = null;
+          iframe.src = "about:blank";
+        }
+
+        card.setAttribute("data-state", "idle");
+        activeView?.classList.add("hidden");
+        loadingOverlay?.classList.remove("hidden");
+        standbyView?.classList.remove("hidden");
+        reloadBtn?.classList.add("hidden");
+        fullscreenBtn?.classList.add("hidden");
+        unloadBtn.classList.add("hidden");
+
+        if (statusDot) {
+          statusDot.className = "preview-status-dot w-2 h-2 inline-block rounded-full bg-border-hairline";
+        }
+        if (statusText) {
+          statusText.textContent = "// STANDBY";
+        }
+        return;
+      }
+
+      // 3. Reload button clicked
+      const reloadBtn = target.closest<HTMLButtonElement>(".preview-reload-btn");
+      if (reloadBtn) {
+        const card = reloadBtn.closest<HTMLElement>(".artifact-preview-card");
+        if (!card) return;
+        const demoUrl = card.getAttribute("data-demo-url");
+        const iframe = card.querySelector<HTMLIFrameElement>(".preview-iframe");
+        const loadingOverlay = card.querySelector<HTMLElement>(".preview-loading-overlay");
+        const statusDot = card.querySelector<HTMLElement>(".preview-status-dot");
+        const statusText = card.querySelector<HTMLElement>(".preview-status-text");
+
+        if (iframe && demoUrl) {
+          loadingOverlay?.classList.remove("hidden");
+          if (statusDot) {
+            statusDot.className = "preview-status-dot w-2 h-2 inline-block rounded-full bg-accent-spec animate-pulse";
+          }
+          if (statusText) {
+            statusText.textContent = "// RELOADING...";
+          }
+          iframe.src = demoUrl;
+        }
+        return;
+      }
+
+      // 4. Fullscreen button clicked
+      const fsBtn = target.closest<HTMLButtonElement>(".preview-fullscreen-btn");
+      if (fsBtn) {
+        const card = fsBtn.closest<HTMLElement>(".artifact-preview-card");
+        const iframe = card?.querySelector<HTMLIFrameElement>(".preview-iframe");
+        const activeView = card?.querySelector<HTMLElement>(".preview-active-view");
+        const targetElement = iframe || activeView;
+        if (!targetElement) return;
+
+        if (!document.fullscreenElement) {
+          targetElement.requestFullscreen?.().catch((err) => {
+            console.error("Fullscreen request on iframe failed, falling back to container:", err);
+            if (activeView && targetElement !== activeView) {
+              activeView.requestFullscreen?.().catch((e) => console.error("Container fullscreen failed:", e));
+            }
+          });
+        } else {
+          document.exitFullscreen?.().catch((err) => {
+            console.error("Exit fullscreen failed:", err);
+          });
+        }
+        return;
+      }
+    });
+  }
+
+  if (!(window as any).__artifactPreviewsInitialized) {
+    (window as any).__artifactPreviewsInitialized = true;
+    setupArtifactPreviews();
+  }
+</script>
+
+<style>
+  .preview-active-view:fullscreen {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none !important;
+    max-height: none !important;
+    aspect-ratio: auto !important;
+    min-height: 0 !important;
+    border: none !important;
+  }
+  .preview-iframe:fullscreen {
+    width: 100vw !important;
+    height: 100vh !important;
+    border: none !important;
+  }
+</style>
