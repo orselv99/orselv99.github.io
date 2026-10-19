@@ -1,6 +1,22 @@
 [
     {
-        "index": "02",
+        "index": "04",
+        "period": "2026.10 — 2026.10",
+        "title": "AI 컨텐츠 자동화 포스팅",
+        "summary": "",
+        "refs": [
+            "003d4763-4d07-4de6-b85a-b9185335ce45",
+            "79c24545-9fd7-4246-9ee4-96ec28fcf929",
+            "d9c0e8e1-8cb5-4ded-a12a-abc88beae5d3"
+        ],
+        "demoUrl": "https://orselv99.github.io/automation-posting",
+        "tags": [
+            "AI",
+            "Automation"
+        ]
+    },
+    {
+        "index": "03",
         "period": "2026.09 — 2026.09",
         "title": "게임 전적검색 및 리플레이",
         "summary": "",
@@ -14,7 +30,7 @@
         ]
     },
     {
-        "index": "03",
+        "index": "02",
         "period": "2026.08 — 2026.08",
         "title": "원격 리소스 생성기",
         "summary": "로컬 diffusion 모델과 ComfyUI, 텔레그램을 이용한 원격 이미지 생성요청 서비스",
