@@ -1,5 +1,5 @@
 ---
-title: "멀티모달 창작과 스마트에디터ONE"
+title: "멀티모달 창작과 네이버 스마트에디터"
 date: "2026-10-17 17:00:00"
 category: "Automation"
 summary: "Gemini 를 이용한 판타지 소설과 삽화를 생성하고, 공식 API 가 닫힌 네이버 스마트에디터의 React 가상 DOM 을 Playwright 로 제어해 자동 발행 파이프라인을 구축"

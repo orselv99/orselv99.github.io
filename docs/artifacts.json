@@ -3,7 +3,7 @@
         "index": "03",
         "period": "2026.10 — 2026.10",
         "title": "AI 컨텐츠 자동화 포스팅",
-        "summary": "AI 컨텐츠 생성부터 네이버블로그에 포스팅까지 자동화 여정",
+        "summary": "AI 컨텐츠 생성부터 네이버블로그에 포스팅까지 자동화 여정 (작업필요: 데모 산출물 어떻게 표현 할것인가)",
         "refs": [
             "963d5f26-c18c-4d07-8c43-34635d076f21",
             "003d4763-4d07-4de6-b85a-b9185335ce45",
@@ -20,21 +20,22 @@
         "index": "02",
         "period": "2026.09 — 2026.09",
         "title": "게임 전적검색 및 리플레이",
-        "summary": "",
+        "summary": "면접 탈락후 질문받은 내용을 공부하고자 만든 게임 전적검색 및 리플레이 서비스",
         "refs": [
             "3db5725f-fb22-47a0-aad4-e97356f94e0b"
         ],
         "demoUrl": "https://orselv99.github.io/match-history",
         "tags": [
-            "tag1",
-            "tag2"
+            "Game",
+            "Search",
+            "Replay"
         ]
     },
     {
         "index": "01",
         "period": "2026.08 — 2026.08",
         "title": "원격 리소스 생성기",
-        "summary": "로컬 diffusion 모델과 ComfyUI, 텔레그램을 이용한 원격 이미지 생성요청 서비스",
+        "summary": "로컬 Diffusion 모델과 ComfyUI, 텔레그램을 이용한 원격 이미지 생성요청 서비스 (작업필요: 데모 산출물 어떻게 표현 할것인가)",
         "demoUrl": "",
         "refs": [
             "fdcfd4e1-77f3-4bf3-8981-4cd709795341",
