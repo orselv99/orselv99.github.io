@@ -1,9 +1,9 @@
 [
     {
-        "index": "04",
+        "index": "03",
         "period": "2026.10 — 2026.10",
         "title": "AI 컨텐츠 자동화 포스팅",
-        "summary": "",
+        "summary": "AI 컨텐츠 생성부터 네이버블로그에 포스팅까지 자동화 여정",
         "refs": [
             "963d5f26-c18c-4d07-8c43-34635d076f21",
             "003d4763-4d07-4de6-b85a-b9185335ce45",
@@ -17,7 +17,7 @@
         ]
     },
     {
-        "index": "03",
+        "index": "02",
         "period": "2026.09 — 2026.09",
         "title": "게임 전적검색 및 리플레이",
         "summary": "",
@@ -31,7 +31,7 @@
         ]
     },
     {
-        "index": "02",
+        "index": "01",
         "period": "2026.08 — 2026.08",
         "title": "원격 리소스 생성기",
         "summary": "로컬 diffusion 모델과 ComfyUI, 텔레그램을 이용한 원격 이미지 생성요청 서비스",
@@ -45,20 +45,6 @@
             "AI",
             "diffusion",
             "telegram-bot"
-        ]
-    },
-    {
-        "index": "01",
-        "period": "2025.02 — 2026.09",
-        "title": "Doom",
-        "summary": "가능한 곳에 Doom 포팅",
-        "demoUrl": "",
-        "refs": [
-            "8e29b9cf-159a-4568-b4a2-97eb7c6fb2cf",
-            "bcca2589-a43b-4127-8663-1470a9ca8ca6"
-        ],
-        "tags": [
-            "Doom"
         ]
     }
 ]
