@@ -1,8 +1,8 @@
 ---
-title: "멀티모달 창작과 스마트에디터 ONE"
+title: "멀티모달 창작과 스마트에디터ONE"
 date: "2026-10-17 17:00:00"
 category: "Automation"
-summary: "Gemini 를 이용한 판타지 소설과 삽화를 생성하고, 공식 API 가 닫힌 네이버 스마트에디터 ONE 의 React 가상 DOM 을 Playwright 로 제어해 자동 발행 파이프라인을 구축"
+summary: "Gemini 를 이용한 판타지 소설과 삽화를 생성하고, 공식 API 가 닫힌 네이버 스마트에디터의 React 가상 DOM 을 Playwright 로 제어해 자동 발행 파이프라인을 구축"
 tags: ["Playwright","PromptEngineering", "ReverseEngineering"]
 ---
 
@@ -49,11 +49,11 @@ Strictly no solid color fills, parchment-toned background #ece0c6. High contrast
 |비교 항목|Selenium WebDriver|Microsoft Playwright|
 |---|---|---|
 |대기 메커니즘|명시적 대기(time.sleep, WebDriverWait)가 빈번히 필요|조작 가능할 때까지 자동으로 대기(Auto-Wait)|
-|복잡한 DOM/SPA 지원|React 기반 스마트에디터 ONE 의 동적 렌더링 추적에 취약|가상 DOM 및 비동기 이벤트에 대해 견고한 셀렉터 엔진을 제공|
+|복잡한 DOM/SPA 지원|React 기반 스마트에디터의 동적 렌더링 추적에 취약|가상 DOM 및 비동기 이벤트에 대해 견고한 셀렉터 엔진을 제공|
 |세션 유지 관리|브라우저 프로필 설정이 번거롭고 크래시가 잦음|userDataDir 영속화 및 storageState 추출을 네이티브로 지원|
 |실행 속도 및 안정성|HTTP JSON-Wire 프로토콜 오버헤드가 존재|CDP(Chrome DevTools Protocol) 직접 통신으로 반응 속도가 압도적임|
 
-네이버의 스마트에디터 ONE 은 단순한 HTML 폼이 아니라 React 컴포넌트로 이루어진 리치 텍스트 에디터다. 클릭 타이밍이 조금만 어긋나도 툴바가 닫히거나 포커스가 풀려버리는데, 엘리먼트의 가시성과 애니메이션 완료 상태를 스스로 확인하는 `Playwright` 의 `Actionability Check` 기능은 선택이 아닌 필수였다.   
+네이버의 스마트에디터는 단순한 HTML 폼이 아니라 React 컴포넌트로 이루어진 리치 텍스트 에디터다. 클릭 타이밍이 조금만 어긋나도 툴바가 닫히거나 포커스가 풀려버리는데, 엘리먼트의 가시성과 애니메이션 완료 상태를 스스로 확인하는 `Playwright` 의 `Actionability Check` 기능은 선택이 아닌 필수였다.   
 
 > *"이제 에디터 URL로 들어가서 텍스트 넣고 이미지 올린 다음 발행 버튼만 누르면 끝나는 거 아닌가?"*
 
@@ -82,7 +82,7 @@ context = p.chromium.launch_persistent_context(
 <br/>
 <br/>
 
-## 스마트에디터 ONE의 침묵
+## 스마트에디터ONE의 침묵
 
 로그인을 뚫고 에디터 페이지에서 DOM 요소를 찾아 텍스트를 직접 주입했다.
 
@@ -94,7 +94,7 @@ document.querySelector(".se-text-paragraph").innerHTML = "소설 본문";
 
 ### React Virtual DOM 과 가상 키보드 에뮬레이션
 
-원인은 스마트에디터 ONE 이 React 기반의 가상 DOM 으로 동작하고 있기 때문이었다. 외부 스크립트로 실제 DOM 트리를 수정해 봤자 React 컴포넌트 내부의 state 나 store 에는 아무런 변경 이벤트가 전달되지 않아, 저장 시점에는 빈 문자열로 처리되어 버린 것이다.
+원인은 스마트에디터가 React 기반의 가상 DOM 으로 동작하고 있기 때문이었다. 외부 스크립트로 실제 DOM 트리를 수정해 봤자 React 컴포넌트 내부의 state 나 store 에는 아무런 변경 이벤트가 전달되지 않아, 저장 시점에는 빈 문자열로 처리되어 버린 것이다.
 
 React 의 내부 상태를 업데이트하려면 브라우저가 <span style="color: var(--color-accent-impl);">"실제 사람이 키보드를 두드리고 있다"</span> 고 인식하도록 네이티브 키보드 이벤트를 발생시켜야 했다.
 
@@ -139,5 +139,3 @@ page.wait_for_timeout(6000)
 page.keyboard.press("ArrowDown")
 page.keyboard.press("Enter")
 ```
-
-이렇게 1부 원고를 타이핑한 직후 파일 선택기를 가로채 삽화를 업로드하고, 커서를 자연스럽게 아래로 내려 2부 서사를 이어 적도록 구현했다.
