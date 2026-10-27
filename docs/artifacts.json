@@ -22,7 +22,10 @@
         "title": "게임 전적검색 및 리플레이",
         "summary": "면접 탈락후 질문받은 내용을 공부하고자 만든 게임 전적검색 및 리플레이 서비스",
         "refs": [
-            "3db5725f-fb22-47a0-aad4-e97356f94e0b"
+            "b3e05039-c970-41b6-9c3f-c18f8fd7e66f",
+            "7da6ffb8-7cc4-4a2e-b805-c71a485445f2",
+            "cb458190-2ffd-4f3a-96f6-a120b506efa9",
+            "3532df6f-4bd3-4842-afb1-5e62a99193e3"
         ],
         "demoUrl": "https://orselv99.github.io/match-history",
         "tags": [

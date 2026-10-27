@@ -281,7 +281,7 @@ Presidio에는 MRZ 인식기가 없으므로, ICAO 규격의 체크섬과 패턴
 
 ### 요약 및 실무 권장 파이프라인
 | 단계 | 적용 기법 | 해결된 문제 |
-| :--- | :--- | :--- |
+| --- | --- | --- |
 | **Pre-process** | Otsu Thresholding (`cv2.threshold`) | 여권 위조방지 문양 및 배경 노이즈 제거 |
 | **Multi-pass** | 0° 정방향 + 90° 회전 이중 OCR | 모바일 스크린샷 내 회전된 신분증 카드 인식 |
 | **Coordinate** | 2D Inverse Mapping ($x_{orig} = W - (y+h)$) | 회전 검출 박스를 원본 스크린샷에 1:1 오차 없이 매핑 |
