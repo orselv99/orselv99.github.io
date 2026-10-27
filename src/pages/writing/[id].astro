@@ -44,6 +44,7 @@ const dateFormatted = post.data.date ? post.data.date.replace(/-/g, ".") : "";
       summary={post.data.summary}
       tags={post.data.tags}
       backUrl={backUrl}
+      uuid={uuid}
     />
 
     <!-- Main Markdown Body -->
@@ -60,7 +61,7 @@ const dateFormatted = post.data.date ? post.data.date.replace(/-/g, ".") : "";
   <!-- Interactive Pan & Zoom Modal for Diagrams -->
   <MermaidModal />
 
-  <!-- Back Navigation Handler to preserve archive page state -->
+  <!-- Back Navigation & SVG Image Inlining Handlers -->
   <script>
     function setupBackNav() {
       const savedUrl = sessionStorage.getItem("writing_archive_url");
@@ -77,8 +78,51 @@ const dateFormatted = post.data.date ? post.data.date.replace(/-/g, ".") : "";
       });
     }
 
+    async function inlineSvgImages() {
+      const images = document.querySelectorAll<HTMLImageElement>(
+        ".markdown-body img[src*='.svg'], .markdown-body img[src*='f=svg']"
+      );
+      for (const img of Array.from(images)) {
+        try {
+          const res = await fetch(img.src);
+          if (!res.ok) continue;
+          const svgText = await res.text();
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(svgText, "image/svg+xml");
+          const svg = doc.querySelector("svg");
+          if (!svg) continue;
+
+          // Preserve attributes from img
+          Array.from(img.attributes).forEach((attr) => {
+            if (attr.name !== "src" && attr.name !== "loading" && attr.name !== "decoding") {
+              if (attr.name === "class") {
+                svg.classList.add(...attr.value.split(/\s+/).filter(Boolean));
+              } else {
+                svg.setAttribute(attr.name, attr.value);
+              }
+            }
+          });
+
+          if (!svg.getAttribute("aria-label") && img.alt) {
+            svg.setAttribute("aria-label", img.alt);
+          }
+
+          img.replaceWith(svg);
+        } catch (err) {
+          console.error("Failed to inline SVG image:", err);
+        }
+      }
+    }
+
     setupBackNav();
-    document.addEventListener("astro:page-load", setupBackNav);
-    document.addEventListener("astro:after-swap", setupBackNav);
+    inlineSvgImages();
+    document.addEventListener("astro:page-load", () => {
+      setupBackNav();
+      inlineSvgImages();
+    });
+    document.addEventListener("astro:after-swap", () => {
+      setupBackNav();
+      inlineSvgImages();
+    });
   </script>
 </BaseLayout>

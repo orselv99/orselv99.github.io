@@ -164,8 +164,9 @@ html.dark .astro-code span {
   opacity: 0.8;
 }
 
-/* Centered Markdown Images */
-.markdown-body img {
+/* Centered Markdown Images & Inlined SVGs */
+.markdown-body img,
+.markdown-body svg:not(.mermaid-chart svg):not(#mermaid-modal-target svg) {
   display: block;
   margin: 1.5rem auto;
   max-width: 100%;
@@ -173,7 +174,9 @@ html.dark .astro-code span {
 }
 
 .markdown-body p:has(> img),
-.markdown-body p:has(> a > img) {
+.markdown-body p:has(> a > img),
+.markdown-body p:has(> svg),
+.markdown-body p:has(> a > svg) {
   text-align: center;
 }
 
@@ -323,4 +326,29 @@ html.dark .astro-code span {
   border: 1px solid var(--color-border-hairline) !important;
   color: var(--color-text-secondary) !important;
 }
+
+/* SVG Image & Diagram Typography Theme Integration */
+.markdown-body svg {
+  color: var(--color-text-primary);
+}
+
+.markdown-body svg text,
+.markdown-body svg tspan,
+#mermaid-modal-target svg text,
+#mermaid-modal-target svg tspan {
+  fill: var(--color-text-primary) !important;
+  color: var(--color-text-primary) !important;
+}
+
+.markdown-body svg foreignObject,
+.markdown-body svg foreignObject div,
+.markdown-body svg foreignObject span,
+.markdown-body .mermaid-chart .nodeLabel,
+#mermaid-modal-target foreignObject,
+#mermaid-modal-target foreignObject div,
+#mermaid-modal-target foreignObject span,
+#mermaid-modal-target .nodeLabel {
+  color: var(--color-text-primary) !important;
+}
+
 

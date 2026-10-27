@@ -7,14 +7,15 @@ interface Props {
   summary?: string;
   tags?: string[];
   backUrl: string;
+  uuid?: string;
 }
 
-const { title, date, category, ref, summary, tags = [], backUrl } = Astro.props;
+const { title, date, category, ref, summary, tags = [], backUrl, uuid } = Astro.props;
 ---
 
-<!-- 뒤로가기 -->
+<!-- 뒤로가기 및 UUID -->
 <section class="bg-surface-canvas">
-  <div class="flex flex-row-reverse items-center justify-between gap-space-sm pb-space-sm">
+  <div class="flex items-center justify-between gap-space-sm pb-space-sm">
     <a
       href={backUrl}
       data-back-to-archive
@@ -23,6 +24,11 @@ const { title, date, category, ref, summary, tags = [], backUrl } = Astro.props;
       <span>←</span>
       <span>[BACK TO WRITING ARCHIVE]</span>
     </a>
+    {uuid && (
+      <span class="font-code-block text-label-mono-xs text-text-muted">
+        UUID: {uuid}
+      </span>
+    )}
   </div>
 </section>
 
