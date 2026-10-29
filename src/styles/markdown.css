@@ -164,13 +164,36 @@ html.dark .astro-code span {
   opacity: 0.8;
 }
 
-/* Centered Markdown Images & Inlined SVGs */
+/* Centered Markdown Images & Inlined SVGs with Interactive Zoom Affordance */
 .markdown-body img,
 .markdown-body svg:not(.mermaid-chart svg):not(#mermaid-modal-target svg) {
   display: block;
   margin: 1.5rem auto;
   max-width: 100%;
   height: auto;
+  cursor: zoom-in;
+  border: 1px solid var(--color-border-hairline);
+  transition: border-color var(--transition-fast) ease, box-shadow var(--transition-fast) ease;
+}
+
+.markdown-body img:hover,
+.markdown-body svg:not(.mermaid-chart svg):not(#mermaid-modal-target svg):hover {
+  border-color: var(--color-accent-spec);
+  box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.25);
+}
+
+.markdown-body td img,
+.markdown-body td svg:not(.mermaid-chart svg):not(#mermaid-modal-target svg) {
+  margin: 0.5rem auto;
+}
+
+/* Modal Target Element Styling */
+#mermaid-modal-target img {
+  max-width: none;
+  height: auto;
+  border: 1px solid var(--color-border-hairline);
+  background-color: var(--color-surface-canvas);
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.6);
 }
 
 .markdown-body p:has(> img),

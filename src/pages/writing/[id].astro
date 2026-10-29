@@ -112,6 +112,7 @@ const dateFormatted = post.data.date ? post.data.date.replace(/-/g, ".") : "";
           console.error("Failed to inline SVG image:", err);
         }
       }
+      document.dispatchEvent(new CustomEvent("images:inlined"));
     }
 
     setupBackNav();

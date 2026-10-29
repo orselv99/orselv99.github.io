@@ -17,7 +17,7 @@
     <div class="h-10 px-4 bg-surface-subtle border-b border-border-hairline flex items-center justify-between font-label-mono-xs text-label-mono-xs uppercase text-text-primary shrink-0">
       <div class="flex items-center gap-2">
         <span class="w-1.5 h-1.5 bg-accent-spec inline-block"></span>
-        <span class="font-bold tracking-wider">DIAGRAM</span>
+        <span class="font-bold tracking-wider" id="mermaid-modal-title">DIAGRAM</span>
       </div>
 
       <div class="flex items-center gap-2">
@@ -31,7 +31,7 @@
           >
             -
           </button>
-          <span id="mermaid-zoom-level" class="px-2.5 py-0.5 text-text-secondary font-code-block">
+          <span id="mermaid-zoom-level" class="px-2.5 py-0.5 text-text-secondary font-code-block min-w-[50px] text-center">
             100%
           </span>
           <button
@@ -101,47 +101,51 @@
 
   function clampPan() {
     const viewport = document.getElementById("mermaid-modal-viewport");
-    const targetSvg = document.querySelector<SVGElement>("#mermaid-modal-target svg");
-    if (!viewport || !targetSvg) return;
+    const targetEl = document.querySelector<HTMLElement | SVGElement>(
+      "#mermaid-modal-target > *"
+    );
+    if (!viewport || !targetEl) return;
 
     const vpW = viewport.clientWidth;
     const vpH = viewport.clientHeight;
     if (vpW <= 0 || vpH <= 0) return;
 
-    const rect = targetSvg.getBoundingClientRect();
-    const svgW = rect.width;
-    const svgH = rect.height;
-    if (svgW <= 0 || svgH <= 0) return;
+    const rect = targetEl.getBoundingClientRect();
+    const elW = rect.width;
+    const elH = rect.height;
+    if (elW <= 0 || elH <= 0) return;
 
     const margin = 40;
 
-    // Horizontal clamping: restrict so diagram doesn't exit the window bounds
-    if (svgW > vpW) {
-      const maxLimitX = (svgW - vpW) / 2 + margin;
+    // Horizontal clamping: restrict so diagram/image doesn't exit the window bounds
+    if (elW > vpW) {
+      const maxLimitX = (elW - vpW) / 2 + margin;
       panX = Math.max(-maxLimitX, Math.min(maxLimitX, panX));
     } else {
-      const maxLimitX = Math.max(0, (vpW - svgW) / 2);
+      const maxLimitX = Math.max(0, (vpW - elW) / 2);
       panX = Math.max(-maxLimitX, Math.min(maxLimitX, panX));
     }
 
-    // Vertical clamping: restrict so diagram doesn't exit the window bounds
-    if (svgH > vpH) {
-      const maxLimitY = (svgH - vpH) / 2 + margin;
+    // Vertical clamping: restrict so diagram/image doesn't exit the window bounds
+    if (elH > vpH) {
+      const maxLimitY = (elH - vpH) / 2 + margin;
       panY = Math.max(-maxLimitY, Math.min(maxLimitY, panY));
     } else {
-      const maxLimitY = Math.max(0, (vpH - svgH) / 2);
+      const maxLimitY = Math.max(0, (vpH - elH) / 2);
       panY = Math.max(-maxLimitY, Math.min(maxLimitY, panY));
     }
   }
 
   function updateZoom(newZoom: number) {
-    currentZoom = Math.max(0.3, Math.min(4.0, Math.round(newZoom * 100) / 100));
-    const targetSvg = document.querySelector<SVGElement>("#mermaid-modal-target svg");
+    currentZoom = Math.max(0.2, Math.min(4.0, Math.round(newZoom * 100) / 100));
+    const targetEl = document.querySelector<HTMLElement | SVGElement>(
+      "#mermaid-modal-target > *"
+    );
     const label = document.getElementById("mermaid-zoom-level");
-    if (targetSvg) {
-      targetSvg.style.width = `${Math.round(baseWidth * currentZoom)}px`;
-      targetSvg.style.height = "auto";
-      targetSvg.style.maxWidth = "none";
+    if (targetEl) {
+      targetEl.style.width = `${Math.round(baseWidth * currentZoom)}px`;
+      targetEl.style.height = "auto";
+      targetEl.style.maxWidth = "none";
     }
     if (label) {
       label.textContent = `${Math.round(currentZoom * 100)}%`;
@@ -153,8 +157,13 @@
   function openMermaidModal(chartEl: HTMLElement) {
     const modal = document.getElementById("mermaid-modal");
     const target = document.getElementById("mermaid-modal-target");
+    const titleEl = document.getElementById("mermaid-modal-title");
     const svgEl = chartEl.querySelector("svg");
     if (!modal || !target || !svgEl) return;
+
+    if (titleEl) {
+      titleEl.textContent = "DIAGRAM";
+    }
 
     // Clone SVG for full natural resolution
     const clone = svgEl.cloneNode(true) as SVGElement;
@@ -174,7 +183,106 @@
     modal.classList.remove("hidden");
     document.body.style.overflow = "hidden";
 
-    // Reset pan & zoom to center
+    // Reset pan & zoom to center at fixed 100%
+    panX = 0;
+    panY = 0;
+    currentZoom = 1;
+    updateZoom(1);
+    clampPan();
+    updateTransform();
+  }
+
+  function openImageModal(imgEl: HTMLImageElement) {
+    const modal = document.getElementById("mermaid-modal");
+    const target = document.getElementById("mermaid-modal-target");
+    const titleEl = document.getElementById("mermaid-modal-title");
+    if (!modal || !target) return;
+
+    if (titleEl) {
+      const alt = imgEl.alt?.trim();
+      if (alt && alt !== "alt text") {
+        const truncated = alt.length > 36 ? alt.slice(0, 36) + "..." : alt;
+        titleEl.textContent = `IMAGE // ${truncated}`;
+      } else {
+        titleEl.textContent = "IMAGE";
+      }
+    }
+
+    const clone = document.createElement("img");
+    clone.src = imgEl.currentSrc || imgEl.src;
+    clone.alt = imgEl.alt || "";
+    clone.style.maxWidth = "none";
+    clone.style.height = "auto";
+    clone.style.userSelect = "none";
+    clone.draggable = false;
+    clone.style.display = "block";
+
+    const attrW = parseInt(imgEl.getAttribute("width") || "0", 10);
+    const attrH = parseInt(imgEl.getAttribute("height") || "0", 10);
+    const natW = imgEl.naturalWidth || attrW || imgEl.clientWidth || 900;
+    baseWidth = natW;
+    clone.style.width = `${baseWidth}px`;
+
+    target.innerHTML = "";
+    target.appendChild(clone);
+
+    modal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+
+    // Fixed 100% initial zoom (identical to diagram modal)
+    panX = 0;
+    panY = 0;
+    currentZoom = 1;
+    updateZoom(1);
+    clampPan();
+    updateTransform();
+
+    // If clone finishes loading slightly later, update clamping and transform
+    const updateOnLoad = () => {
+      clampPan();
+      updateTransform();
+    };
+    if (clone.complete && clone.naturalWidth > 0) {
+      updateOnLoad();
+    } else {
+      clone.onload = updateOnLoad;
+    }
+  }
+
+  function openSvgImageModal(svgEl: SVGElement) {
+    const modal = document.getElementById("mermaid-modal");
+    const target = document.getElementById("mermaid-modal-target");
+    const titleEl = document.getElementById("mermaid-modal-title");
+    if (!modal || !target) return;
+
+    if (titleEl) {
+      const alt = svgEl.getAttribute("aria-label")?.trim();
+      if (alt && alt !== "alt text") {
+        const truncated = alt.length > 36 ? alt.slice(0, 36) + "..." : alt;
+        titleEl.textContent = `IMAGE // ${truncated}`;
+      } else {
+        titleEl.textContent = "IMAGE";
+      }
+    }
+
+    const clone = svgEl.cloneNode(true) as SVGElement;
+    clone.style.maxWidth = "none";
+    clone.style.height = "auto";
+    clone.removeAttribute("width");
+    clone.removeAttribute("height");
+
+    const vb = svgEl.viewBox?.baseVal;
+    const natW = vb && vb.width > 0 ? vb.width : svgEl.clientWidth || 900;
+    baseWidth = Math.max(natW, 600);
+    clone.style.width = `${baseWidth}px`;
+
+    target.innerHTML = "";
+    target.appendChild(clone);
+
+    modal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+
+    // Fixed 100% initial zoom (identical to diagram modal)
     panX = 0;
     panY = 0;
     currentZoom = 1;
@@ -193,7 +301,7 @@
     document.body.style.cursor = "";
   }
 
-  // Setup Drag to Pan on Viewport
+  // Setup Drag to Pan on Viewport with Pointer Events
   function setupDragPanning() {
     const viewport = document.getElementById("mermaid-modal-viewport");
     if (!viewport) return;
@@ -204,8 +312,8 @@
     let initialPanX = 0;
     let initialPanY = 0;
 
-    viewport.onmousedown = (e: MouseEvent) => {
-      if (e.button !== 0) return; // Left click only
+    viewport.onpointerdown = (e: PointerEvent) => {
+      if (e.button !== 0) return; // Left click or primary touch only
       isDragging = true;
       wasDragged = false;
       viewport.style.cursor = "grabbing";
@@ -214,10 +322,13 @@
       startY = e.clientY;
       initialPanX = panX;
       initialPanY = panY;
+      try {
+        viewport.setPointerCapture(e.pointerId);
+      } catch {}
       e.preventDefault();
     };
 
-    window.addEventListener("mousemove", (e: MouseEvent) => {
+    viewport.onpointermove = (e: PointerEvent) => {
       if (!isDragging) return;
       const dx = e.clientX - startX;
       const dy = e.clientY - startY;
@@ -239,18 +350,24 @@
       }
 
       updateTransform();
-    });
+    };
 
-    window.addEventListener("mouseup", () => {
+    const stopDragging = (e: PointerEvent) => {
       if (isDragging) {
         isDragging = false;
         viewport.style.cursor = "grab";
         document.body.style.cursor = "";
+        try {
+          viewport.releasePointerCapture(e.pointerId);
+        } catch {}
         setTimeout(() => {
           wasDragged = false;
         }, 80);
       }
-    });
+    };
+
+    viewport.onpointerup = stopDragging;
+    viewport.onpointercancel = stopDragging;
 
     // Mousewheel: Ctrl+Wheel to Zoom, regular Wheel to Pan
     viewport.onwheel = (e: WheelEvent) => {
@@ -281,6 +398,7 @@
     const zoomInBtn = document.getElementById("mermaid-zoom-in");
     const zoomOutBtn = document.getElementById("mermaid-zoom-out");
     const zoomResetBtn = document.getElementById("mermaid-zoom-reset");
+    const viewport = document.getElementById("mermaid-modal-viewport");
 
     closeBtn?.addEventListener("click", closeMermaidModal);
     zoomInBtn?.addEventListener("click", () => updateZoom(currentZoom + 0.25));
@@ -288,7 +406,20 @@
     zoomResetBtn?.addEventListener("click", () => {
       panX = 0;
       panY = 0;
+      currentZoom = 1;
       updateZoom(1);
+    });
+
+    // Double-click to toggle zoom (100% <-> 175%)
+    viewport?.addEventListener("dblclick", () => {
+      if (wasDragged) return;
+      panX = 0;
+      panY = 0;
+      if (Math.abs(currentZoom - 1) < 0.05) {
+        updateZoom(1.75);
+      } else {
+        updateZoom(1);
+      }
     });
 
     // Backdrop click handling:
@@ -344,6 +475,7 @@
           e.preventDefault();
           panX = 0;
           panY = 0;
+          currentZoom = 1;
           updateZoom(1);
         }
       }
@@ -351,13 +483,46 @@
     { passive: false }
   );
 
-  // Delegated click on any .mermaid-chart in document
+  // Delegated click on any .mermaid-chart or markdown image in document
   document.addEventListener("click", (e) => {
-    const chart = (e.target as HTMLElement)?.closest<HTMLElement>(".mermaid-chart");
+    const target = e.target as HTMLElement | SVGElement | null;
+    if (!target) return;
+
+    if (target.closest("#mermaid-modal")) return;
+
+    // 1. Mermaid diagram click
+    const chart = target.closest<HTMLElement>(".mermaid-chart");
     if (chart) {
       openMermaidModal(chart);
+      return;
+    }
+
+    // 2. Standard image click inside .markdown-body
+    const img = target.closest<HTMLImageElement>(".markdown-body img");
+    if (img) {
+      e.preventDefault();
+      openImageModal(img);
+      return;
+    }
+
+    // 3. Inlined SVG image click inside .markdown-body (not a mermaid chart)
+    const svg = target.closest<SVGElement>(".markdown-body svg");
+    if (svg && !svg.closest(".mermaid-chart")) {
+      e.preventDefault();
+      openSvgImageModal(svg);
+      return;
     }
   });
+
+  function setupImageEnhancements() {
+    document.querySelectorAll<HTMLElement>(
+      ".markdown-body img, .markdown-body svg:not(.mermaid-chart svg):not(#mermaid-modal-target svg)"
+    ).forEach((el) => {
+      if (!el.getAttribute("title")) {
+        el.setAttribute("title", "클릭하여 확대 및 이동 (Click to Zoom & Pan)");
+      }
+    });
+  }
 
   // Diagram rendering logic
   async function renderMermaidCharts() {
@@ -824,15 +989,20 @@
   // Initialize
   renderMermaidCharts();
   setupModalControls();
+  setupImageEnhancements();
+
+  document.addEventListener("images:inlined", setupImageEnhancements);
 
   document.addEventListener("astro:page-load", () => {
     renderMermaidCharts();
     setupModalControls();
+    setupImageEnhancements();
   });
 
   document.addEventListener("astro:after-swap", () => {
     renderMermaidCharts();
     setupModalControls();
+    setupImageEnhancements();
   });
 
   // Theme observer
