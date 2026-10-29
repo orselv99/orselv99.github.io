@@ -678,6 +678,93 @@
       }
     }
 
+    // Post-processing to fix Mermaid sequence diagram vertical spacing:
+    // Mermaid hardcodes an excessive top-offset for message text (boxMargin: 38)
+    // while advancing vertical position by only 10px between messages.
+    // This shifts message labels down closer to their own arrow/loop line (~9-14px),
+    // naturally expanding the gap between preceding arrows and subsequent texts.
+    function fixSequenceMessageSpacing(container: HTMLElement) {
+      const svg = container.querySelector("svg");
+      if (!svg) return;
+
+      const children = Array.from(svg.children);
+      const messages: { texts: SVGTextElement[]; line: SVGElement }[] = [];
+      let currentTexts: SVGTextElement[] = [];
+
+      for (const child of children) {
+        const cls = child.getAttribute("class") || "";
+        const tag = child.tagName.toLowerCase();
+        if (cls.includes("messageText") && tag === "text") {
+          currentTexts.push(child as SVGTextElement);
+        } else if (
+          (cls.includes("messageLine0") || cls.includes("messageLine1")) &&
+          (tag === "line" || tag === "path")
+        ) {
+          if (currentTexts.length > 0) {
+            messages.push({ texts: currentTexts, line: child as SVGElement });
+            currentTexts = [];
+          }
+        }
+      }
+
+      for (const msg of messages) {
+        const line = msg.line;
+        let lineY = 0;
+        if (line.tagName.toLowerCase() === "line") {
+          lineY = parseFloat(line.getAttribute("y1") || "0");
+        } else {
+          const d = line.getAttribute("d") || "";
+          const parts = d.split(/[ ,]+/);
+          lineY = parseFloat(parts[2] || "0");
+        }
+        if (!lineY || isNaN(lineY)) continue;
+
+        let maxBottom = -Infinity;
+        for (const textEl of msg.texts) {
+          try {
+            const bbox = textEl.getBBox();
+            if (bbox && bbox.height > 0) {
+              const bottom = bbox.y + bbox.height;
+              if (bottom > maxBottom) {
+                maxBottom = bottom;
+              }
+            }
+          } catch {}
+        }
+
+        if (maxBottom === -Infinity) {
+          const lastText = msg.texts[msg.texts.length - 1];
+          const lastY = parseFloat(lastText.getAttribute("y") || "0");
+          maxBottom = lastY + 20;
+        }
+
+        // Check if there is an autonumber sequenceNumber marker nearby
+        const nextEl = line.nextElementSibling;
+        const hasSeqMarker =
+          nextEl &&
+          (nextEl.getAttribute("marker-start")?.includes("sequencenumber") ||
+            nextEl.getAttribute("class")?.includes("sequenceNumber") ||
+            nextEl.nextElementSibling?.getAttribute("class")?.includes("sequenceNumber"));
+
+        const effectiveGap = hasSeqMarker ? 14 : 9;
+        const shift = lineY - effectiveGap - maxBottom;
+        if (shift <= 0) continue;
+
+        for (const textEl of msg.texts) {
+          const currentY = parseFloat(textEl.getAttribute("y") || "0");
+          const newY = Math.round(currentY + shift);
+          textEl.setAttribute("y", String(newY));
+
+          textEl.querySelectorAll("tspan").forEach((tspan) => {
+            if (tspan.hasAttribute("y")) {
+              const tspanY = parseFloat(tspan.getAttribute("y") || "0");
+              tspan.setAttribute("y", String(Math.round(tspanY + shift)));
+            }
+          });
+        }
+      }
+    }
+
     // Sanitize Mermaid code to handle common syntax edge cases (e.g. unescaped backslashes before brackets)
     function sanitizeMermaidCode(code: string): string {
       return code.replace(/(?<=[^\\])\\(?=[)\]}])/g, "\\\\");
@@ -693,6 +780,7 @@
         const { svg } = await mermaid.render(id, rawCode);
         container.innerHTML = svg;
         enhanceSequenceLoops(container);
+        fixSequenceMessageSpacing(container);
         fixSequenceLifelines(container);
       } catch (err) {
         console.error("Failed to re-render Mermaid diagram:", err);
@@ -723,6 +811,7 @@
         container.setAttribute("data-raw-mermaid", rawCode);
         container.innerHTML = svg;
         enhanceSequenceLoops(container);
+        fixSequenceMessageSpacing(container);
         fixSequenceLifelines(container);
 
         pre.replaceWith(container);

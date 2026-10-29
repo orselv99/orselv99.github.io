@@ -332,12 +332,18 @@ html.dark .astro-code span {
   color: var(--color-text-primary);
 }
 
-.markdown-body svg text,
-.markdown-body svg tspan,
-#mermaid-modal-target svg text,
-#mermaid-modal-target svg tspan {
+.markdown-body svg text:not(.sequenceNumber),
+.markdown-body svg tspan:not(.sequenceNumber),
+#mermaid-modal-target svg text:not(.sequenceNumber),
+#mermaid-modal-target svg tspan:not(.sequenceNumber) {
   fill: var(--color-text-primary) !important;
   color: var(--color-text-primary) !important;
+}
+
+.markdown-body svg text.sequenceNumber,
+#mermaid-modal-target svg text.sequenceNumber {
+  fill: #ffffff !important;
+  color: #ffffff !important;
 }
 
 .markdown-body svg foreignObject,
