@@ -15,11 +15,11 @@ const { artifacts, categories = [], categoryCounts = {}, totalCount } = Astro.pr
 
 <div class="w-full flex flex-col gap-space-md">
   <!-- Category Filter & Search Bar -->
-  <ArtifactFilter
+  <!-- <ArtifactFilter
     categories={categories}
     categoryCounts={categoryCounts}
     totalCount={totalCount}
-  />
+  /> -->
 
   <!-- Artifacts Grid / List Container -->
   <section class="py-space-md bg-surface-canvas">
@@ -39,14 +39,14 @@ const { artifacts, categories = [], categoryCounts = {}, totalCount } = Astro.pr
     </div>
 
     <!-- Footer Stats Bar -->
-    <div class="mt-space-lg bg-surface-subtle p-space-md border border-border-hairline flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-mono-xs text-label-mono-xs uppercase text-text-secondary select-none">
+    <!-- <div class="mt-space-lg bg-surface-subtle p-space-md border border-border-hairline flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-mono-xs text-label-mono-xs uppercase text-text-secondary select-none">
       <div class="flex items-center space-x-2">
         <span class="w-1.5 h-1.5 bg-accent-spec inline-block"></span>
         <span id="artifact-count-label">
           01-{String(Math.min(artifacts.length, totalCount)).padStart(2, "0")} OF {String(totalCount).padStart(2, "0")} ARTIFACTS
         </span>
       </div>
-    </div>
+    </div> -->
   </section>
 </div>
 
