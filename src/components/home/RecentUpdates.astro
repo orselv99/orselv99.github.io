@@ -31,10 +31,10 @@ if (!displayUpdates) {
   displayUpdates = rawPosts
     .map((post) => {
       const uuid = post.id.split("/").pop()?.replace(/\.md$/, "") || post.id;
-      const rawDate = post.data.date;
+      const displayDate = post.data.date.slice(0, 10).replace(/-/g, ".");
       const tag = post.data.tags?.[0] || post.data.category || "DISPATCH";
       return {
-        date: rawDate,
+        date: displayDate,
         tag: tag.toUpperCase(),
         title: post.data.title,
         href: `${basePath}/writing/${uuid}`,
@@ -73,10 +73,10 @@ if (!displayUpdates) {
             href={item.href}
             class="group grid grid-cols-1 sm:grid-cols-12 px-space-md py-space-sm items-baseline hover:bg-surface-subtle transition-none gap-y-1"
           >
-            <div class="sm:col-span-3 font-code-block text-label-mono-xs text-text-secondary whitespace-nowrap">
+            <div class="sm:col-span-2 font-code-block text-label-mono-xs text-text-secondary whitespace-nowrap">
               {item.date}
             </div>
-            <div class="sm:col-span-8 font-body-sm text-body-sm font-semibold text-text-primary group-hover:underline truncate pr-space-xs">
+            <div class="sm:col-span-9 font-body-sm text-body-sm font-semibold text-text-primary group-hover:underline truncate pr-space-xs">
               {item.title}
             </div>
             <div class="sm:col-span-1 text-right font-label-mono text-label-mono font-bold text-text-primary group-hover:translate-x-0.5 transition-none">

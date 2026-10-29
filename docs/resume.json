@@ -108,7 +108,7 @@
       "projects": [
         {
           "title": "DLP · 문서중앙화 솔루션",
-          "period": "2019.03 — 2020.05",
+          "period": "2018.05 — 2021.09",
           "description": "사내 중요 정보 유출 방지를 위한 Windows 엔드포인트 보안 에이전트 및 중앙 웹 관제 플랫폼 개발·운영",
           "roles": [
             "DLP 보안모듈 (C/C++, Win32 API, API/Message Hooking)",
